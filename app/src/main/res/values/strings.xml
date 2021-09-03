@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Postku</string>
+    <string name="app_description">Aplikasi Kasir Digital Gratis Untuk UMKM Indonesia</string>
+    <string name="label_btn_register">Daftar Akun</string>
+    <string name="label_btn_login">Masuk</string>
+    <string name="todo">TODO</string>
+    <string name="username_prefix">\u0040</string>
+    <string name="error_empty">This field cannot be blank</string>
+    <string name="error_connection">No internet connection, please check your mobile data</string>
+    <string name="error_server">Error connection to server</string>
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="warning_rekening_bank">Isi data rekening bank untuk mentransfer Dana Qris</string>
+</resources>
