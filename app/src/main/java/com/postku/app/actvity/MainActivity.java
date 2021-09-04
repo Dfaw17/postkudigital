@@ -22,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.fragment.HomeFragment;
+import com.postku.app.fragment.riwayat.HistoryFragment;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.models.User;
 import com.postku.app.utils.SessionManager;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (itemId){
                     case R.id.home:
                         loadFragment(new HomeFragment());
+                        break;
+                    case R.id.riwayat:
+                        loadFragment(new HistoryFragment());
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);

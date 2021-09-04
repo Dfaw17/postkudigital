@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.postku.app.R;
 import com.postku.app.adapter.BannerAdapter;
+import com.postku.app.adapter.NewsAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.HomeResponseJson;
@@ -45,6 +48,9 @@ public class HomeFragment extends Fragment {
     final long DELAY_MS = 2000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 4000; // time in milliseconds between successive task executions.
     int currentPage = 0;
+    private RecyclerView recyclerView;
+    private NewsAdapter adapter;
+    private TextView notFoundNews, readMore;
     private SessionManager sessionManager;
 
     public HomeFragment() {
@@ -70,6 +76,14 @@ public class HomeFragment extends Fragment {
         totalTrxQris = view.findViewById(R.id.text_trx_qris);
         totalSold = view.findViewById(R.id.text_menu_terjual);
         menuFavorit = view.findViewById(R.id.text_menu_terlaris);
+        notFoundNews = view.findViewById(R.id.text_not_found);
+        readMore = view.findViewById(R.id.text_read_more);
+        recyclerView = view.findViewById(R.id.rec_artikel);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
         return view;
     }
 
@@ -136,6 +150,20 @@ public class HomeFragment extends Fragment {
                             }, DELAY_MS, PERIOD_MS);
 
                         }
+
+                        if(response.body().getArtikelList().isEmpty()){
+                            notFoundNews.setVisibility(View.VISIBLE);
+                            readMore.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.GONE);
+                        }else {
+                            notFoundNews.setVisibility(View.GONE);
+                            readMore.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            adapter = new NewsAdapter(context, response.body().getArtikelList());
+                            recyclerView.setAdapter(adapter);
+
+                        }
+
                     }else{
                         DHelper.pesan(context, response.body().getMsg());
                     }

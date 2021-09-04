@@ -13,4 +13,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="warning_rekening_bank">Isi data rekening bank untuk mentransfer Dana Qris</string>
+    <string name="news_notfound">Artikel tidak tersedia</string>
+    <string name="title_news_home">Artikel Bisnis</string>
+    <string name="title_btn_pos">Mulai Transaksi</string>
+    <string name="title_read_more">Read more...</string>
 </resources>

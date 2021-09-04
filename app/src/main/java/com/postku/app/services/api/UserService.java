@@ -15,6 +15,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserService {
     @Multipart
@@ -31,6 +32,6 @@ public interface UserService {
     @GET("beranda/{id}")
     Call<HomeResponseJson> home(@Path("id") String id);
 
-    @GET("tokos/{id}")
-    Call<GetOutletResponseJson> getToko(@Path("id") String id);
+    @GET("toko")
+    Call<GetOutletResponseJson> getToko(@Query("id_owner") String id);
 }

@@ -7,8 +7,10 @@
     <color name="colorGreen">#64F961</color>
     <color name="colorPrimaryBold">#FF8B00</color>
     <color name="colorGreen2">#05E800</color>
-    <color name="colorGrey">#C5C5C5</color>
+    <color name="colorGrey">#B3C4C4C4</color>
+    <color name="colorLightGrey">#ECE3E3</color>
     <color name="colorRed">#FF0051</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#99000000</color>
+    <color name="colorBlue">#03A9F4</color>
 </resources>

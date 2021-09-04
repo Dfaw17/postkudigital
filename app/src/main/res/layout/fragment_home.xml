@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -47,8 +48,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:background="@drawable/custom_button_outline">
+                    android:background="@drawable/custom_button_outline"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/lsaldo"
@@ -475,14 +476,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Artikel Bisnis"
+                    android:text="@string/title_news_home"
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_artikel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/text_not_found"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/news_notfound"
+                    android:visibility="gone">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/text_read_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_rectangle"
+                    android:clickable="true"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:minHeight="48dp"
+                    android:paddingStart="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/title_read_more"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="12sp"
+                    android:visibility="gone">
+
+                </TextView>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -498,6 +537,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/custom_button_fill"
         android:fontFamily="@font/poppins_medium"
-        android:text="Mulai Transaksi"
+        android:text="@string/title_btn_pos"
         android:textColor="@color/colorWhite" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
