@@ -22,7 +22,17 @@ import com.google.android.material.navigation.NavigationView;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.fragment.HomeFragment;
+import com.postku.app.fragment.absensi.AbsensiFragment;
+import com.postku.app.fragment.customer.CustomerFragment;
+import com.postku.app.fragment.diskon.DiskonFragment;
+import com.postku.app.fragment.meja.TableFragment;
+import com.postku.app.fragment.pegawai.PegawaiFragment;
+import com.postku.app.fragment.pos.PosFragment;
+import com.postku.app.fragment.product.ProdukFragment;
+import com.postku.app.fragment.report.ReportFragment;
 import com.postku.app.fragment.riwayat.HistoryFragment;
+import com.postku.app.fragment.setting.SettingFragment;
+import com.postku.app.fragment.toko.TokoFragment;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.models.User;
 import com.postku.app.utils.SessionManager;
@@ -92,6 +102,36 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.riwayat:
                         loadFragment(new HistoryFragment());
+                        break;
+                    case R.id.kasir:
+                        loadFragment(new PosFragment());
+                        break;
+                    case R.id.report:
+                        loadFragment(new ReportFragment());
+                        break;
+                    case R.id.toko:
+                        loadFragment(new TokoFragment());
+                        break;
+                    case R.id.pegawai:
+                        loadFragment(new PegawaiFragment());
+                        break;
+                    case R.id.menu:
+                        loadFragment(new ProdukFragment());
+                        break;
+                    case R.id.absensi:
+                        loadFragment(new AbsensiFragment());
+                        break;
+                    case R.id.meja:
+                        loadFragment(new TableFragment());
+                        break;
+                    case R.id.diskon:
+                        loadFragment(new DiskonFragment());
+                        break;
+                    case R.id.customer:
+                        loadFragment(new CustomerFragment());
+                        break;
+                    case R.id.setting:
+                        loadFragment(new SettingFragment());
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);

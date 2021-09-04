@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.toko.DetailTokoActivity">
+
+    <include layout="@layout/app_bar_custom"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:srcCompat="@drawable/noimage" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Informasi Toko"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edt_nama_toko2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="nama"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_alamat_toko2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="alamat"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_kategori_toko2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="kategori toko"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_provinsi2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="provinsi"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_kota2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="kab/kota"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_kecamatan2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="kecamatan"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_kelurahan2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:ems="10"
+                android:fontFamily="@font/poppins_medium"
+                android:hint="kelurahan/desa"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="13dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_register2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_button_fill"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Simpan"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
