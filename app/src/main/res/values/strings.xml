@@ -17,4 +17,11 @@
     <string name="title_news_home">Artikel Bisnis</string>
     <string name="title_btn_pos">Mulai Transaksi</string>
     <string name="title_read_more">Read more...</string>
+    <string name="title_tab_menu">Menu</string>
+    <string name="title_tab_kategori">Kategori</string>
+    <string name="title_tab_stock">Stok</string>
+    <string name="simpan">Simpan</string>
+    <string name="subtitle_stock_manageent">Atur stock menu di menu management stock</string>
+    <string name="title_stock_menu">Stock Menu</string>
+
 </resources>

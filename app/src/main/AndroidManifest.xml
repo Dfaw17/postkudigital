@@ -17,11 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".fragment.product.menu.ManageMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".fragment.toko.DetailTokoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".fragment.riwayat.DetailTransaksiActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".actvity.SelectOutletActivity"

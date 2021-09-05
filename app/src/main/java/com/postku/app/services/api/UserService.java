@@ -1,5 +1,7 @@
 package com.postku.app.services.api;
 
+import com.postku.app.json.GetKategoriResponseJson;
+import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
 import com.postku.app.json.HomeResponseJson;
 import com.postku.app.json.LoginResponseJson;
@@ -34,4 +36,10 @@ public interface UserService {
 
     @GET("toko")
     Call<GetOutletResponseJson> getToko(@Query("id_owner") String id);
+
+    @GET("menu")
+    Call<GetMenuResponseJson> getMenu(@Query("id_toko") String id);
+
+    @GET("kategorimenu")
+    Call<GetKategoriResponseJson> getKategori(@Query("id_toko") String id);
 }
