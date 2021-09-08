@@ -1,9 +1,12 @@
 package com.postku.app.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RelativeLayout;
@@ -13,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.postku.app.R;
+import com.postku.app.fragment.product.kategori.KategoriFragment;
 import com.postku.app.models.Kategori;
 import com.postku.app.models.Menus;
 
@@ -25,11 +29,13 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.VH> im
     private Context context;
     private List<Kategori> kategoriList;
     private List<Kategori> filteredList;
+    private KategoriFragment fragment;
 
-    public KategoriAdapter(Context context, List<Kategori> kategoriList){
+    public KategoriAdapter(Context context, List<Kategori> kategoriList, KategoriFragment fragment){
         this.context = context;
         this.kategoriList = kategoriList;
         this.filteredList = kategoriList;
+        this.fragment = fragment;
     }
 
     @Override
@@ -76,7 +82,7 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.VH> im
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               fragment.showDialog(true, String.valueOf(kategori.getId()), kategori.getLabel());
             }
         });
     }
@@ -95,4 +101,6 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.VH> im
             label = view.findViewById(R.id.text_nama);
         }
     }
+
+
 }

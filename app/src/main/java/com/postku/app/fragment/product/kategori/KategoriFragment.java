@@ -1,5 +1,6 @@
 package com.postku.app.fragment.product.kategori;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +9,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.postku.app.R;
 import com.postku.app.adapter.KategoriAdapter;
 import com.postku.app.adapter.MenuAdapter;
@@ -24,15 +29,22 @@ import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetMenuResponseJson;
+import com.postku.app.json.KategoriPostResponse;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
+import java.util.HashMap;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.postku.app.helpers.Constants.TAG;
 
 public class KategoriFragment extends Fragment {
     private Context context;
@@ -91,11 +103,7 @@ public class KategoriFragment extends Fragment {
         ladd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ManageMenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra(Constants.METHOD, Constants.ADD);
-                startActivity(intent);
+                showDialog(false, "", "");
             }
         });
 
@@ -122,7 +130,7 @@ public class KategoriFragment extends Fragment {
                         if(response.body().getKategoriList().isEmpty()){
                             lempty.setVisibility(View.VISIBLE);
                         }else {
-                            adapter = new KategoriAdapter(context, response.body().getKategoriList());
+                            adapter = new KategoriAdapter(context, response.body().getKategoriList(), KategoriFragment.this);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -139,8 +147,125 @@ public class KategoriFragment extends Fragment {
             public void onFailure(Call<GetKategoriResponseJson> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 t.printStackTrace();
-                Log.e(Constants.TAG, t.getMessage());
+                Log.e(TAG, t.getMessage());
             }
         });
+    }
+
+    public void showDialog(boolean isEdit, String id, String label){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog_kategori, null);
+        builder.setView(dialogView);
+
+        final TextView title = dialogView.findViewById(R.id.title);
+        final TextView delete = dialogView.findViewById(R.id.delete);
+        final EditText editText = dialogView.findViewById(R.id.edittext);
+        final Button submit = dialogView.findViewById(R.id.btn_submit);
+
+        if(isEdit){
+            title.setText("Edit Kategori");
+            editText.setText(label);
+            delete.setVisibility(View.VISIBLE);
+        }else {
+            title.setText("Tambah Kategori");
+            delete.setVisibility(View.GONE);
+        }
+
+
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEdit){
+                    updateKategori(id, editText.getText().toString());
+                }else {
+                    submitKategori(editText.getText().toString());
+                }
+
+                alertDialog.dismiss();
+            }
+        });
+
+        if(isEdit){
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteKategori(id);
+                    alertDialog.dismiss();
+                }
+            });
+        }
+
+    }
+
+    private void submitKategori(String kategori){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("label", createPartFromString(kategori));
+        map.put("toko", createPartFromString(sessionManager.getIdToko()));
+        map.put("is_active", createPartFromString("1"));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.submitKategori(map).enqueue(new Callback<KategoriPostResponse>() {
+            @Override
+            public void onResponse(Call<KategoriPostResponse> call, Response<KategoriPostResponse> response) {
+                if(response.isSuccessful()){
+                   DHelper.pesan(context, response.body().getMessage());
+                    getData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KategoriPostResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void updateKategori(String id, String kategori){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_kategori_menu", createPartFromString(id));
+        map.put("label", createPartFromString(kategori));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.updateKategori(map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    getData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteKategori(String id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_kategori_menu", createPartFromString(id));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteKategori(map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    getData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
     }
 }

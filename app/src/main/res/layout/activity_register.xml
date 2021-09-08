@@ -76,9 +76,9 @@
                     android:hint="Username"
                     android:inputType="textPersonName"
                     android:paddingStart="10dp"
-                    android:paddingTop="13dp"
+                    android:paddingTop="10dp"
                     android:paddingEnd="20dp"
-                    android:paddingBottom="13dp"
+                    android:paddingBottom="10dp"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -95,9 +95,9 @@
                 android:hint="password"
                 android:inputType="textPassword"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -110,12 +110,12 @@
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="w-mail"
+                android:hint="e-mail"
                 android:inputType="textEmailAddress"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -131,9 +131,9 @@
                 android:hint="nama akun"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -149,9 +149,9 @@
                 android:hint="no. whatsapp"
                 android:inputType="phone"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -167,9 +167,9 @@
                 android:hint="alamat"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <RelativeLayout
@@ -192,13 +192,14 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/img_owner"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_below="@id/textView9"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/noimage" />
             </RelativeLayout>
 
@@ -226,9 +227,9 @@
                 android:hint="nama"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
@@ -244,13 +245,13 @@
                 android:hint="alamat"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/edt_kategori_toko"
+            <AutoCompleteTextView
+                android:id="@+id/kategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -258,18 +259,17 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="kategori toko"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp"></AutoCompleteTextView>
 
-            <EditText
-                android:id="@+id/edt_provinsi"
+            <AutoCompleteTextView
+                android:id="@+id/provinsi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -277,19 +277,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="provinsi"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
+            </AutoCompleteTextView>
 
-            <EditText
-                android:id="@+id/edt_kota"
+            <AutoCompleteTextView
+                android:id="@+id/kabkota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -297,18 +297,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="kab/kota"
-                android:inputType="text"
+                android:hint="kabupaten/kota"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
-            <EditText
-                android:id="@+id/edt_kecamatan"
+            </AutoCompleteTextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/kecamatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -316,18 +317,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="kecamatan"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
-            <EditText
-                android:id="@+id/edt_kelurahan"
+            </AutoCompleteTextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/desa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -335,15 +337,16 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="kelurahan/desa"
-                android:inputType="text"
+                android:hint="kelurahan"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
+
+            </AutoCompleteTextView>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -366,12 +369,13 @@
 
                 <ImageView
                     android:id="@+id/img_toko"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_below="@id/text_label_toko"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/noimage" />
             </RelativeLayout>
 
@@ -390,4 +394,12 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,6 +2,7 @@ package com.postku.app.helpers;
 
 public class Constants {
     private static final String BASE_URL = "http://13.213.192.212:8000/";
+    public static final String URL_LOCATION = "https://dev.farizdotid.com/api/daerahindonesia/";
     public static final String CONNECTION = BASE_URL + "api/";
     public static final String IMAGESUSER = BASE_URL + "images/user/";
     public static final String TAG = "Postku-app";
@@ -28,5 +29,9 @@ public class Constants {
     public static int PERMISSION_WRITE_DATA = 788;
     public static int PERMISSION_READ_DATA = 789;
     public static int PERMISSION_RECORDING_DATA = 790;
+    public static int CAMERA_PROFILE_REQUEST = 122;
+    public static int CAMERA_TOKO_REQUEST = 123;
+    public static int GALERY_PROFILE_REQUEST = 130;
+    public static int GALERY_TOKO_REQUEST = 131;
 
 }

@@ -24,4 +24,26 @@
     <string name="subtitle_stock_manageent">Atur stock menu di menu management stock</string>
     <string name="title_stock_menu">Stock Menu</string>
 
+    <string-array name="shop_category">
+        <item>Kafe</item>
+        <item>Coffee Shop</item>
+        <item>Roti dan Kue</item>
+        <item>Makanan dan Minuman</item>
+        <item>Toko retail</item>
+        <item>Minimarket</item>
+        <item>Toko olahraga</item>
+        <item>Butik dan Pakaian</item>
+        <item>Salon</item>
+        <item>Barbershop</item>
+        <item>Toko bangunan</item>
+        <item>Vape store</item>
+        <item>Laundry</item>
+        <item>Fotocopy</item>
+        <item>Bengkel</item>
+        <item>Cuci Steam</item>
+        <item>Toko Kecantikan</item>
+        <item>Klinik</item>
+        <item>Tourismn</item>
+    </string-array>
+
 </resources>

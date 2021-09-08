@@ -47,5 +47,13 @@ public class BeginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
