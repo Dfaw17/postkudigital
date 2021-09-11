@@ -92,6 +92,7 @@ public class PaymentActivity extends AppCompatActivity {
                     case R.id.rbQris:
                         metode = 2;
                         inputNumber = String.valueOf(tagihan);
+                        pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
                         break;
                 }
             }

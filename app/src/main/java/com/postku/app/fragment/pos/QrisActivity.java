@@ -42,7 +42,7 @@ public class QrisActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private TextView caption, invoice, amount, textTimer;
     private ImageView backButton, imgQr;
-    private double nominal;
+    private String nominal;
     private static final String FORMAT = "%02d:%02d";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +78,12 @@ public class QrisActivity extends AppCompatActivity {
                     if(response.body().getStatusCode() == 200){
                         invoice.setText(response.body().getData().getExternalId());
                         amount.setText(DHelper.formatRupiah(response.body().getData().getAmount()));
-                        nominal = response.body().getData().getAmount();
+                        nominal = String.valueOf(response.body().getData().getAmount());
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
                         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
                         hints.put(EncodeHintType.MARGIN, 2);
-                        hints.put(EncodeHintType.QR_VERSION, 2);
+                        hints.put(EncodeHintType.QR_VERSION, 10);
                         String code = response.body().getData().getQrString().toString();
                         try {
                             Bitmap bitmap = barcodeEncoder.encodeBitmap(code
@@ -137,7 +137,7 @@ public class QrisActivity extends AppCompatActivity {
 
     }
 
-    private void checkCallback(String code, double amount){
+    private void checkCallback(String code, String amount){
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.callbackQris(code, String.valueOf(amount)).enqueue(new Callback<CallbackQrisResponse>() {
             @Override
@@ -192,7 +192,6 @@ public class QrisActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         confirmExit();
     }
 }
