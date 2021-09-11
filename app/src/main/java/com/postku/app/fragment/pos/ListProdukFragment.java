@@ -99,6 +99,15 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
             }
         });
 
+        imgList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PesananActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -191,6 +200,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         if(response.body().getCartList().size() > 0){
+                            Log.e(TAG, "------------sini");
                             boxCart.setVisibility(View.VISIBLE);
                             Cart cart = response.body().getCartList().get(0);
                             idCart = cart.getId();
@@ -207,7 +217,8 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
 
             @Override
             public void onFailure(Call<GetCartResponse> call, Throwable t) {
-
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
         });
     }

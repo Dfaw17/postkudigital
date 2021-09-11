@@ -1,11 +1,19 @@
 package com.postku.app.services.api;
 
+import androidx.transition.Slide;
+
 import com.postku.app.json.ActiveStockResponse;
+import com.postku.app.json.CallbackQrisResponse;
 import com.postku.app.json.CreateCartResponse;
+import com.postku.app.json.CreateQrisResponse;
 import com.postku.app.json.CreateTokoResponse;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
+import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.json.GetCartResponse;
+import com.postku.app.json.GetDetailArtikelResponse;
+import com.postku.app.json.GetDetailBannerResponse;
+import com.postku.app.json.GetHistoryTransResponse;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
@@ -16,6 +24,7 @@ import com.postku.app.json.LoginResponseJson;
 import com.postku.app.json.PostMenuResponse;
 import com.postku.app.json.RegisterResponseJson;
 import com.postku.app.json.StockResponseJson;
+import com.postku.app.json.TransactionResponse;
 
 import java.util.Map;
 
@@ -130,6 +139,14 @@ public interface UserService {
     Call<CreateCartResponse> createCart(@PartMap Map<String, RequestBody> text);
 
     @Multipart
+    @PATCH("cart")
+    Call<CreateCartResponse> simpanCart(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @DELETE("cart")
+    Call<InsertItemResponse> deleteCart(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
     @POST("cartitem")
     Call<InsertItemResponse> addItem(@PartMap Map<String, RequestBody> text);
 
@@ -140,4 +157,34 @@ public interface UserService {
     @Multipart
     @PATCH("cartitem")
     Call<InsertItemResponse> updateItem(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @POST("transaction")
+    Call<TransactionResponse> createTransaction(@PartMap Map<String, RequestBody> text);
+
+    @GET("transaction")
+    Call<GetHistoryTransResponse> historyTrans(@Query("id_toko") String id,
+                                               @Query("date1") String date1,
+                                               @Query("date2") String date2);
+
+    @GET("transaction/detail/{code}")
+    Call<DetailTransactionResponse> detail(@Path("code") String code);
+
+    @Multipart
+    @POST("qris")
+    Call<CreateQrisResponse> payQithQris(@PartMap Map<String, RequestBody> text);
+
+    @GET("qris/callback")
+    Call<CallbackQrisResponse> callbackQris(@Query("cart_code") String id,
+                                            @Query("amount") String date1);
+
+    @GET("qris/check/{invoice}")
+    Call<CreateQrisResponse> checkQris(@Path("invoice") String invoice);
+
+    @GET("banner/{id}")
+    Call<GetDetailBannerResponse> detailbanner(@Path("id") String id);
+
+    @GET("articles/{id}")
+    Call<GetDetailArtikelResponse> detailArtikel(@Path("id") String id);
+
 }

@@ -1,6 +1,7 @@
 package com.postku.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.postku.app.R;
+import com.postku.app.actvity.DetailWebActivity;
+import com.postku.app.helpers.Constants;
 import com.postku.app.models.Artikel;
 
 import java.util.List;
@@ -46,7 +49,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.VH> {
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, DetailWebActivity.class);
+                intent.putExtra(Constants.ID, a.getId());
+                intent.putExtra(Constants.METHOD, Constants.ARTICLE);
+                context.startActivity(intent);
             }
         });
     }

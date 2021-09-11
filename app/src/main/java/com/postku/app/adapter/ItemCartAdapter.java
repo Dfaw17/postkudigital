@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.postku.app.R;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.helpers.OnCartItemClickListener;
+import com.postku.app.helpers.OnItemClickListener;
 import com.postku.app.models.ItemCart;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +24,12 @@ import java.util.List;
 public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
     private Context context;
     private List<ItemCart> itemCartList;
+    private OnCartItemClickListener onItemClickListener;
 
-    public ItemCartAdapter(Context context, List<ItemCart> itemCartList){
+    public ItemCartAdapter(Context context, List<ItemCart> itemCartList, OnCartItemClickListener onItemClickListener){
         this.context = context;
         this.itemCartList = itemCartList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NotNull
@@ -42,6 +46,19 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
         holder.harga.setText("Rp" + DHelper.toformatRupiah(String.valueOf(itemCart.getMenuName().getHarga())) + " x " + itemCart.getQty());
         double grandTotal = Math.round(itemCart.getGrandTotalPrice());
         holder.total.setText("Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(itemCart.getId(), itemCart.getQty(), itemCart.getMenuName().getNama(), itemCart.getMenuName().getHarga(), 2);
+            }
+        });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(itemCart.getId(), itemCart.getQty(), itemCart.getMenuName().getNama(), itemCart.getMenuName().getHarga(), 1);
+            }
+        });
 
     }
 

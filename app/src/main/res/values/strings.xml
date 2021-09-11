@@ -24,6 +24,7 @@
     <string name="subtitle_stock_manageent">Atur stock menu di menu management stock</string>
     <string name="title_stock_menu">Stock Menu</string>
     <string name="currency_symbol">Rp</string>
+    <string name="confirm_cancel_qris_message">Pastikan saldo customer belum terpotong, saat keluar halaman ini transaksi qris akan otomatis batal, silahkan membuat kode QRIS yang baru</string>
 
     <string-array name="shop_category">
         <item>Kafe</item>

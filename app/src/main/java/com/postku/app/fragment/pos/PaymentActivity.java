@@ -1,5 +1,6 @@
 package com.postku.app.fragment.pos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -19,9 +21,20 @@ import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.CreateQrisResponse;
+import com.postku.app.json.TransactionResponse;
 import com.postku.app.models.User;
+import com.postku.app.services.ServiceGenerator;
+import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
+
+import java.util.HashMap;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.postku.app.helpers.Constants.TAG;
 
@@ -38,6 +51,7 @@ public class PaymentActivity extends AppCompatActivity {
     private RadioGroup payMethod;
     private RadioButton rbTunai, rbQris;
     private int metode = 1;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +77,7 @@ public class PaymentActivity extends AppCompatActivity {
         payMethod = findViewById(R.id.method);
         rbTunai = findViewById(R.id.rbTunai);
         rbQris = findViewById(R.id.rbQris);
+        progressBar = findViewById(R.id.progressBar);
 
         tagihan = getIntent().getDoubleExtra(Constants.ADD, 0);
         totalTagihan.setText(DHelper.formatRupiah(tagihan));
@@ -76,8 +91,7 @@ public class PaymentActivity extends AppCompatActivity {
                         break;
                     case R.id.rbQris:
                         metode = 2;
-                        Intent intent = new Intent(context, QrisActivity.class);
-                        startActivity(intent);
+                        inputNumber = String.valueOf(tagihan);
                         break;
                 }
             }
@@ -208,9 +222,100 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "Id Cart:" + getIntent().getIntExtra(Constants.ID, 0) + " metode:" + metode);
+                if(inputNumber.equalsIgnoreCase("") || inputNumber.equalsIgnoreCase("0")){
+                    DHelper.pesan(context, "Pembayaran harus diisi");
+                    return;
+                }
+                if(rbTunai.isChecked() && Integer.parseInt(inputNumber) < tagihan){
+                    DHelper.pesan(context, "Pembayaran kurang");
+                    return;
+                }
+
+                pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
             }
         });
 
 
+    }
+
+    private void pay(int idCart,int metode, String nominal){
+        progressBar.setVisibility(View.VISIBLE);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("cart", createPartFromString(String.valueOf(idCart)));
+        map.put("payment_type", createPartFromString(String.valueOf(metode)));
+        map.put("uang_bayar", createPartFromString(inputNumber));
+        map.put("pegawai", createPartFromString(user.getId()));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.createTransaction(map).enqueue(new Callback<TransactionResponse>() {
+            @Override
+            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        if(metode == 1){
+                            Intent intent = new Intent(context, ResultTransactionActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            payQris(response.body().getTransaction().getReffCode(), inputNumber);
+                        }
+
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
+    private void payQris(String invoice, String nominal){
+        progressBar.setVisibility(View.VISIBLE);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("cart_code", createPartFromString(invoice));
+        map.put("amount", createPartFromString(inputNumber));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.payQithQris(map).enqueue(new Callback<CreateQrisResponse>() {
+            @Override
+            public void onResponse(Call<CreateQrisResponse> call, Response<CreateQrisResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        Intent intent = new Intent(context, QrisActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra(Constants.ID, invoice);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateQrisResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+
+            }
+        });
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
     }
 }

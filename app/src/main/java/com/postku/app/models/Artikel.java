@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Artikel implements Serializable {
     @Expose
@@ -15,6 +16,10 @@ public class Artikel implements Serializable {
     private String title;
 
     @Expose
+    @SerializedName("body")
+    private String body;
+
+    @Expose
     @SerializedName("image")
     private String image;
 
@@ -24,7 +29,7 @@ public class Artikel implements Serializable {
 
     @Expose
     @SerializedName("created_at")
-    private String createdAt;
+    private Date createdAt;
 
     public int getId() {
         return id;
@@ -58,11 +63,19 @@ public class Artikel implements Serializable {
         this.countSeen = countSeen;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

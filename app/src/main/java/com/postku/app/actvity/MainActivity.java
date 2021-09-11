@@ -33,6 +33,7 @@ import com.postku.app.fragment.report.ReportFragment;
 import com.postku.app.fragment.riwayat.HistoryFragment;
 import com.postku.app.fragment.setting.SettingFragment;
 import com.postku.app.fragment.toko.TokoFragment;
+import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.models.User;
 import com.postku.app.utils.SessionManager;
@@ -87,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
         textNamaToko.setText(sessionManager.getNamaToko());
 
 
+        if(getIntent().getStringExtra(Constants.METHOD) != null){
+            loadFragment(new PosFragment());
+        }else {
+            loadFragment(new HomeFragment());
+        }
 
-        loadFragment(new HomeFragment());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -2,15 +2,197 @@ package com.postku.app.fragment.pos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.postku.app.R;
+import com.postku.app.helpers.Constants;
+import com.postku.app.helpers.DHelper;
+import com.postku.app.json.CallbackQrisResponse;
+import com.postku.app.json.CreateQrisResponse;
+import com.postku.app.services.ServiceGenerator;
+import com.postku.app.services.api.UserService;
+import com.postku.app.utils.SessionManager;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QrisActivity extends AppCompatActivity {
-
+    private Context context;
+    private SessionManager sessionManager;
+    private TextView caption, invoice, amount, textTimer;
+    private ImageView backButton, imgQr;
+    private double nominal;
+    private static final String FORMAT = "%02d:%02d";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qris);
+        context = this;
+        sessionManager = new SessionManager(context);
+        caption = findViewById(R.id.text_caption);
+        invoice = findViewById(R.id.text_invoice);
+        amount = findViewById(R.id.text_amount);
+        backButton = findViewById(R.id.back_button);
+        imgQr = findViewById(R.id.img_qrcode);
+        textTimer = findViewById(R.id.text_timer);
+
+
+        caption.setText("QRIS");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        showData(getIntent().getStringExtra(Constants.ID));
+    }
+
+    private void showData(String code){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.checkQris(code).enqueue(new Callback<CreateQrisResponse>() {
+            @Override
+            public void onResponse(Call<CreateQrisResponse> call, Response<CreateQrisResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        invoice.setText(response.body().getData().getExternalId());
+                        amount.setText(DHelper.formatRupiah(response.body().getData().getAmount()));
+                        nominal = response.body().getData().getAmount();
+                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                        Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+                        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+                        hints.put(EncodeHintType.MARGIN, 2);
+                        hints.put(EncodeHintType.QR_VERSION, 2);
+                        String code = response.body().getData().getQrString().toString();
+                        try {
+                            Bitmap bitmap = barcodeEncoder.encodeBitmap(code
+                                    , BarcodeFormat.QR_CODE, 400, 400, hints);
+                            imgQr.setImageBitmap(bitmap);
+                        } catch (WriterException e) {
+                            e.printStackTrace();
+                        }
+
+                        startTimer();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateQrisResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void confirmExit(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_exit_qris, null);
+        builder.setView(dialogView);
+
+        final Button cancel = dialogView.findViewById(R.id.btn_submit);
+        final Button dismiss = dialogView.findViewById(R.id.btn_submit2);
+
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                finish();
+            }
+        });
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+
+    }
+
+    private void checkCallback(String code, double amount){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.callbackQris(code, String.valueOf(amount)).enqueue(new Callback<CallbackQrisResponse>() {
+            @Override
+            public void onResponse(Call<CallbackQrisResponse> call, Response<CallbackQrisResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        if(response.body().getData().getStatus().equalsIgnoreCase("COMPLETED")){
+                            Intent intent = new Intent(context, ResultTransactionActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra(Constants.ID, code);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CallbackQrisResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void startTimer(){
+        new CountDownTimer(180000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                textTimer.setVisibility(View.VISIBLE);
+                textTimer.setText(String.format(FORMAT,
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkCallback(getIntent().getStringExtra(Constants.ID), nominal);
+                    }
+                }, 5000);
+            }
+
+            @Override
+            public void onFinish() {
+                DHelper.pesan(context, "Waktu tunggu habis, silahkan create ulang QR Code");
+                imgQr.setImageDrawable(context.getDrawable(R.drawable.img_qrreload));
+                textTimer.setVisibility(View.GONE);
+            }
+        }.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        confirmExit();
     }
 }

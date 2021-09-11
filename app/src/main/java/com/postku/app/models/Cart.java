@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Cart implements Serializable {
     @Expose
@@ -52,7 +53,7 @@ public class Cart implements Serializable {
 
     @Expose
     @SerializedName("created_at")
-    private String createdAt;
+    private Date createdAt;
 
     @Expose
     @SerializedName("user")
@@ -174,11 +175,11 @@ public class Cart implements Serializable {
         isCanceled = canceled;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

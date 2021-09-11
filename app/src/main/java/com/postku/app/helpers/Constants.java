@@ -23,6 +23,8 @@ public class Constants {
     public static String INTENT_DATA = "INTENTDATA";
     public static String ADD = "add";
     public static String EDIT = "edit";
+    public static String BANNER = "Detail Banner";
+    public static String ARTICLE = "Detail Article";
     public static int CAMERTA_REQUEST = 122;
     public static int GALERY_REQUEST = 123;
     public static int PERMISSION_CAMERA_CODE = 786;

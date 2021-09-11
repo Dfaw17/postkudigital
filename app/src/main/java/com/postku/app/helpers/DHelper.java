@@ -133,6 +133,11 @@ public class DHelper {
         return startDate;
     }
 
+    public static String strTodatetime(Date data) {
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy, hh:mm", Locale.getDefault());
+        return df.format(data);
+    }
+
     public static boolean isBatasUsia(String etText, int batas) {
 //        String a = etText.getText().toString();
 

@@ -1,6 +1,7 @@
 package com.postku.app.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,10 +13,12 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.postku.app.R;
+import com.postku.app.actvity.MainActivity;
 import com.postku.app.adapter.BannerAdapter;
 import com.postku.app.adapter.NewsAdapter;
 import com.postku.app.helpers.Constants;
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment {
     private NewsAdapter adapter;
     private TextView notFoundNews, readMore;
     private SessionManager sessionManager;
+    private Button toPos;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -79,10 +83,20 @@ public class HomeFragment extends Fragment {
         notFoundNews = view.findViewById(R.id.text_not_found);
         readMore = view.findViewById(R.id.text_read_more);
         recyclerView = view.findViewById(R.id.rec_artikel);
+        toPos = view.findViewById(R.id.btn_start);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+        toPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(Constants.METHOD, Constants.RESET);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

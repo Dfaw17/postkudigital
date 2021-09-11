@@ -17,8 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragment.pos.QrisActivity"
+        <activity android:name=".actvity.DetailWebActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".fragment.pos.ResultTransactionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.pos.PesananActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.pos.QrisActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment.pos.PaymentActivity"
             android:theme="@style/AppTheme.NoActionBar" />

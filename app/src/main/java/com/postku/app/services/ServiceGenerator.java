@@ -73,7 +73,7 @@ public class ServiceGenerator {
         }
     }
     public static Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .setDateFormat("yyyy-MM-dd'T'hh:mm:ss.S")
             .serializeNulls()
             .registerTypeAdapter(Boolean.class, booleanSerializerDeserializer)
             .registerTypeAdapter(boolean.class, booleanSerializerDeserializer)

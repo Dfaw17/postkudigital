@@ -15,6 +15,8 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.postku.app.R;
+import com.postku.app.actvity.DetailWebActivity;
+import com.postku.app.helpers.Constants;
 import com.postku.app.models.Banner;
 
 import java.util.List;
@@ -59,11 +61,10 @@ public class BannerAdapter extends PagerAdapter {
         slider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(context, WebviewActivity.class);
-//                String url = bannerModel.getLinkBanner();
-//                i.putExtra("url", url);
-//                i.setData(Uri.parse(url));
-//                context.startActivity(i);
+                Intent intent = new Intent(context, DetailWebActivity.class);
+                intent.putExtra(Constants.ID, bannerModel.getId());
+                intent.putExtra(Constants.METHOD, Constants.BANNER);
+                context.startActivity(intent);
             }
         });
 
