@@ -17,7 +17,7 @@ public class GetKategoriResponseJson {
     private int statusCode;
 
     @Expose
-    @SerializedName("data_kategori_menu_toko")
+    @SerializedName("data")
     private List<Kategori> kategoriList;
 
     public String getMsg() {

@@ -32,4 +32,36 @@
         </shape>
     </item>
 
+    <item
+        android:state_enabled="false">
+        <shape
+            android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:radius="10dp"
+                android:topRightRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomRightRadius="10dp"/>
+
+            <solid
+                android:color="@color/colorLightGrey"/>
+        </shape>
+    </item>
+
+    <item
+        android:state_enabled="true">
+        <shape
+            android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:radius="10dp"
+                android:topRightRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomRightRadius="10dp"/>
+
+            <solid
+                android:color="@color/colorGreen"/>
+        </shape>
+    </item>
+
 </selector>

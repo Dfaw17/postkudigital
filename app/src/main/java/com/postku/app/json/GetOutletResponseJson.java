@@ -16,7 +16,7 @@ public class GetOutletResponseJson {
     private String statusCode;
 
     @Expose
-    @SerializedName("data_toko")
+    @SerializedName("data")
     private List<Toko> tokoList;
 
     public String getMsg() {

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +50,13 @@ public class DHelper {
         decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
         decimalFormat.setMaximumFractionDigits(0);
         return decimalFormat.format(d(s)).replace(",", ".");
+    }
+
+    public static String formatRupiah(Double number){
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        formatRupiah.setMaximumFractionDigits(0);
+        return formatRupiah.format(number).replace(",", ".");
     }
 
     public static boolean isValidEmail(EditText email) {
@@ -159,6 +167,8 @@ public class DHelper {
         }
         return file;
     }
+
+
 
 
 }

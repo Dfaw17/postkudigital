@@ -10,7 +10,7 @@ public class CreateTokoResponse {
     private String msg;
 
     @Expose
-    @SerializedName("status")
+    @SerializedName("status_code")
     private int statusCode;
 
     @Expose

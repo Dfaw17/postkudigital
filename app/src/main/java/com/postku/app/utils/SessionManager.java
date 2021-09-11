@@ -12,6 +12,8 @@ public class SessionManager {
     private static final String TOKEN = "token";
     private static final String ID_TOKO = "idToko";
     private static final String NAMA_TOKO = "namaToko";
+    private static final String ACTIVE_CART = "activeCart";
+    private static final String IS_CART_ACTIVE = "isCartActive";
 
     public SessionManager(Context context){
         this.context = context;
@@ -37,6 +39,32 @@ public class SessionManager {
         editor.putBoolean(IS_LOGIN, false);
         editor.commit();
     }
+
+    public void createCart(String id){
+        editor.putBoolean(IS_CART_ACTIVE, true);
+        editor.putString(ACTIVE_CART, id);
+        editor.commit();
+    }
+
+    public void deleteCart(){
+        editor.putBoolean(IS_CART_ACTIVE,false);
+        editor.remove("activeCart");
+        editor.commit();
+    }
+
+    public boolean isCartActive(){
+        return sharedPref.getBoolean(IS_CART_ACTIVE, false);
+    }
+
+    public String getActiveCart(){
+        return sharedPref.getString(ACTIVE_CART, "");
+    }
+
+    public void setActiveCart(String s){
+        editor.putString(ACTIVE_CART, s);
+        editor.commit();
+    }
+
     public boolean isLogin(){
         return sharedPref.getBoolean(IS_LOGIN,false);
     }

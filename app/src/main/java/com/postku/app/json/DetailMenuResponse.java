@@ -16,7 +16,7 @@ public class DetailMenuResponse {
     private int statusCode;
 
     @Expose
-    @SerializedName("detail_menu")
+    @SerializedName("data")
     private Menus menus;
 
     public String getMsg() {

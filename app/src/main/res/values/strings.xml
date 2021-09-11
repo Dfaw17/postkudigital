@@ -23,6 +23,7 @@
     <string name="simpan">Simpan</string>
     <string name="subtitle_stock_manageent">Atur stock menu di menu management stock</string>
     <string name="title_stock_menu">Stock Menu</string>
+    <string name="currency_symbol">Rp</string>
 
     <string-array name="shop_category">
         <item>Kafe</item>

@@ -35,7 +35,7 @@
                 android:paddingEnd="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/img_toko"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
@@ -57,7 +57,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/edt_nama_toko2"
+                android:id="@+id/edt_nama_toko"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -69,13 +69,13 @@
                 android:hint="nama"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edt_alamat_toko2"
+                android:id="@+id/edt_alamat_toko"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -87,13 +87,13 @@
                 android:hint="alamat"
                 android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
+                android:paddingBottom="10dp"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/edt_kategori_toko2"
+            <AutoCompleteTextView
+                android:id="@+id/kategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -101,18 +101,17 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="kategori toko"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp"></AutoCompleteTextView>
 
-            <EditText
-                android:id="@+id/edt_provinsi2"
+            <AutoCompleteTextView
+                android:id="@+id/provinsi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -120,18 +119,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="provinsi"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
-            <EditText
-                android:id="@+id/edt_kota2"
+            </AutoCompleteTextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/kabkota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -139,18 +139,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="kab/kota"
-                android:inputType="text"
+                android:hint="kabupaten/kota"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
-            <EditText
-                android:id="@+id/edt_kecamatan2"
+            </AutoCompleteTextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/kecamatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -158,18 +159,19 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
+                android:editable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="kecamatan"
-                android:inputType="text"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
 
-            <EditText
-                android:id="@+id/edt_kelurahan2"
+            </AutoCompleteTextView>
+
+            <AutoCompleteTextView
+                android:id="@+id/desa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -177,18 +179,18 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
-                android:ems="10"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="kelurahan/desa"
-                android:inputType="text"
+                android:hint="kelurahan"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="13dp"
-                android:textSize="16sp" />
+                android:paddingBottom="10dp"
+                android:textSize="16sp">
+
+            </AutoCompleteTextView>
 
             <Button
-                android:id="@+id/btn_register2"
+                android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -197,10 +199,18 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_button_fill"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Simpan"
+                android:text="Submit"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

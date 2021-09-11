@@ -17,16 +17,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragment.product.menu.ManageMenuActivity"
+        <activity android:name=".fragment.pos.QrisActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".fragment.pos.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.pos.DetailOrderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.product.stok.DetailStockActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.product.menu.ManageMenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".fragment.toko.DetailTokoActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment.riwayat.DetailTransaksiActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.SelectOutletActivity"
             android:theme="@style/AppTheme.NoActionBar" />

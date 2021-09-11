@@ -16,7 +16,7 @@ public class GetMenuResponseJson {
     private int statusCode;
 
     @Expose
-    @SerializedName("data_menu")
+    @SerializedName("data")
     private List<Menus> menusList;
 
     public String getMsg() {

@@ -34,6 +34,7 @@ import com.postku.app.adapter.KategoriAdapter;
 import com.postku.app.fragment.product.kategori.KategoriFragment;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.PostMenuResponse;
@@ -157,9 +158,6 @@ public class ManageMenuActivity extends AppCompatActivity {
                     edtModal.setError(context.getString(R.string.error_empty));
                     edtModal.requestFocus();
                     return;
-                }else if(imageFileMenu == null){
-                    DHelper.pesan(context, "Gambar menu harap ditambahkan");
-                    return;
                 }
 
                 if(getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
@@ -240,12 +238,14 @@ public class ManageMenuActivity extends AppCompatActivity {
                         edtDeskripsi.setText(menus.getDescription().toString());
                         edtHarga.setText(DHelper.toformatRupiah(String.valueOf(menus.getHarga())));
                         edtModal.setText(DHelper.toformatRupiah(String.valueOf(menus.getHargaModal())));
-
+                        imageView.setDrawingCacheEnabled(true);
                         Glide.with(context)
                                 .load(menus.getImage())
                                 .placeholder(R.drawable.image_placeholder)
                                 .into(imageView);
                         selectKategori.setText(menus.getKategori());
+                        Bitmap bitmap = imageView.getDrawingCache();
+                        imageFileMenu = DHelper.createTempFile(context, bitmap);
                     }
                 }
             }
@@ -271,8 +271,12 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("is_active", createPartFromString("1"));
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileMenu);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("menu_pic", imageFileMenu.getName(), reqFile);
+        MultipartBody.Part body = null;
+        if(imageFileMenu !=null){
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileMenu);
+            body = MultipartBody.Part.createFormData("menu_pic", imageFileMenu.getName(), reqFile);
+        }
+
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.addMenu(body, map).enqueue(new Callback<PostMenuResponse>() {
             @Override
@@ -280,6 +284,9 @@ public class ManageMenuActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatus() == 201){
                         DHelper.pesan(context, response.body().getMessage());
+                        if(aSwitch.isChecked()){
+                            activeStock(String.valueOf(response.body().getMenus().getId()));
+                        }
                         finish();
                     }
                 }
@@ -301,24 +308,51 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori_id", createPartFromString(String.valueOf(idKategori)));
+        map.put("kategori", createPartFromString(String.valueOf(idKategori)));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileMenu);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("menu_pic", imageFileMenu.getName(), reqFile);
+        MultipartBody.Part body = null;
+        if(imageFileMenu !=null){
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileMenu);
+            body = MultipartBody.Part.createFormData("menu_pic", imageFileMenu.getName(), reqFile);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.editMenu(body, map).enqueue(new Callback<PostMenuResponse>() {
             @Override
             public void onResponse(Call<PostMenuResponse> call, Response<PostMenuResponse> response) {
                 if(response.isSuccessful()){
                     DHelper.pesan(context, "Success");
+                    if(aSwitch.isChecked()){
+                        activeStock(id);
+                    }
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<PostMenuResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void activeStock(String id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("menu", createPartFromString(id));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.activeStock(map).enqueue(new Callback<ActiveStockResponse>() {
+            @Override
+            public void onResponse(Call<ActiveStockResponse> call, Response<ActiveStockResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatus() == 200);{
+                        Log.e(TAG, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActiveStockResponse> call, Throwable t) {
 
             }
         });
@@ -338,6 +372,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             if(requestCode == Constants.CAMERA_PROFILE_REQUEST){
                 Log.e(TAG, "sini");
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                imageView.destroyDrawingCache();
                 imageView.setImageBitmap(bitmap);
                 imageFileMenu = DHelper.createTempFile(context, bitmap);
             }else if(requestCode == Constants.GALERY_PROFILE_REQUEST){
@@ -347,6 +382,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                     Uri contentUri = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                        imageView.destroyDrawingCache();
                         imageView.setImageBitmap(bitmap);
                         imageFileMenu = DHelper.createTempFile(context, bitmap);
 
