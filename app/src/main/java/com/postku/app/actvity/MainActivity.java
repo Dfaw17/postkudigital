@@ -8,9 +8,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -89,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(getIntent().getStringExtra(Constants.METHOD) != null){
+            toolbar.setTitle("Kasir");
             loadFragment(new PosFragment());
         }else {
+            toolbar.setTitle("Beranda");
             loadFragment(new HomeFragment());
         }
 
@@ -160,5 +165,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 1) {
+            // If there are back-stack entries, leave the FragmentActivity
+            // implementation take care of them.
+            manager.popBackStack();
+//            layout.setVisibility(View.VISIBLE);
+        } else {
+            // Otherwise, ask user if he wants to leave :)
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Konfirmasi?")
+                    .setMessage("Apakah yakin akan keluar aplikasi?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            // MainActivity.super.onBackPressed();
+                            finish();
+                            moveTaskToBack(true);
+                        }
+                    }).create().show();
+        }
     }
 }

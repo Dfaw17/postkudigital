@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -52,6 +53,8 @@ public class PaymentActivity extends AppCompatActivity {
     private RadioButton rbTunai, rbQris;
     private int metode = 1;
     private ProgressBar progressBar;
+    private ImageView backButton;
+    private TextView caption;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,17 @@ public class PaymentActivity extends AppCompatActivity {
         rbTunai = findViewById(R.id.rbTunai);
         rbQris = findViewById(R.id.rbQris);
         progressBar = findViewById(R.id.progressBar);
+        backButton = findViewById(R.id.back_button);
+        caption = findViewById(R.id.text_caption);
+
+        caption.setText("Detail Pembayaran");
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         tagihan = getIntent().getDoubleExtra(Constants.ADD, 0);
         totalTagihan.setText(DHelper.formatRupiah(tagihan));
@@ -231,8 +245,12 @@ public class PaymentActivity extends AppCompatActivity {
                     DHelper.pesan(context, "Pembayaran kurang");
                     return;
                 }
+                if(metode == 1){
+                    pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
+                }else{
+                    payQris(getIntent().getStringExtra(Constants.NAMA), inputNumber);
+                }
 
-                pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
             }
         });
 
@@ -253,17 +271,12 @@ public class PaymentActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 201){
-                        if(metode == 1){
-                            Intent intent = new Intent(context, ResultTransactionActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
-                            startActivity(intent);
-                            finish();
-                        }else {
-                            payQris(response.body().getTransaction().getReffCode(), inputNumber);
-                        }
-
+                        Intent intent = new Intent(context, ResultTransactionActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
+                        startActivity(intent);
+                        finish();
                     }else {
                         DHelper.pesan(context, response.body().getMessage());
                     }
@@ -295,7 +308,8 @@ public class PaymentActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, QrisActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra(Constants.ID, invoice);
+                        intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID,0));
+                        intent.putExtra(Constants.NAMA, invoice);
                         startActivity(intent);
                         finish();
                     }else {

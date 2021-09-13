@@ -73,6 +73,10 @@ public interface UserService {
     Call<CreateTokoResponse> detailToko(@Path("id") String id);
 
     @Multipart
+    @PUT("toko")
+    Call<InsertItemResponse> deleteToko(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
     @POST("token/login")
     Call<LoginResponseJson> login (@Part("username") RequestBody username,
                                    @Part("password") RequestBody password);
@@ -142,17 +146,15 @@ public interface UserService {
     @PATCH("cart")
     Call<CreateCartResponse> simpanCart(@PartMap Map<String, RequestBody> text);
 
-    @Multipart
     @DELETE("cart")
-    Call<InsertItemResponse> deleteCart(@PartMap Map<String, RequestBody> text);
+    Call<InsertItemResponse> deleteCart(@Query("id_cart") String id);
 
     @Multipart
     @POST("cartitem")
     Call<InsertItemResponse> addItem(@PartMap Map<String, RequestBody> text);
 
-    @Multipart
     @DELETE("cartitem")
-    Call<InsertItemResponse> deleteItem(@PartMap Map<String, RequestBody> text);
+    Call<InsertItemResponse> deleteItem(@Query("id_cart_item") String id);
 
     @Multipart
     @PATCH("cartitem")

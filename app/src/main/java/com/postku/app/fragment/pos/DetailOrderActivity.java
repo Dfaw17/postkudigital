@@ -66,6 +66,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private ProgressBar progressBar;
     double totalTagihan;
     public int quantity=0;
+    private String invoice="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +118,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 Intent intent = new Intent(context, PaymentActivity.class);
                 intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID, 0));
                 intent.putExtra(Constants.ADD, totalTagihan);
+                intent.putExtra(Constants.NAMA, invoice);
                 startActivity(intent);
             }
         });
@@ -266,6 +268,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                         totalItems.setText(response.body().getJmlItem() + " Items");
                         Cart cart = new Cart();
                         cart = response.body().getCart();
+                        invoice = cart.getCode();
                         subTotal.setText(DHelper.formatRupiah(cart.getTotalPrice()));
                         grandTotal.setText(DHelper.formatRupiah(cart.getGrandTotal()));
                         totalTagihan = Math.round(cart.getGrandTotal());
@@ -312,10 +315,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     }
 
     private void deleteMenuItem(int id){
-        HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("id_cart_item", createPartFromString(String.valueOf(id)));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.deleteItem(map).enqueue(new Callback<InsertItemResponse>() {
+        service.deleteItem(String.valueOf(id)).enqueue(new Callback<InsertItemResponse>() {
             @Override
             public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                 if(response.isSuccessful()){

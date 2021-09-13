@@ -80,11 +80,14 @@ public class StockFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 0){
-                    adapter.getFilter().filter("");
-                }else {
-                    adapter.getFilter().filter(s.toString());
+                if(adapter != null){
+                    if(s.length() == 0){
+                        adapter.getFilter().filter("");
+                    }else {
+                        adapter.getFilter().filter(s.toString());
+                    }
                 }
+
             }
         });
 

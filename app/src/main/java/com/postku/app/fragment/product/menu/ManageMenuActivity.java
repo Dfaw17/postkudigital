@@ -266,7 +266,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori_id", createPartFromString(String.valueOf(idKategori)));
+        map.put("kategori", createPartFromString(String.valueOf(idKategori)));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
@@ -286,8 +286,11 @@ public class ManageMenuActivity extends AppCompatActivity {
                         DHelper.pesan(context, response.body().getMessage());
                         if(aSwitch.isChecked()){
                             activeStock(String.valueOf(response.body().getMenus().getId()));
+                            finish();
+                        }else{
+                            finish();
                         }
-                        finish();
+
                     }
                 }
             }
@@ -325,8 +328,10 @@ public class ManageMenuActivity extends AppCompatActivity {
                     DHelper.pesan(context, "Success");
                     if(aSwitch.isChecked()){
                         activeStock(id);
+                    }else{
+                        finish();
                     }
-                    finish();
+
                 }
             }
 

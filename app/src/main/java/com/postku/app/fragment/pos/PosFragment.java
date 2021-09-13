@@ -142,6 +142,20 @@ public class PosFragment extends Fragment {
                             viewPager.setOffscreenPageLimit(1);
                             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+                        }else{
+                            Kategori kategori = new Kategori();
+                            kategori.setId(0);
+                            kategori.setActive(true);
+                            kategori.setLabel("All");
+                            kategori.setToko(Integer.parseInt(sessionManager.getIdToko()));
+                            kategoriList.add(kategori);
+                            adapter = new CategoryTabAdapter(getChildFragmentManager(), kategoriList);
+                            for(int i=0;i < kategoriList.size();i++){
+                                tabLayout.addTab(tabLayout.newTab().setText(kategoriList.get(i).getLabel()));
+                            }
+                            viewPager.setAdapter(adapter);
+                            viewPager.setOffscreenPageLimit(1);
+                            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
                         }
                     }else {
                         DHelper.pesan(context, response.body().getMsg());

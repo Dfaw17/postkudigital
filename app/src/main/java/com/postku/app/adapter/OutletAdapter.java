@@ -48,6 +48,13 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.VH> {
             }
         });
 
+        holder.check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemCheckChange(v);
+            }
+        });
+
         if(holder.check.isChecked()){
             holder.item.setBackground(context.getResources().getDrawable(R.drawable.custom_button_outline));
             holder.nama.setTextColor(context.getResources().getColor(R.color.colorPrimary));

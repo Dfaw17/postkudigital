@@ -37,6 +37,7 @@ import com.postku.app.json.GetDesaResponse;
 import com.postku.app.json.GetKecamatanResponse;
 import com.postku.app.json.GetKotaResponse;
 import com.postku.app.json.GetProvinsiResponse;
+import com.postku.app.json.InsertItemResponse;
 import com.postku.app.json.PostMenuResponse;
 import com.postku.app.models.Menus;
 import com.postku.app.models.Toko;
@@ -73,7 +74,7 @@ public class DetailTokoActivity extends AppCompatActivity {
     private User user;
     private ImageView backButton, imgToko;
     private Button submit;
-    private TextView caption;
+    private TextView caption, delete;
     private EditText edtNamaToko, edtAlamatToko;
     private AutoCompleteTextView selectKategori, selectProvinsi, selectKota, selectKecamata, selectDesa;
     String[] listCategory;
@@ -113,14 +114,33 @@ public class DetailTokoActivity extends AppCompatActivity {
         imgToko = findViewById(R.id.img_toko);
         submit = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
+        delete = findViewById(R.id.text_delete);
 
         if(getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
             caption.setText("Tambah Toko");
+            delete.setVisibility(View.GONE);
         }else {
             caption.setText("Edit Toko");
+            delete.setVisibility(View.VISIBLE);
             id = getIntent().getIntExtra(Constants.ID, 0);
             detail(String.valueOf(id));
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteToko(String.valueOf(id));
+                }
+            });
         }
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
 
         listCategory = getResources().getStringArray(R.array.shop_category);
         ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listCategory);
@@ -398,7 +418,8 @@ public class DetailTokoActivity extends AppCompatActivity {
             public void onResponse(Call<CreateTokoResponse> call, Response<CreateTokoResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
-                    Log.e(TAG, response.body().getMsg());
+                    DHelper.pesan(context, response.body().getMsg());
+                    finish();
                 }else {
                     Log.e(TAG, response.body().getMsg());
                 }
@@ -449,6 +470,30 @@ public class DetailTokoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CreateTokoResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteToko(String id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_toko", createPartFromString(id));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteToko(map).enqueue(new Callback<InsertItemResponse>() {
+            @Override
+            public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        DHelper.pesan(context, response.body().getMessage());
+                        finish();
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InsertItemResponse> call, Throwable t) {
 
             }
         });
@@ -515,5 +560,11 @@ public class DetailTokoActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

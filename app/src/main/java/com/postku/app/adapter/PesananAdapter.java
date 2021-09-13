@@ -40,7 +40,11 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.VH> {
     @Override
     public void onBindViewHolder(@NotNull VH holder, int position) {
         final Cart cart = cartList.get(position);
-        holder.invoice.setText(cart.getCode().toString());
+        if(cart.getNama() != null){
+            holder.invoice.setText(cart.getNama().toString());
+        }else {
+            holder.invoice.setText(cart.getCode().toString());
+        }
         double total = Math.round(cart.getGrandTotal());
         holder.total.setText(DHelper.formatRupiah(total));
         holder.tanggal.setText(DHelper.strTodatetime(cart.getCreatedAt()));

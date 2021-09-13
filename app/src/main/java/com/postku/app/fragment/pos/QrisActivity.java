@@ -1,5 +1,6 @@
 package com.postku.app.fragment.pos;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -20,22 +21,30 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.CallbackQrisResponse;
 import com.postku.app.json.CreateQrisResponse;
+import com.postku.app.json.TransactionResponse;
+import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
+import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.postku.app.helpers.Constants.TAG;
 
 public class QrisActivity extends AppCompatActivity {
     private Context context;
@@ -44,12 +53,17 @@ public class QrisActivity extends AppCompatActivity {
     private ImageView backButton, imgQr;
     private String nominal;
     private static final String FORMAT = "%02d:%02d";
+    private CountDownTimer countDownTimer;
+    private User user;
+    private int idCart;
+    private String reffCode="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qris);
         context = this;
         sessionManager = new SessionManager(context);
+        user = BaseApp.getInstance(context).getLoginUser();
         caption = findViewById(R.id.text_caption);
         invoice = findViewById(R.id.text_invoice);
         amount = findViewById(R.id.text_amount);
@@ -57,8 +71,9 @@ public class QrisActivity extends AppCompatActivity {
         imgQr = findViewById(R.id.img_qrcode);
         textTimer = findViewById(R.id.text_timer);
 
-
         caption.setText("QRIS");
+        idCart = getIntent().getIntExtra(Constants.ID, 0);
+        reffCode = getIntent().getStringExtra(Constants.NAMA);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +81,7 @@ public class QrisActivity extends AppCompatActivity {
             }
         });
 
-        showData(getIntent().getStringExtra(Constants.ID));
+        showData(reffCode);
     }
 
     private void showData(String code){
@@ -123,6 +138,7 @@ public class QrisActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+                countDownTimer.cancel();
                 finish();
             }
         });
@@ -145,12 +161,8 @@ public class QrisActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         if(response.body().getData().getStatus().equalsIgnoreCase("COMPLETED")){
-                            Intent intent = new Intent(context, ResultTransactionActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra(Constants.ID, code);
-                            startActivity(intent);
-                            finish();
+                            countDownTimer.cancel();
+                            pay(idCart, amount);
                         }
                     }
                 }
@@ -163,8 +175,47 @@ public class QrisActivity extends AppCompatActivity {
         });
     }
 
+    private void pay(int idCart, String amount){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("cart", createPartFromString(String.valueOf(idCart)));
+        map.put("payment_type", createPartFromString("2"));
+        map.put("uang_bayar", createPartFromString(amount));
+        map.put("pegawai", createPartFromString(user.getId()));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.createTransaction(map).enqueue(new Callback<TransactionResponse>() {
+            @Override
+            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        Intent intent = new Intent(context, ResultTransactionActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
+    }
+
     private void startTimer(){
-        new CountDownTimer(180000, 1000) {
+        countDownTimer = new CountDownTimer(180000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 textTimer.setVisibility(View.VISIBLE);
@@ -187,7 +238,8 @@ public class QrisActivity extends AppCompatActivity {
                 imgQr.setImageDrawable(context.getDrawable(R.drawable.img_qrreload));
                 textTimer.setVisibility(View.GONE);
             }
-        }.start();
+        };
+        countDownTimer.start();
     }
 
     @Override
