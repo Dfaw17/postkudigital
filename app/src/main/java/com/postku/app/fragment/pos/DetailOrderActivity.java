@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.postku.app.BaseApp;
 import com.postku.app.R;
+import com.postku.app.actvity.MainActivity;
 import com.postku.app.adapter.ItemCartAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
@@ -130,7 +131,16 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             }
         });
 
+        deleteCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCart(getIntent().getIntExtra(Constants.ID, 0));
+            }
+        });
+
         detail(getIntent().getIntExtra(Constants.ID, 0));
+
+
     }
 
     private void simpanCart(int id, String label) {
@@ -323,6 +333,32 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                     if(response.body().getStatusCode() == 200){
                         DHelper.pesan(context, response.body().getMessage());
                         detail(getIntent().getIntExtra(Constants.ID, 0));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InsertItemResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteCart(int id){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteCart(String.valueOf(id)).enqueue(new Callback<InsertItemResponse>() {
+            @Override
+            public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        DHelper.pesan(context, response.body().getMessage());
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(Constants.METHOD, Constants.RESET);
+                        sessionManager.deleteCart();
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }

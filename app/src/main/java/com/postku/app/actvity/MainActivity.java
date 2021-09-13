@@ -90,16 +90,6 @@ public class MainActivity extends AppCompatActivity {
         }
         textNamaToko.setText(sessionManager.getNamaToko());
 
-
-        if(getIntent().getStringExtra(Constants.METHOD) != null){
-            toolbar.setTitle("Kasir");
-            loadFragment(new PosFragment());
-        }else {
-            toolbar.setTitle("Beranda");
-            loadFragment(new HomeFragment());
-        }
-
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -148,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        if(getIntent().getStringExtra(Constants.METHOD) != null){
+            toolbar.setTitle("Kasir");
+            loadFragment(new PosFragment());
+        }else {
+            toolbar.setTitle("Beranda");
+            loadFragment(new HomeFragment());
+        }
+
     }
 
     public void loadFragment(Fragment fragment) {

@@ -558,7 +558,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
+                android:clickable="true"
                 android:fontFamily="@font/poppins_medium"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="Hapus pesanan"
                 android:textColor="@color/colorPrimary" />
 

@@ -5,14 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Kelurahan implements Serializable {
+public class Reference implements Serializable {
     @Expose
     @SerializedName("id")
     private String id;
-
-    @Expose
-    @SerializedName("id_kecamatan")
-    private String idKecamatan;
 
     @Expose
     @SerializedName("nama")
@@ -24,14 +20,6 @@ public class Kelurahan implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getIdKecamatan() {
-        return idKecamatan;
-    }
-
-    public void setIdKecamatan(String idKecamatan) {
-        this.idKecamatan = idKecamatan;
     }
 
     public String getNama() {

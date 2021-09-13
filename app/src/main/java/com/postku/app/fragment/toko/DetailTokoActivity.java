@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
@@ -29,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.RegisterActivity;
+import com.postku.app.fragment.ReferenceFragment;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.CreateTokoResponse;
@@ -68,7 +70,7 @@ import retrofit2.Response;
 
 import static com.postku.app.helpers.Constants.TAG;
 
-public class DetailTokoActivity extends AppCompatActivity {
+public class DetailTokoActivity extends AppCompatActivity implements ReferenceFragment.UpdateText {
     private Context context;
     private SessionManager sessionManager;
     private User user;
@@ -152,61 +154,52 @@ public class DetailTokoActivity extends AppCompatActivity {
             }
         });
 
-        getProvinsi();
+        final ReferenceFragment dialogFragment = new ReferenceFragment();
         selectProvinsi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listProvinsi.size() > 0){
-                    selectProvinsi.showDropDown();
-                }
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.PROVINSI);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
             }
         });
 
-        selectProvinsi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Provinsi p = provinsiList.get(position);
-                idProvinsi = p.getId();
-                Log.e("ID", idProvinsi + "");
-                getKotaKabupaten(String.valueOf(idProvinsi));
-            }
-        });
 
         selectKota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listKab.size() > 0){
-                    selectKota.showDropDown();
-                }
-            }
-        });
-
-        selectKota.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Kota k = kotaKabList.get(position);
-                idKota = k.getId();
-                Log.e("ID", idKota + "");
-                getKecamatan(String.valueOf(idKota));
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.KABKOTA);
+                bundle.putInt(Constants.ID, idProvinsi);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
             }
         });
 
         selectKecamata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listKecamatan.size() > 0){
-                    selectKecamata.showDropDown();
-                }
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.KECAMATAN);
+                bundle.putInt(Constants.ID, idKota);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
             }
         });
 
-        selectKecamata.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        selectDesa.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Kecamatan k = kecamatanList.get(position);
-                idKecamatan = k.getId();
-                Log.e("ID", idKecamatan + "");
-                getKelurahan(String.valueOf(idKecamatan));
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.KELURAHAN);
+                bundle.putInt(Constants.ID, idKecamatan);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
             }
         });
 
@@ -566,5 +559,21 @@ public class DetailTokoActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void updateResult(String id, String nama, String metode) {
+        if(metode.equalsIgnoreCase(Constants.PROVINSI)){
+            selectProvinsi.setText(nama);
+            idProvinsi = Integer.parseInt(id);
+        }else if(metode.equalsIgnoreCase(Constants.KABKOTA)){
+            selectKota.setText(nama);
+            idKota = Integer.parseInt(id);
+        }else if(metode.equalsIgnoreCase(Constants.KECAMATAN)){
+            selectKecamata.setText(nama);
+            idKecamatan = Integer.parseInt(id);
+        }else if(metode.equalsIgnoreCase(Constants.KELURAHAN)){
+            selectDesa.setText(nama);
+        }
     }
 }

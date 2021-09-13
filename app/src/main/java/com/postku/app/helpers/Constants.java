@@ -25,6 +25,10 @@ public class Constants {
     public static String EDIT = "edit";
     public static String BANNER = "Detail Banner";
     public static String ARTICLE = "Detail Article";
+    public static String PROVINSI = "provinsi";
+    public static String KABKOTA = "kabkota";
+    public static String KECAMATAN = "kecamatan";
+    public static String KELURAHAN = "kelurahan";
     public static int CAMERTA_REQUEST = 122;
     public static int GALERY_REQUEST = 123;
     public static int PERMISSION_CAMERA_CODE = 786;
