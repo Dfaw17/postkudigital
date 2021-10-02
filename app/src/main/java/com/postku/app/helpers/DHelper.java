@@ -138,6 +138,11 @@ public class DHelper {
         return df.format(data);
     }
 
+    public static String strToSimpleDate(Date data) {
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        return df.format(data);
+    }
+
     public static boolean isBatasUsia(String etText, int batas) {
 //        String a = etText.getText().toString();
 

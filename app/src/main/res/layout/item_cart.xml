@@ -11,6 +11,7 @@
     android:paddingEnd="10dp">
 
     <LinearLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -65,7 +66,7 @@
             android:id="@+id/img_delete"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_deleted" />
     </LinearLayout>
 
@@ -73,7 +74,7 @@
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_below="@id/lbutton"
-        android:layout_marginTop="10dp"
+        android:layout_below="@id/content"
+        android:layout_marginTop="20dp"
         android:background="@color/colorGrey" />
 </RelativeLayout>

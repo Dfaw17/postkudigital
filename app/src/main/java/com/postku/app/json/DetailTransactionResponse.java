@@ -28,7 +28,7 @@ public class DetailTransactionResponse {
     private Cart cart;
 
     @Expose
-    @SerializedName("data_cart_item")
+    @SerializedName("data_cart_items")
     private List<ItemCart> itemCarts;
 
     @Expose

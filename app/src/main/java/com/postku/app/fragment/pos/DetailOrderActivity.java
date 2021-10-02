@@ -284,7 +284,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                         totalTagihan = Math.round(cart.getGrandTotal());
 
                         if(response.body().getItemCartList().size() > 0){
-                            adapter = new ItemCartAdapter(context, response.body().getItemCartList(), DetailOrderActivity.this::onItemClick);
+                            adapter = new ItemCartAdapter(context, response.body().getItemCartList(), DetailOrderActivity.this::onItemClick, true);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setVisibility(View.VISIBLE);
                         }else {

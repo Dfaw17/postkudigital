@@ -1,11 +1,14 @@
 package com.postku.app.fragment.pos;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,7 +53,7 @@ import retrofit2.Response;
 
 import static com.postku.app.helpers.Constants.TAG;
 
-public class ListProdukFragment extends Fragment implements OnItemClickListener {
+public class ListProdukFragment extends Fragment implements OnItemClickListener, SelectTable.UpdateText {
     private Context context;
     private SessionManager sessionManager;
     private User user;
@@ -63,6 +66,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
     private TextView qty, total;
     private ImageView imgTable, imgList;
     int idCart = 0;
+    int idTable = 0;
     private List<ItemCart> itemCartList = new ArrayList<>();
     public ListProdukFragment() {
         // Required empty public constructor
@@ -105,6 +109,18 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
                 Intent intent = new Intent(context, PesananActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+            }
+        });
+
+        final SelectTable dialogFragment = new SelectTable();
+        imgTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getChildFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.PROVINSI);
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
             }
         });
 
@@ -339,5 +355,11 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener 
 
             }
         });
+    }
+
+    @Override
+    public void updateResult(String id, String nama) {
+        idTable = Integer.parseInt(id);
+        Log.e(TAG, "Meja:" + nama);
     }
 }

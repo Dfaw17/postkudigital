@@ -8,9 +8,13 @@
     <color name="colorPrimaryBold">#FF8B00</color>
     <color name="colorGreen2">#1CA119</color>
     <color name="colorGrey">#B3C4C4C4</color>
-    <color name="colorLightGrey">#DCDCDC</color>
+    <color name="colorLightGrey">#ECECEC</color>
     <color name="colorRed">#FF0051</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#99000000</color>
+    <color name="colorBlack">#BF000000</color>
     <color name="colorBlue">#03A9F4</color>
+    <color name="colorRedSoft">#FF9D9D</color>
+    <color name="colorGreenSoft">#64F961</color>
+    <color name="colorYellowSoft">#FAEC78</color>
+    <color name="colorBlueSoft">#31FFFF</color>
 </resources>

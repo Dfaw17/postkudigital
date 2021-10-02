@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
+import com.postku.app.actvity.plus.PostkuPlusActivity;
 import com.postku.app.fragment.HomeFragment;
 import com.postku.app.fragment.absensi.AbsensiFragment;
 import com.postku.app.fragment.customer.CustomerFragment;
@@ -63,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, navigationView, false);
         navigationView.addHeaderView(headerView);
+
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PostkuPlusActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         toolbar = findViewById(R.id.toolbar);

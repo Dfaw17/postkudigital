@@ -61,6 +61,9 @@ public class SelectOutletActivity extends AppCompatActivity {
                 if(adapter.getSelectedItem() > 0){
                     sessionManager.setIdToko(String.valueOf(adapter.getSelectedItem()));
                     sessionManager.setNamaToko(adapter.getNamaToko());
+                    sessionManager.setAlamatToko(adapter.getAlamatToko());
+                    sessionManager.setLogoToko(adapter.getLogoToko());
+                    sessionManager.setKategoriToko(adapter.getKategoriToko());
                     Intent intent = new Intent(context, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -89,16 +92,20 @@ public class SelectOutletActivity extends AppCompatActivity {
                     if(response.body().getStatusCode().equalsIgnoreCase("200")){
                         if(response.body().getTokoList().isEmpty()){
                             recyclerView.setVisibility(View.GONE);
+                            selectOutlet.setVisibility(View.GONE);
                         }else {
                             recyclerView.setVisibility(View.VISIBLE);
                             adapter = new OutletAdapter(context, response.body().getTokoList());
                             recyclerView.setAdapter(adapter);
+                            selectOutlet.setVisibility(View.VISIBLE);
                         }
                     }else {
                         DHelper.pesan(context, response.body().getMsg());
+                        selectOutlet.setVisibility(View.GONE);
                     }
                 }else {
                     DHelper.pesan(context, context.getString(R.string.error_server));
+                    selectOutlet.setVisibility(View.GONE);
                 }
             }
 
@@ -106,6 +113,7 @@ public class SelectOutletActivity extends AppCompatActivity {
             public void onFailure(Call<GetOutletResponseJson> call, Throwable t) {
                 t.printStackTrace();
                 Log.e(Constants.TAG, t.getMessage());
+                selectOutlet.setVisibility(View.GONE);
             }
         });
     }

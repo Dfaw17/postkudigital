@@ -54,6 +54,7 @@
             android:text="Pilih Toko"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

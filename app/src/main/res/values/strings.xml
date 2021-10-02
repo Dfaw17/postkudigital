@@ -49,4 +49,11 @@
         <item>Toko Lainnya</item>
     </string-array>
 
+    <string-array name="trx_stock">
+        <item>Pilih Transaksi</item>
+        <item>Penambahan</item>
+        <item>Pengurangan</item>
+        <item>Reset Stock</item>
+    </string-array>
+
 </resources>

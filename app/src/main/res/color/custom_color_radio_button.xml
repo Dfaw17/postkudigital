@@ -8,6 +8,6 @@
         android:color="@color/colorWhite"
         />
     <item
-        android:color="@color/colorPrimary"
+        android:color="@color/colorWhite"
         />
 </selector>

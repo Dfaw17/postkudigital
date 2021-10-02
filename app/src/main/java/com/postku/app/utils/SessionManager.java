@@ -12,6 +12,9 @@ public class SessionManager {
     private static final String TOKEN = "token";
     private static final String ID_TOKO = "idToko";
     private static final String NAMA_TOKO = "namaToko";
+    private static final String ALAMAT_TOKO = "alamatToko";
+    private static final String LOGO_TOKO = "logoToko";
+    private static final String KATEGORI_TOKO = "kategoriToko";
     private static final String ACTIVE_CART = "activeCart";
     private static final String IS_CART_ACTIVE = "isCartActive";
 
@@ -92,5 +95,32 @@ public class SessionManager {
     public void setNamaToko(String s){
         editor.putString(NAMA_TOKO, s);
         editor.commit();
+    }
+
+    public void setAlamatToko(String s){
+        editor.putString(ALAMAT_TOKO, s);
+        editor.commit();
+    }
+
+    public String getAlamatToko(){
+        return sharedPref.getString(ALAMAT_TOKO, "");
+    }
+
+    public void setKategoriToko(String s){
+        editor.putString(KATEGORI_TOKO, s);
+        editor.commit();
+    }
+
+    public String getKategoriToko(){
+        return sharedPref.getString(KATEGORI_TOKO, "");
+    }
+
+    public void setLogoToko(String s){
+        editor.putString(LOGO_TOKO, s);
+        editor.commit();
+    }
+
+    public String getLogoToko(){
+        return sharedPref.getString(LOGO_TOKO, "");
     }
 }

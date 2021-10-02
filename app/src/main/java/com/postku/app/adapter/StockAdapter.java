@@ -82,6 +82,8 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.VH> implemen
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailStockActivity.class);
                 intent.putExtra(Constants.ID, stock.getId());
+                intent.putExtra(Constants.NAMA, stock.getNama());
+                intent.putExtra(Constants.METHOD, stock.getCurrentStock());
                 context.startActivity(intent);
             }
         });

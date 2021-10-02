@@ -110,5 +110,29 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.VH> {
         }
         return "";
     }
+
+    public String getAlamatToko(){
+        if (lastSelectedPosition >= 0) {
+            Toko v = tokoList.get(lastSelectedPosition);
+            return v.getAlamat();
+        }
+        return "";
+    }
+
+    public String getLogoToko(){
+        if (lastSelectedPosition >= 0) {
+            Toko v = tokoList.get(lastSelectedPosition);
+            return v.getLogo();
+        }
+        return "";
+    }
+
+    public String getKategoriToko(){
+        if (lastSelectedPosition >= 0) {
+            Toko v = tokoList.get(lastSelectedPosition);
+            return v.getKategori();
+        }
+        return "";
+    }
 }
 

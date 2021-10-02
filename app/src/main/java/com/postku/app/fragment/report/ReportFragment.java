@@ -1,66 +1,167 @@
 package com.postku.app.fragment.report;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate;
+import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions;
+import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker;
+import com.bumptech.glide.Glide;
 import com.postku.app.R;
+import com.postku.app.adapter.HistoryTransAdapter;
+import com.postku.app.helpers.DHelper;
+import com.postku.app.json.GetHistoryTransResponse;
+import com.postku.app.json.GetReportResponseJson;
+import com.postku.app.models.User;
+import com.postku.app.services.ServiceGenerator;
+import com.postku.app.services.api.UserService;
+import com.postku.app.utils.DateRangePickerFragement;
+import com.postku.app.utils.SessionManager;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ReportFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ReportFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private Context context;
+    private SessionManager sessionManager;
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatDate = new SimpleDateFormat("dd MMMM yyyy");
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+    private RelativeLayout rlranking;
+    private CircleImageView circleImageView;
+    private RelativeLayout selectDate;
+    private TextView textDateCompleted, textNamaToko, textKotor, textPajak, textServiceFee,
+    textDiskon, textCanceled, textTotalItems, textHpp, textLabaRugi;
+    private String date1, date2, dateStart, dateEnd;
+    private Calendar calendar;
     public ReportFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ReportFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ReportFragment newInstance(String param1, String param2) {
-        ReportFragment fragment = new ReportFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_report, container, false);
+        context = getActivity();
+        sessionManager = new SessionManager(context);
+        calendar = Calendar.getInstance();
+
+        rlranking = view.findViewById(R.id.rlranking);
+        circleImageView = view.findViewById(R.id.userphoto);
+        selectDate = view.findViewById(R.id.rldate);
+        textDateCompleted = view.findViewById(R.id.text_date);
+        textNamaToko = view.findViewById(R.id.text_toko);
+        textKotor = view.findViewById(R.id.text_kotor);
+        textPajak = view.findViewById(R.id.text_pajak);
+        textServiceFee = view.findViewById(R.id.text_service_fee);
+        textDiskon = view.findViewById(R.id.text_diskon);
+        textCanceled = view.findViewById(R.id.text_cancel);
+        textHpp = view.findViewById(R.id.text_hpp);
+        textTotalItems = view.findViewById(R.id.text_total_item);
+        textLabaRugi = view.findViewById(R.id.text_labarugi);
+
+        textNamaToko.setText(sessionManager.getNamaToko());
+        Glide.with(context)
+                .load(sessionManager.getLogoToko())
+                .placeholder(R.drawable.image_placeholder)
+                .into(circleImageView);
+
+//        set data
+        date1 = formater.format(calendar.getTime());
+        date2 = formater.format(calendar.getTime());
+        dateStart = formatDate.format(calendar.getTime());
+        dateEnd = formatDate.format(calendar.getTime());
+
+        getData(date1, date2);
+
+        selectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectDateRange();
+            }
+        });
+
+        rlranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReportRankingActivity.class);
+                startActivity(intent);
+            }
+        });
+        return view;
+    }
+
+    private void selectDateRange(){
+        DateRangePickerFragement pickerFragement = new DateRangePickerFragement();
+        pickerFragement.setCallback(new DateRangePickerFragement.Callback() {
+            @Override
+            public void onCancelled() {
+
+            }
+
+            @Override
+            public void onDateTimeRecurrenceSet(SelectedDate selectedDate, int hourOfDay, int minute, SublimeRecurrencePicker.RecurrenceOption recurrenceOption, String recurrenceRule) {
+                date1 = formater.format(selectedDate.getStartDate().getTime());
+                date2 = formater.format(selectedDate.getEndDate().getTime());
+                dateStart = formatDate.format(selectedDate.getStartDate().getTime());
+                dateEnd = formatDate.format(selectedDate.getEndDate().getTime());
+                textDateCompleted.setText(dateStart + " - " + dateEnd);
+                getData(date1, date2);
+
+            }
+        });
+
+        SublimeOptions options = new SublimeOptions();
+        options.setCanPickDateRange(true);
+        options.setPickerToShow(SublimeOptions.Picker.DATE_PICKER);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("SUBLIME_OPTIONS", options);
+        pickerFragement.setArguments(bundle);
+        pickerFragement.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        pickerFragement.show(getChildFragmentManager(), "SUBLIME_PICKER");
+    }
+
+    private void getData(String mDate1, String mDate2){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.laporan(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<GetReportResponseJson>() {
+            @Override
+            public void onResponse(Call<GetReportResponseJson> call, Response<GetReportResponseJson> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getCode() == 200){
+                        textKotor.setText(DHelper.formatRupiah(response.body().getDataPenjualanKotor()));
+                        textPajak.setText(DHelper.formatRupiah(response.body().getDataPajak()));
+                        textServiceFee.setText(DHelper.formatRupiah(response.body().getDataServiceFee()));
+                        textDiskon.setText(DHelper.formatRupiah(response.body().getDataDiscount()));
+                        textCanceled.setText(DHelper.toformatRupiah(String.valueOf(response.body().getDataTotalItem())));
+                        textHpp.setText(DHelper.formatRupiah(response.body().getDataHpp()));
+                        textTotalItems.setText(DHelper.toformatRupiah(String.valueOf(response.body().getDataTotalItem())));
+                        textLabaRugi.setText(DHelper.formatRupiah(response.body().getDataLabaRugi()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetReportResponseJson> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

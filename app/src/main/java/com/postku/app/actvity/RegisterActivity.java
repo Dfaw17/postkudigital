@@ -455,7 +455,7 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
         map.put("phone", createPartFromString(edtPhone.getText().toString().trim()));
         map.put("address", createPartFromString(edtAlamat.getText().toString().trim()));
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("profil_pic", imageFileOwner.getName(), reqFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
         UserService service = ServiceGenerator.createService(UserService.class, token, null, null, null);
         service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
             @Override

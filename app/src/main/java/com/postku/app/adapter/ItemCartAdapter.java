@@ -25,11 +25,13 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
     private Context context;
     private List<ItemCart> itemCartList;
     private OnCartItemClickListener onItemClickListener;
+    private boolean isEditable;
 
-    public ItemCartAdapter(Context context, List<ItemCart> itemCartList, OnCartItemClickListener onItemClickListener){
+    public ItemCartAdapter(Context context, List<ItemCart> itemCartList, OnCartItemClickListener onItemClickListener, boolean isEditable){
         this.context = context;
         this.itemCartList = itemCartList;
         this.onItemClickListener = onItemClickListener;
+        this.isEditable = isEditable;
     }
 
     @NotNull
@@ -59,6 +61,14 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
                 onItemClickListener.onItemClick(itemCart.getId(), itemCart.getQty(), itemCart.getMenuName().getNama(), itemCart.getMenuName().getHarga(), 1);
             }
         });
+
+        if(isEditable){
+            holder.edit.setVisibility(View.VISIBLE);
+            holder.delete.setVisibility(View.VISIBLE);
+        }else {
+            holder.edit.setVisibility(View.GONE);
+            holder.delete.setVisibility(View.GONE);
+        }
 
     }
 

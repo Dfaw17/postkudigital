@@ -7,23 +7,35 @@ import com.postku.app.json.CallbackQrisResponse;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.CreateQrisResponse;
 import com.postku.app.json.CreateTokoResponse;
+import com.postku.app.json.CustomerPostResponseJson;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.json.GetCartResponse;
+import com.postku.app.json.GetCustomerResponseJson;
 import com.postku.app.json.GetDetailArtikelResponse;
 import com.postku.app.json.GetDetailBannerResponse;
 import com.postku.app.json.GetHistoryTransResponse;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
+import com.postku.app.json.GetPromoResponseJson;
+import com.postku.app.json.GetReportResponseJson;
+import com.postku.app.json.GetServiceResponseJson;
+import com.postku.app.json.GetTableResponse;
+import com.postku.app.json.GetTaxResponseJson;
 import com.postku.app.json.HomeResponseJson;
 import com.postku.app.json.InsertItemResponse;
 import com.postku.app.json.KategoriPostResponse;
 import com.postku.app.json.LoginResponseJson;
 import com.postku.app.json.PostMenuResponse;
+import com.postku.app.json.PromoPostResponseJson;
 import com.postku.app.json.RegisterResponseJson;
+import com.postku.app.json.ServicePostResponseJson;
 import com.postku.app.json.StockResponseJson;
+import com.postku.app.json.StockTrxResponse;
+import com.postku.app.json.TablePostResponse;
+import com.postku.app.json.TaxPostResponseJson;
 import com.postku.app.json.TransactionResponse;
 
 import java.util.Map;
@@ -48,17 +60,17 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserService {
+//    auth
     @FormUrlEncoded
     @POST("token/register")
     Call<RegisterResponseJson> createUser(@Field("username") String username,
                                           @Field("email") String email,
                                           @Field("password") String password);
-
     @Multipart
     @PUT("updateowner")
     Call<ResponseBody> updateOwner (@Part MultipartBody.Part image,
                                     @PartMap Map<String, RequestBody> text);
-
+//    toko
     @Multipart
     @POST("toko")
     Call<CreateTokoResponse> createToko (@Part MultipartBody.Part image,
@@ -80,13 +92,14 @@ public interface UserService {
     @POST("token/login")
     Call<LoginResponseJson> login (@Part("username") RequestBody username,
                                    @Part("password") RequestBody password);
-
+//    beranda
     @GET("beranda/{id}")
     Call<HomeResponseJson> home(@Path("id") String id);
 
     @GET("toko")
     Call<GetOutletResponseJson> getToko(@Query("id_owner") String id);
 
+//  menu
     @GET("menu")
     Call<GetMenuResponseJson> getMenu(@Query("id_toko") String id);
 
@@ -132,6 +145,10 @@ public interface UserService {
     @GET("stock")
     Call<StockResponseJson> stockList(@Query("id_toko") String id);
 
+    @GET("stock/trx")
+    Call<StockTrxResponse> historyStock(@Query("id_menu") String id);
+
+//    cart
     @GET("cart")
     Call<GetCartResponse> getCart(@Query("id_toko") String id);
 
@@ -172,6 +189,11 @@ public interface UserService {
     @GET("transaction/detail/{code}")
     Call<DetailTransactionResponse> detail(@Path("code") String code);
 
+    @GET("laporanbisnis")
+    Call<GetReportResponseJson> laporan(@Query("id_toko") String id,
+                                        @Query("date1") String date1,
+                                        @Query("date2") String date2);
+
     @Multipart
     @POST("qris")
     Call<CreateQrisResponse> payQithQris(@PartMap Map<String, RequestBody> text);
@@ -189,4 +211,78 @@ public interface UserService {
     @GET("articles/{id}")
     Call<GetDetailArtikelResponse> detailArtikel(@Path("id") String id);
 
+    @GET("table")
+    Call<GetTableResponse> getTable(@Query("id_toko") String id);
+
+    @Multipart
+    @POST("table")
+    Call<TablePostResponse> addTable(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PATCH("table")
+    Call<TablePostResponse> updTable(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("table")
+    Call<TablePostResponse> delTable(@PartMap Map<String, RequestBody> text);
+
+    @GET("discount")
+    Call<GetPromoResponseJson> getPromo(@Query("id_toko") String id);
+
+    @Multipart
+    @POST("discount")
+    Call<PromoPostResponseJson> addPromo(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PATCH("discount")
+    Call<PromoPostResponseJson> updPromo(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("discount")
+    Call<PromoPostResponseJson> delPromo(@PartMap Map<String, RequestBody> text);
+
+    @GET("pajak")
+    Call<GetTaxResponseJson> getPajak(@Query("id_toko") String id);
+
+    @Multipart
+    @POST("pajak")
+    Call<TaxPostResponseJson> addPajak(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PATCH("pajak")
+    Call<TaxPostResponseJson> updPajak(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("pajak")
+    Call<TaxPostResponseJson> delPajak(@PartMap Map<String, RequestBody> text);
+
+    @GET("servicefee")
+    Call<GetServiceResponseJson> getServiceFee(@Query("id_toko") String id);
+
+    @Multipart
+    @POST("servicefee")
+    Call<ServicePostResponseJson> addServiceFee(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PATCH("servicefee")
+    Call<ServicePostResponseJson> updServiceFee(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("servicefee")
+    Call<ServicePostResponseJson> delServiceFee(@PartMap Map<String, RequestBody> text);
+
+    @GET("pelanggan")
+    Call<GetCustomerResponseJson> getCustomer(@Query("id_toko") String id);
+
+    @Multipart
+    @POST("pelanggan")
+    Call<CustomerPostResponseJson> addCustomer(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PATCH("pelanggan")
+    Call<CustomerPostResponseJson> updCustomer(@PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("pelanggan")
+    Call<CustomerPostResponseJson> delCustomer(@PartMap Map<String, RequestBody> text);
 }

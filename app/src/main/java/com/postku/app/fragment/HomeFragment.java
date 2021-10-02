@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.postku.app.R;
 import com.postku.app.actvity.MainActivity;
+import com.postku.app.actvity.wallet.ActivatedWalletActivity;
 import com.postku.app.adapter.BannerAdapter;
 import com.postku.app.adapter.NewsAdapter;
 import com.postku.app.helpers.Constants;
@@ -46,7 +47,7 @@ public class HomeFragment extends Fragment {
     private ViewPager pager;
     private CircleIndicator circleIndicator;
     private BannerAdapter bannerAdapter;
-    private LinearLayout lslider;
+    private LinearLayout lslider, lsaldo, lqris;
     Timer timer;
     final long DELAY_MS = 2000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 4000; // time in milliseconds between successive task executions.
@@ -84,6 +85,8 @@ public class HomeFragment extends Fragment {
         readMore = view.findViewById(R.id.text_read_more);
         recyclerView = view.findViewById(R.id.rec_artikel);
         toPos = view.findViewById(R.id.btn_start);
+        lsaldo = view.findViewById(R.id.lsaldo);
+        lqris = view.findViewById(R.id.lqris);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -94,6 +97,14 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra(Constants.METHOD, Constants.RESET);
+                startActivity(intent);
+            }
+        });
+
+        lsaldo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ActivatedWalletActivity.class);
                 startActivity(intent);
             }
         });
