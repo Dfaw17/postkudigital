@@ -82,7 +82,7 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.VH> {
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    check.setChecked(lastSelectedPosition == getAdapterPosition());
+
 
                 }
             });

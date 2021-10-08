@@ -56,4 +56,9 @@
         <item>Reset Stock</item>
     </string-array>
 
+    <string-array name="list_saran">
+        <item>Saran</item>
+        <item>Kritik</item>
+    </string-array>
+
 </resources>

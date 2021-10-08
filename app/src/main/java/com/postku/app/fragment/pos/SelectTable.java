@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class SelectTable extends DialogFragment {
     private ClickInterface clickInterface;
     private ImageView backButton;
     private TextView caption;
+    private Button select;
     private List<Meja> mejaList = new ArrayList<>();
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class SelectTable extends DialogFragment {
         recyclerView = view.findViewById(R.id.rec_table);
         backButton = view.findViewById(R.id.back_button);
         caption = view.findViewById(R.id.text_caption);
+        select = view.findViewById(R.id.button6);
 
         caption.setText("Daftar meja");
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -74,14 +77,21 @@ public class SelectTable extends DialogFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
-        clickInterface = new ClickInterface() {
+        select.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(String id, String nama) {
-                UpdateText updateText = (UpdateText) getParentFragment();
-                updateText.updateResult(id, nama);
-                dismiss();
+            public void onClick(View v) {
+                if(adapter != null){
+                    if(adapter.isBooked()){
+                        DHelper.pesan(context, "Meja sudah dibooking");
+                        return;
+                    }else {
+                        UpdateText updateText = (UpdateText) getParentFragment();
+                        updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                        dismiss();
+                    }
+                }
             }
-        };
+        });
 
         return view;
     }

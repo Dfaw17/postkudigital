@@ -88,6 +88,8 @@
                             android:layout_height="match_parent"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:orientation="vertical"
                             android:padding="5dp">
 
@@ -116,6 +118,8 @@
                             android:layout_height="match_parent"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:orientation="vertical"
                             android:padding="5dp">
 
@@ -144,6 +148,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
                             android:orientation="vertical"
                             android:padding="5dp">
 
@@ -457,7 +463,9 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/custom_rectangle"
+                android:clickable="true"
                 android:elevation="1dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:padding="15dp">
 
                 <ImageView
@@ -496,7 +504,9 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/custom_rectangle"
+                android:clickable="true"
                 android:elevation="1dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:padding="15dp">
 
                 <ImageView
@@ -534,7 +544,9 @@
                 android:layout_marginEnd="25dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/custom_rectangle"
+                android:clickable="true"
                 android:elevation="1dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:padding="15dp">
 
                 <ImageView

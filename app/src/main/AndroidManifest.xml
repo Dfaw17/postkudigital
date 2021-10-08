@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -22,7 +21,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragment.setting.PrinterActivity"></activity>
+        <activity android:name=".actvity.ppob.ResultTransaksiActivity"></activity>
+        <activity
+            android:name=".actvity.ppob.TransPpobActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.wallet.RiwayatPayActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".actvity.wallet.TopupPendingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.wallet.PilihChannelActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.wallet.KonfirmasiTopupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.ppob.PpobProductActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.ppob.PpobKategoriActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.wallet.TopUpSaldoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.setting.PrinterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment.report.ReportRankingActivity"
             android:theme="@style/AppTheme.NoActionBar" />

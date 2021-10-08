@@ -11,6 +11,7 @@ public class Constants {
     public static Double LONGITUDE;
     public static String LOCATION;
     public static String PHONE = "phone";
+    public static String NOMINAL = "nominal";
     public static String ID = "id";
     public static String ID_KATEGORI = "idcat";
     public static String BUNGA = "bunga";

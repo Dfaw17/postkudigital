@@ -20,11 +20,17 @@ import android.widget.TextView;
 import com.postku.app.R;
 import com.postku.app.actvity.MainActivity;
 import com.postku.app.actvity.wallet.ActivatedWalletActivity;
+import com.postku.app.actvity.wallet.KonfirmasiTopupActivity;
+import com.postku.app.actvity.wallet.TopUpSaldoActivity;
+import com.postku.app.actvity.wallet.TopupPendingActivity;
+import com.postku.app.actvity.wallet.WalletActivity;
 import com.postku.app.adapter.BannerAdapter;
 import com.postku.app.adapter.NewsAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.HomeResponseJson;
+import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -104,8 +110,7 @@ public class HomeFragment extends Fragment {
         lsaldo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ActivatedWalletActivity.class);
-                startActivity(intent);
+                checkStatusDeposit();
             }
         });
 
@@ -202,6 +207,31 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<HomeResponseJson> call, Throwable t) {
                 t.printStackTrace();
                 Log.e(Constants.TAG, t.getMessage());
+            }
+        });
+    }
+
+    private void checkStatusDeposit(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailWallet(sessionManager.getIdToko()).enqueue(new Callback<WalletResponseJson>() {
+            @Override
+            public void onResponse(Call<WalletResponseJson> call, Response<WalletResponseJson> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        Intent intent = new Intent(context, WalletActivity.class);
+                        startActivity(intent);
+                    }else if(response.body().getStatusCode() == 404) {
+                        Intent intent = new Intent(context, ActivatedWalletActivity.class);
+                        startActivity(intent);
+                    }
+                }else {
+                    DHelper.pesan(context, context.getString(R.string.error_connection));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletResponseJson> call, Throwable t) {
+
             }
         });
     }

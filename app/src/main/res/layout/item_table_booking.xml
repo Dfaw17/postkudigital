@@ -7,6 +7,19 @@
     android:background="@drawable/button_outline_green"
     android:padding="25dp">
 
+    <RadioButton
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:padding="3dp"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/text_meja"
         android:layout_width="wrap_content"

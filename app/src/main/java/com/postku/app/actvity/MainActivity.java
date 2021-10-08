@@ -19,6 +19,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,9 +46,12 @@ import com.postku.app.fragment.toko.TokoFragment;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.models.User;
+import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.postku.app.helpers.Constants.TAG;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
@@ -54,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView textNama, textJabatan, textNamaToko;
     private CircleImageView avatar;
+    String[] listCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +149,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.customer:
                         loadFragment(new CustomerFragment());
                         break;
+                    case R.id.chat:
+                        toolbar.setTitle("Beranda");
+                        showContactUs();
+                        break;
+                    case R.id.spacer:
+                        toolbar.setTitle("Beranda");
+                        showDialogKritik();
+                        break;
                     case R.id.setting:
                         loadFragment(new SettingFragment());
                         break;
@@ -164,6 +181,74 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.frame, fragment);
         transaction.commit();
     }
+
+    private void showContactUs(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_contactus, null);
+        builder.setView(dialogView);
+
+        final RelativeLayout wasap = dialogView.findViewById(R.id.rlwa);
+        final RelativeLayout instagram = dialogView.findViewById(R.id.rlinsta);
+
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        wasap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void showDialogKritik(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_add_stock, null);
+        builder.setView(dialogView);
+
+        final TextView title = dialogView.findViewById(R.id.title);
+        final AutoCompleteTextView selectKategori = dialogView.findViewById(R.id.kategori);
+        final EditText edtStock = dialogView.findViewById(R.id.edittext);
+        final EditText edtNote = dialogView.findViewById(R.id.edittext2);
+        final Button submit = dialogView.findViewById(R.id.btn_submit);
+
+        title.setText("Saran dan Kritik");
+        edtStock.setVisibility(View.GONE);
+
+        listCategory = getResources().getStringArray(R.array.list_saran);
+        ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listCategory);
+        selectKategori.setAdapter(catAdapter);
+        selectKategori.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectKategori.showDropDown();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "pos:" + selectKategori.getText().toString().trim());
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

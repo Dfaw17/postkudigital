@@ -12,6 +12,7 @@ import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.json.GetCartResponse;
+import com.postku.app.json.GetChannelResponseJson;
 import com.postku.app.json.GetCustomerResponseJson;
 import com.postku.app.json.GetDetailArtikelResponse;
 import com.postku.app.json.GetDetailBannerResponse;
@@ -19,6 +20,7 @@ import com.postku.app.json.GetHistoryTransResponse;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
+import com.postku.app.json.GetProdukPponResponse;
 import com.postku.app.json.GetPromoResponseJson;
 import com.postku.app.json.GetReportResponseJson;
 import com.postku.app.json.GetServiceResponseJson;
@@ -27,8 +29,11 @@ import com.postku.app.json.GetTaxResponseJson;
 import com.postku.app.json.HomeResponseJson;
 import com.postku.app.json.InsertItemResponse;
 import com.postku.app.json.KategoriPostResponse;
+import com.postku.app.json.KonfirmTopupResponseJson;
 import com.postku.app.json.LoginResponseJson;
 import com.postku.app.json.PostMenuResponse;
+import com.postku.app.json.PpobCategoryResponse;
+import com.postku.app.json.PpobProductResponse;
 import com.postku.app.json.PromoPostResponseJson;
 import com.postku.app.json.RegisterResponseJson;
 import com.postku.app.json.ServicePostResponseJson;
@@ -36,7 +41,9 @@ import com.postku.app.json.StockResponseJson;
 import com.postku.app.json.StockTrxResponse;
 import com.postku.app.json.TablePostResponse;
 import com.postku.app.json.TaxPostResponseJson;
+import com.postku.app.json.TopupResponseJson;
 import com.postku.app.json.TransactionResponse;
+import com.postku.app.json.WalletResponseJson;
 
 import java.util.Map;
 
@@ -285,4 +292,33 @@ public interface UserService {
     @Multipart
     @PUT("pelanggan")
     Call<CustomerPostResponseJson> delCustomer(@PartMap Map<String, RequestBody> text);
+
+    @FormUrlEncoded
+    @POST("wallet")
+    Call<WalletResponseJson> activeWallet(@Field("toko") String toko);
+
+    @GET("wallet")
+    Call<WalletResponseJson> detailWallet(@Query("toko") String id);
+
+    @GET("channel_payment")
+    Call<GetChannelResponseJson> getchannel();
+
+    @FormUrlEncoded
+    @POST("wallet/trx")
+    Call<TopupResponseJson> topup(@Field("wallet") String wallet,
+                                  @Field("adjustment_balance") String balance);
+
+    @Multipart
+    @POST("wallet/konfirmasi")
+    Call<KonfirmTopupResponseJson> konfirmTopup(@PartMap Map<String, RequestBody> text);
+
+    @GET("kategori/ppob")
+    Call<PpobCategoryResponse> kategoriPpob();
+
+    @GET("brand/ppob")
+    Call<PpobProductResponse> productPpob(@Query("category") String cat);
+
+    @GET("ppob_digi")
+    Call<GetProdukPponResponse> ppob(@Query("category") String cat,
+                                     @Query("brand") String brand);
 }
