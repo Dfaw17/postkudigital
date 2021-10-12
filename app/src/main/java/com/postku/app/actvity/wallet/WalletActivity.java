@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.postku.app.R;
 import com.postku.app.actvity.ppob.PpobKategoriActivity;
+import com.postku.app.actvity.ppob.RiwayatPpobActivity;
 import com.postku.app.actvity.qris.HomeQrisActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
@@ -29,12 +31,15 @@ public class WalletActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private LinearLayout topup, qris, ppob, pulsa, games, emoney, ewallet, pulsadata, voucher, pln, lainnya;
     private RelativeLayout rlriwayatpostku, rlriwayattopup, rlriwayatppob;
+    private TextView textSaldo;
+    private int walletid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
         context = this;
         sessionManager = new SessionManager(context);
+        textSaldo = findViewById(R.id.text_saldo);
         topup = findViewById(R.id.ltopup);
         qris = findViewById(R.id.lqris);
         ppob = findViewById(R.id.lppob);
@@ -49,6 +54,9 @@ public class WalletActivity extends AppCompatActivity {
         rlriwayatpostku = findViewById(R.id.rl_history_postku);
         rlriwayattopup = findViewById(R.id.rl_history_topup);
         rlriwayatppob = findViewById(R.id.rl_history_ppob);
+
+        walletid = getIntent().getIntExtra(Constants.ID, 0);
+        sessionManager.setIdWallet(String.valueOf(walletid));
 
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +80,32 @@ public class WalletActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        rlriwayatpostku.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RiwayatPayActivity.class);
+                intent.putExtra(Constants.ID, walletid);
+                startActivity(intent);
+            }
+        });
+
+        rlriwayattopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RiwayatTopupActivity.class);
+                intent.putExtra(Constants.ID, walletid);
+                startActivity(intent);
+            }
+        });
+
+        rlriwayatppob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RiwayatPpobActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkStatusDeposit(){
@@ -82,6 +116,7 @@ public class WalletActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         Wallet wallet = response.body().getWallet();
+                        textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(wallet.getBalance())));
                         if(wallet.getStatusReqDepo() == 1) {
                             Intent intent = new Intent(context, KonfirmasiTopupActivity.class);
                             intent.putExtra(Constants.ID, wallet.getId());

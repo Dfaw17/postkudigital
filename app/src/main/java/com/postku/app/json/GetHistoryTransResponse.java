@@ -16,8 +16,20 @@ public class GetHistoryTransResponse {
     private int statusCode;
 
     @Expose
+    @SerializedName("total")
+    private int total;
+
+    @Expose
     @SerializedName("data")
     private List<Transaction> transactionList;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public String getMessage() {
         return message;

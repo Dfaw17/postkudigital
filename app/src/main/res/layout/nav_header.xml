@@ -6,8 +6,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rlprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView

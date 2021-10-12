@@ -17,6 +17,7 @@ public class SessionManager {
     private static final String KATEGORI_TOKO = "kategoriToko";
     private static final String ACTIVE_CART = "activeCart";
     private static final String IS_CART_ACTIVE = "isCartActive";
+    private static final String ID_WALLET = "idWallet";
 
     public SessionManager(Context context){
         this.context = context;
@@ -122,5 +123,14 @@ public class SessionManager {
 
     public String getLogoToko(){
         return sharedPref.getString(LOGO_TOKO, "");
+    }
+
+    public void setIdWallet(String s){
+        editor.putString(ID_WALLET, s);
+        editor.commit();
+    }
+
+    public String getIdWallet(){
+        return sharedPref.getString(ID_WALLET, "");
     }
 }

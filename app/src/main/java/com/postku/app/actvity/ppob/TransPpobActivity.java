@@ -1,15 +1,18 @@
 package com.postku.app.actvity.ppob;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +37,7 @@ import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetProdukPponResponse;
 import com.postku.app.json.PpobProductResponse;
+import com.postku.app.json.TransppobResponseJson;
 import com.postku.app.models.ProductPpob;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
@@ -40,8 +45,10 @@ import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
+import java.util.HashMap;
 import java.util.Objects;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,6 +68,7 @@ public class TransPpobActivity extends AppCompatActivity {
     private String category, brand, urlLogo;
     private LinearLayout lempty;
     private ProductPpobAdapter adapter;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +83,7 @@ public class TransPpobActivity extends AppCompatActivity {
         nomor = findViewById(R.id.edt_nomor);
         recyclerView = findViewById(R.id.rec_product);
         lempty = findViewById(R.id.lempty);
+        progressBar = findViewById(R.id.progressBar);
         View bottom_sheet = findViewById(R.id.bottom_sheet);
         mBehavior = BottomSheetBehavior.from(bottom_sheet);
 
@@ -128,10 +137,12 @@ public class TransPpobActivity extends AppCompatActivity {
     }
 
     private void getData(String cat, String merk) {
+        progressBar.setVisibility(View.VISIBLE);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.ppob(cat, merk).enqueue(new Callback<GetProdukPponResponse>() {
             @Override
             public void onResponse(Call<GetProdukPponResponse> call, Response<GetProdukPponResponse> response) {
+                progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         if(response.body().getProductPpobList().isEmpty()){
@@ -151,6 +162,7 @@ public class TransPpobActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GetProdukPponResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 t.printStackTrace();
                 Log.e(TAG, t.getMessage());
             }
@@ -200,6 +212,7 @@ public class TransPpobActivity extends AppCompatActivity {
         bayar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startTrans(nomor.getText().toString(), ppob.getBuyerSkuCode());
                 mBottomSheetDialog.dismiss();
 
             }
@@ -219,7 +232,75 @@ public class TransPpobActivity extends AppCompatActivity {
         });
     }
 
-    private void startTrans(){
+    private void startTrans(String nomor, String sku){
+        progressBar.setVisibility(View.VISIBLE);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("customer_no", createPartFromString(nomor));
+        map.put("buyer_sku_code", createPartFromString(sku));
+        map.put("wallet", createPartFromString(sessionManager.getIdWallet()));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.startTrans(map).enqueue(new Callback<TransppobResponseJson>() {
+            @Override
+            public void onResponse(Call<TransppobResponseJson> call, Response<TransppobResponseJson> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        dialogSuccess(response.body().getMessage(), true);
+                    }else {
+                        dialogSuccess(response.body().getMessage(), false);
+                    }
+                }else {
+                    dialogSuccess("Error connection", false);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<TransppobResponseJson> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                t.printStackTrace();
+
+            }
+        });
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
+    }
+
+    private void dialogSuccess(String msg, boolean isSuccess){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_success);
+        dialog.setCancelable(true);
+
+        final TextView textView = dialog.findViewById(R.id.text_message);
+        final TextView title = dialog.findViewById(R.id.text_message2);
+        final ImageView img = dialog.findViewById(R.id.imageView10);
+
+        if(isSuccess){
+            textView.setText("Success");
+            title.setText("Silahkan lihat status transaksi di menu riwayat PPOB");
+            img.setImageDrawable(context.getDrawable(R.drawable.img_success));
+        }else {
+            textView.setText("Gagal");
+            title.setText(msg);
+            img.setImageDrawable(context.getDrawable(R.drawable.img_success));
+        }
+
+
+
+        dialog.show();
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                // Close dialog after 1000ms
+//                dialog.cancel();
+//
+//            }
+//        }, 1000);
     }
 }

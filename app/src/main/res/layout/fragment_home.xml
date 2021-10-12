@@ -75,9 +75,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="10dp"
-                            android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="Rp."
+                            android:text="Rp"
                             android:textColor="@color/colorGrey"
                             android:textSize="10sp" />
 
@@ -88,9 +87,10 @@
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="1.000.000"
+                            android:text="0"
                             android:textColor="@color/colorBlack"
-                            android:textSize="14sp" />
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/imageView8"
@@ -132,9 +132,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="10dp"
-                            android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="Rp."
+                            android:text="Rp"
                             android:textColor="@color/colorGrey"
                             android:textSize="10sp" />
 
@@ -145,9 +144,10 @@
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="100.000"
+                            android:text="0"
                             android:textColor="@color/colorBlack"
-                            android:textSize="14sp" />
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="25dp"
@@ -224,7 +224,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="3"
+                            android:text="0"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -259,7 +259,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="Rp38.500"
+                            android:text="Rp0"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -301,7 +301,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="Rp20.000"
+                            android:text="Rp0"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -335,7 +335,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="Rp38.500"
+                            android:text="Rp0"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -371,16 +371,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="3"
+                            android:text="0"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp" />
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -411,7 +411,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="center_horizontal"
-                            android:text="Buah naga"
+                            android:text="-"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
                             android:textStyle="bold" />

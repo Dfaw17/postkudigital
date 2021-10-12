@@ -271,10 +271,11 @@ public class PaymentActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 201){
-                        Intent intent = new Intent(context, ResultTransactionActivity.class);
+                        Intent intent = new Intent(context, QrisActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
+                        intent.putExtra(Constants.ID, response.body().getTransaction().getId());
+                        intent.putExtra(Constants.NAMA, response.body().getTransaction().getReffCode());
                         startActivity(intent);
                         finish();
                     }else {

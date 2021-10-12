@@ -6,18 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".actvity.plus.PostkuPlusActivity">
 
-    <include layout="@layout/app_bar_custom"/>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="57dp">
+            android:layout_marginTop="57dp"
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -60,7 +58,7 @@
             <LinearLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
@@ -76,11 +74,35 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imageView27"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/img_fitur_plus" />
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <ImageView
+                            android:id="@+id/imageView27"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/img_fitur_plus" />
+
+                        <ImageView
+                            android:id="@+id/imageView28"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/img_fitur_default" />
+                    </LinearLayout>
+
+
+                </HorizontalScrollView>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -88,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -100,10 +123,34 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Berlangganan Postku plus sekarang, hanya dengan  Rp. 1.000 per hari untuk menikmati semua fitur lengkap postku" />
+
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/custom_button_green"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Upgrade Sekarang"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite" />
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/app_bar_custom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

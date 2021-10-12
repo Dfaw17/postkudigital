@@ -25,6 +25,8 @@
     <string name="title_stock_menu">Stock Menu</string>
     <string name="currency_symbol">Rp</string>
     <string name="confirm_cancel_qris_message">Pastikan saldo customer belum terpotong, saat keluar halaman ini transaksi qris akan otomatis batal, silahkan membuat kode QRIS yang baru</string>
+    <string name="title_confirm_claim">Konfirmasi Klaim Saldo</string>
+    <string name="message_claim_saldo">Pastikan kamu terhubung ke internet untuk melakukan claim saldo qris mu. proses ini akan membutuhkan beberapa waktu, jangan tutup aplikasi saat proses sedang berlangsung</string>
 
     <string-array name="shop_category">
         <item>Kafe</item>

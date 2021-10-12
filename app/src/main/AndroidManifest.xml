@@ -21,13 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".actvity.ppob.ResultTransaksiActivity"></activity>
+        <activity android:name=".actvity.ppob.RiwayatPpobActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".actvity.wallet.RiwayatTopupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".actvity.ppob.ResultTransaksiActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".actvity.ppob.TransPpobActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.wallet.RiwayatPayActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.wallet.TopupPendingActivity"
             android:theme="@style/AppTheme.NoActionBar" />

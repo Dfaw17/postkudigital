@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -74,12 +75,28 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, navigationView, false);
         navigationView.addHeaderView(headerView);
+        RelativeLayout rlsubs = headerView.findViewById(R.id.rlupgrade);
+        RelativeLayout rlprofile = headerView.findViewById(R.id.rlprofile);
 
-        headerView.setOnClickListener(new View.OnClickListener() {
+        rlsubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PostkuPlusActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        rlprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment {
                         }
 
                         if(response.body().getQris() == null){
-                            saldoQris.setText("Aktifkan Qris");
+                            saldoQris.setText("0");
                         }else {
                             saldoQris.setText(DHelper.toformatRupiah(response.body().getWallet()));
                         }
@@ -218,7 +218,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<WalletResponseJson> call, Response<WalletResponseJson> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
+                        Wallet wallet = response.body().getWallet();
                         Intent intent = new Intent(context, WalletActivity.class);
+                        intent.putExtra(Constants.ID, wallet.getId());
                         startActivity(intent);
                     }else if(response.body().getStatusCode() == 404) {
                         Intent intent = new Intent(context, ActivatedWalletActivity.class);

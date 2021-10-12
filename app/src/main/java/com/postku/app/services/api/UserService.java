@@ -4,6 +4,8 @@ import androidx.transition.Slide;
 
 import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.CallbackQrisResponse;
+import com.postku.app.json.ClaimRequestJson;
+import com.postku.app.json.ClaimResponseJson;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.CreateQrisResponse;
 import com.postku.app.json.CreateTokoResponse;
@@ -16,7 +18,11 @@ import com.postku.app.json.GetChannelResponseJson;
 import com.postku.app.json.GetCustomerResponseJson;
 import com.postku.app.json.GetDetailArtikelResponse;
 import com.postku.app.json.GetDetailBannerResponse;
+import com.postku.app.json.GetHistoryClaimResponse;
+import com.postku.app.json.GetHistoryPpobResponse;
+import com.postku.app.json.GetHistoryTopupResponse;
 import com.postku.app.json.GetHistoryTransResponse;
+import com.postku.app.json.GetHistoryWalletResponse;
 import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
@@ -43,6 +49,7 @@ import com.postku.app.json.TablePostResponse;
 import com.postku.app.json.TaxPostResponseJson;
 import com.postku.app.json.TopupResponseJson;
 import com.postku.app.json.TransactionResponse;
+import com.postku.app.json.TransppobResponseJson;
 import com.postku.app.json.WalletResponseJson;
 
 import java.util.Map;
@@ -53,6 +60,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -312,6 +320,13 @@ public interface UserService {
     @POST("wallet/konfirmasi")
     Call<KonfirmTopupResponseJson> konfirmTopup(@PartMap Map<String, RequestBody> text);
 
+    @GET("wallet/trx")
+    Call<GetHistoryWalletResponse> historyWallet(@Query("wallet_id") String id);
+
+    @GET("wallet/history-topup")
+    Call<GetHistoryTopupResponse> historyTopup(@Query("wallet_id") String id,
+                                               @Query("status_confirm") String status);
+
     @GET("kategori/ppob")
     Call<PpobCategoryResponse> kategoriPpob();
 
@@ -321,4 +336,27 @@ public interface UserService {
     @GET("ppob_digi")
     Call<GetProdukPponResponse> ppob(@Query("category") String cat,
                                      @Query("brand") String brand);
+
+    @Multipart
+    @POST("ppob_digi")
+    Call<TransppobResponseJson> startTrans(@PartMap Map<String, RequestBody> text);
+
+
+    @GET("transaction/ppob")
+    Call<GetHistoryPpobResponse> historyPppob(@Query("id_toko") String id,
+                                         @Query("date1") String date1,
+                                         @Query("date2") String date2);
+
+    @GET("settlement")
+    Call<GetHistoryTransResponse> settlement(@Query("id_toko") String id);
+
+    @POST("settlement")
+    Call<ClaimResponseJson> claim(@Body ClaimRequestJson param);
+
+    @GET("settlement/history")
+    Call<GetHistoryClaimResponse> historyClaim(@Query("id_toko") String id,
+                                               @Query("status_trx") String status);
+
+    @GET("settlement/{id}")
+    Call<ClaimResponseJson> detailSettlement(@Path("id") String id);
 }
