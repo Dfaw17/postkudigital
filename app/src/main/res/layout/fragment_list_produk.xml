@@ -130,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
+                android:clickable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center_vertical"
                 android:text="Total = Rp65.000"

@@ -23,6 +23,7 @@ import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions;
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker;
 import com.postku.app.R;
 import com.postku.app.adapter.HistoryTransAdapter;
+import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetHistoryTransResponse;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -160,6 +161,7 @@ public class HistoryFragment extends Fragment {
                         if(response.body().getTransactionList().size() > 0){
                             adapter = new HistoryTransAdapter(context, response.body().getTransactionList());
                             recyclerView.setAdapter(adapter);
+                            totalTrx.setText("Rp" + DHelper.toformatRupiah(String.valueOf(response.body().getTotal())));
                         }
                     }
                 }

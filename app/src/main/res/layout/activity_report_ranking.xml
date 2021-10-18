@@ -75,6 +75,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rlmenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -89,19 +90,19 @@
 
                 <ImageView
                     android:id="@+id/imageView35"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
-                    android:src="@drawable/ic_ranking" />
+                    android:src="@drawable/ic_rank_menu" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/imageView35"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Ranking Report"
+                    android:text="Laporan Menu"
                     android:textColor="@color/colorPrimary" />
 
                 <ImageView
@@ -113,6 +114,279 @@
                     android:src="@drawable/ic_next"
                     app:tint="@color/colorPrimary" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlpegawai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_pegawai"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_pegawai" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_pegawai"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Pegawai"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlkategori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_kategori"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_kategori" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_kategori"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Kategori"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rldiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_discount"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_diskon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_discount"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Discount"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlmeja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_meja"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_meja" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_meja"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Meja"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlcustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_customer"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_customer" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_customer"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Pelanggan"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rltipe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_tipe"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_tipe" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_tipe"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Tipe Order"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rllabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_rectangle"
+                android:clickable="true"
+                android:elevation="3dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_label"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_rank_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@id/icon_label"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Laporan Label Order"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

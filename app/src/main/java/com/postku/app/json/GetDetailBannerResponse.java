@@ -15,7 +15,7 @@ public class GetDetailBannerResponse {
     private int statusCode;
 
     @Expose
-    @SerializedName("data_detail_stock")
+    @SerializedName("data")
     private Banner banner;
 
     public String getMessage() {

@@ -1,5 +1,6 @@
 package com.postku.app.fragment.product.stok;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +24,18 @@ import com.postku.app.adapter.HistoryStockAdapter;
 import com.postku.app.adapter.StockAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.StockResponseJson;
 import com.postku.app.json.StockTrxResponse;
+import com.postku.app.models.HistoryStock;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
+import java.util.HashMap;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,7 +100,7 @@ public class DetailStockActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         if(response.body().getHistoryStockList().size() > 0){
-                            adapter = new HistoryStockAdapter(context, response.body().getHistoryStockList());
+                            adapter = new HistoryStockAdapter(context, response.body().getHistoryStockList(), DetailStockActivity.this);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -154,11 +160,75 @@ public class DetailStockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "pos:" + typeAdjust);
+                trxStock(id, edtStock.getText().toString(), typeAdjust, edtNote.getText().toString());
                 alertDialog.dismiss();
             }
         });
 
 
+    }
+
+    public void showDialogDetail(HistoryStock historyStock){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_detail_stock, null);
+        builder.setView(dialogView);
+
+        final TextView tipe = dialogView.findViewById(R.id.tipe);
+        final TextView qty = dialogView.findViewById(R.id.qty);
+        final TextView note = dialogView.findViewById(R.id.note);
+
+
+        if(historyStock.getType() == 1){
+            tipe.setText("Penambahan");
+            tipe.setBackground(context.getResources().getDrawable(R.drawable.bg_rectangle_green));
+        }else if(historyStock.getType() == 2){
+            tipe.setText("Pengurangan");
+            tipe.setBackground(context.getResources().getDrawable(R.drawable.bg_rectangle_red));
+        }else if(historyStock.getType() == 3){
+            tipe.setText("Reset Stock");
+            tipe.setBackground(context.getResources().getDrawable(R.drawable.bg_rectangle_yellow));
+        }else if(historyStock.getType() == 4){
+            tipe.setText("Penjualan");
+            tipe.setBackground(context.getResources().getDrawable(R.drawable.bg_rectangle_blue));
+        }
+        qty.setText("" + historyStock.getAdjustment());
+        note.setText(historyStock.getNote());
+
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    private void trxStock(int id, String qty, int type, String note){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("stock", createPartFromString(String.valueOf(id)));
+        map.put("adjusment_stock", createPartFromString(qty));
+        map.put("type_adjusment", createPartFromString(String.valueOf(type)));
+        map.put("note", createPartFromString(note));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.activeStock(map).enqueue(new Callback<ActiveStockResponse>() {
+            @Override
+            public void onResponse(Call<ActiveStockResponse> call, Response<ActiveStockResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatus() == 200);{
+                        Log.e(TAG, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActiveStockResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
     }
 
     @Override

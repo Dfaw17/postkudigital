@@ -5,6 +5,7 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
+import com.mazenrashed.printooth.Printooth;
 import com.postku.app.models.User;
 
 import io.realm.Realm;
@@ -21,6 +22,7 @@ public class BaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Printooth.INSTANCE.init(this);
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .schemaVersion(SCHEMA_VERSION)

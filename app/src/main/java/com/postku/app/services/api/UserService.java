@@ -13,6 +13,8 @@ import com.postku.app.json.CustomerPostResponseJson;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.DetailTransactionResponse;
+import com.postku.app.json.GetArtikelResponse;
+import com.postku.app.json.GetBankResponseJson;
 import com.postku.app.json.GetCartResponse;
 import com.postku.app.json.GetChannelResponseJson;
 import com.postku.app.json.GetCustomerResponseJson;
@@ -24,14 +26,17 @@ import com.postku.app.json.GetHistoryTopupResponse;
 import com.postku.app.json.GetHistoryTransResponse;
 import com.postku.app.json.GetHistoryWalletResponse;
 import com.postku.app.json.GetKategoriResponseJson;
+import com.postku.app.json.GetKritikResponse;
 import com.postku.app.json.GetMenuResponseJson;
 import com.postku.app.json.GetOutletResponseJson;
 import com.postku.app.json.GetProdukPponResponse;
 import com.postku.app.json.GetPromoResponseJson;
 import com.postku.app.json.GetReportResponseJson;
+import com.postku.app.json.GetServiceAddResponse;
 import com.postku.app.json.GetServiceResponseJson;
 import com.postku.app.json.GetTableResponse;
 import com.postku.app.json.GetTaxResponseJson;
+import com.postku.app.json.GetTipeOrderResponse;
 import com.postku.app.json.HomeResponseJson;
 import com.postku.app.json.InsertItemResponse;
 import com.postku.app.json.KategoriPostResponse;
@@ -84,6 +89,11 @@ public interface UserService {
     @Multipart
     @PUT("updateowner")
     Call<ResponseBody> updateOwner (@Part MultipartBody.Part image,
+                                    @PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("updatepegawai")
+    Call<ResponseBody> updatepegawai (@Part MultipartBody.Part image,
                                     @PartMap Map<String, RequestBody> text);
 //    toko
     @Multipart
@@ -163,6 +173,9 @@ public interface UserService {
     @GET("stock/trx")
     Call<StockTrxResponse> historyStock(@Query("id_menu") String id);
 
+    @Multipart
+    @GET("stock/trx")
+    Call<StockTrxResponse> stocktrx(@PartMap Map<String, RequestBody> text);
 //    cart
     @GET("cart")
     Call<GetCartResponse> getCart(@Query("id_toko") String id);
@@ -225,6 +238,9 @@ public interface UserService {
 
     @GET("articles/{id}")
     Call<GetDetailArtikelResponse> detailArtikel(@Path("id") String id);
+
+    @GET("articles")
+    Call<GetArtikelResponse> artikel(@Query("page") String page);
 
     @GET("table")
     Call<GetTableResponse> getTable(@Query("id_toko") String id);
@@ -359,4 +375,59 @@ public interface UserService {
 
     @GET("settlement/{id}")
     Call<ClaimResponseJson> detailSettlement(@Path("id") String id);
+
+    @GET("label_order")
+    Call<GetServiceAddResponse> labelorder();
+
+    @GET("tipe_order")
+    Call<GetTipeOrderResponse> tipeorder();
+
+    @GET("bank")
+    Call<GetBankResponseJson> bank();
+
+    @FormUrlEncoded
+    @POST("kritiksaran")
+    Call<GetKritikResponse> kritiksaran(@Field("account") String acc,
+                                        @Field("label") String label,
+                                        @Field("isi") String is);
+
+    @GET("report/menu")
+    Call<ResponseBody> reportmenu(@Query("id_toko") String id,
+                                  @Query("date1") String date1,
+                                  @Query("date2") String date2);
+
+    @GET("report/employee")
+    Call<ResponseBody> reportemployee(@Query("id_toko") String id,
+                                      @Query("date1") String date1,
+                                      @Query("date2") String date2);
+
+    @GET("report/kategori")
+    Call<ResponseBody> reportkategori(@Query("id_toko") String id,
+                                      @Query("date1") String date1,
+                                      @Query("date2") String date2);
+
+    @GET("report/disc")
+    Call<ResponseBody> reportdisc(@Query("id_toko") String id,
+                                  @Query("date1") String date1,
+                                  @Query("date2") String date2);
+
+    @GET("report/table")
+    Call<ResponseBody> reporttable(@Query("id_toko") String id,
+                                  @Query("date1") String date1,
+                                  @Query("date2") String date2);
+
+    @GET("report/pelanggan")
+    Call<ResponseBody> reportpelanggan(@Query("id_toko") String id,
+                                   @Query("date1") String date1,
+                                   @Query("date2") String date2);
+
+    @GET("report/order_tipe")
+    Call<ResponseBody> reporttipe(@Query("id_toko") String id,
+                                       @Query("date1") String date1,
+                                       @Query("date2") String date2);
+
+    @GET("report/label_order")
+    Call<ResponseBody> reportlabel(@Query("id_toko") String id,
+                                  @Query("date1") String date1,
+                                  @Query("date2") String date2);
 }

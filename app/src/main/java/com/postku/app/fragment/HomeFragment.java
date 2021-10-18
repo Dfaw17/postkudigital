@@ -18,7 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.postku.app.R;
+import com.postku.app.actvity.ArtikelActivity;
 import com.postku.app.actvity.MainActivity;
+import com.postku.app.actvity.profil.ProfileActivity;
+import com.postku.app.actvity.qris.HomeQrisActivity;
 import com.postku.app.actvity.wallet.ActivatedWalletActivity;
 import com.postku.app.actvity.wallet.KonfirmasiTopupActivity;
 import com.postku.app.actvity.wallet.TopUpSaldoActivity;
@@ -60,7 +63,7 @@ public class HomeFragment extends Fragment {
     int currentPage = 0;
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
-    private TextView notFoundNews, readMore;
+    private TextView notFoundNews, readMore, marquetext;
     private SessionManager sessionManager;
     private Button toPos;
 
@@ -81,6 +84,7 @@ public class HomeFragment extends Fragment {
         circleIndicator = view.findViewById(R.id.circle_indicator);
         saldoWallet = view.findViewById(R.id.text_saldo);
         saldoQris = view.findViewById(R.id.text_qris);
+        marquetext = view.findViewById(R.id.marqueeText);
         totalTrx = view.findViewById(R.id.text_total_transaksi);
         totalEarning = view.findViewById(R.id.text_pendapatan);
         totalTrxCash = view.findViewById(R.id.text_trx_tunai);
@@ -98,6 +102,23 @@ public class HomeFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
+        marquetext.setSelected(true);
+        marquetext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        readMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ArtikelActivity.class);
+                startActivity(intent);
+            }
+        });
+
         toPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +132,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 checkStatusDeposit();
+            }
+        });
+
+        lqris.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, HomeQrisActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -140,7 +169,7 @@ public class HomeFragment extends Fragment {
                         if(response.body().getQris() == null){
                             saldoQris.setText("0");
                         }else {
-                            saldoQris.setText(DHelper.toformatRupiah(response.body().getWallet()));
+                            saldoQris.setText(DHelper.toformatRupiah(response.body().getQris()));
                         }
                         totalTrx.setText(String.valueOf(response.body().getTotaltrx()));
                         totalEarning.setText(DHelper.toformatRupiah(response.body().getPendapatan()));
@@ -220,6 +249,7 @@ public class HomeFragment extends Fragment {
                     if(response.body().getStatusCode() == 200){
                         Wallet wallet = response.body().getWallet();
                         Intent intent = new Intent(context, WalletActivity.class);
+                        intent.putExtra(Constants.NOMINAL, wallet.getBalance());
                         intent.putExtra(Constants.ID, wallet.getId());
                         startActivity(intent);
                     }else if(response.body().getStatusCode() == 404) {

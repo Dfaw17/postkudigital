@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.postku.app.R;
+import com.postku.app.fragment.product.stok.DetailStockActivity;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.models.HistoryStock;
 
@@ -22,10 +23,12 @@ import java.util.List;
 public class HistoryStockAdapter extends RecyclerView.Adapter<HistoryStockAdapter.VH> {
     private Context context;
     private List<HistoryStock> historyStockList;
+    private DetailStockActivity activity;
 
-    public HistoryStockAdapter(Context context, List<HistoryStock> historyStockList){
+    public HistoryStockAdapter(Context context, List<HistoryStock> historyStockList, DetailStockActivity activity){
         this.context = context;
         this.historyStockList = historyStockList;
+        this.activity = activity;
     }
 
     @NotNull
@@ -56,12 +59,13 @@ public class HistoryStockAdapter extends RecyclerView.Adapter<HistoryStockAdapte
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                activity.showDialogDetail(hs);
             }
         });
 
 
     }
+
 
     @Override
     public int getItemCount() {

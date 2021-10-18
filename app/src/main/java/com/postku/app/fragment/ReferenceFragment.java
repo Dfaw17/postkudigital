@@ -24,17 +24,21 @@ import com.postku.app.R;
 import com.postku.app.adapter.ReferenceAdapter;
 import com.postku.app.helpers.ClickInterface;
 import com.postku.app.helpers.Constants;
+import com.postku.app.json.GetBankResponseJson;
 import com.postku.app.json.GetDesaResponse;
 import com.postku.app.json.GetKecamatanResponse;
 import com.postku.app.json.GetKotaResponse;
 import com.postku.app.json.GetProvinsiResponse;
+import com.postku.app.models.Bank;
 import com.postku.app.models.location.Kecamatan;
 import com.postku.app.models.location.Kelurahan;
 import com.postku.app.models.location.Kota;
 import com.postku.app.models.location.Provinsi;
 import com.postku.app.models.location.Reference;
 import com.postku.app.services.ApiLocationService;
+import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.ReferenceService;
+import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
@@ -119,6 +123,9 @@ public class ReferenceFragment extends DialogFragment {
         }else if(metode.equalsIgnoreCase(Constants.KELURAHAN)){
             toolbar.setTitle("Cari Desa/Kelurahan");
             getKelurahan(String.valueOf(id));
+        }else if(metode.equalsIgnoreCase(Constants.BANK)){
+            toolbar.setTitle("Cari Bank");
+            getBank();
         }
 
         search.addTextChangedListener(new TextWatcher() {
@@ -265,6 +272,37 @@ public class ReferenceFragment extends DialogFragment {
 
             @Override
             public void onFailure(Call<GetDesaResponse> call, Throwable t) {
+                t.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
+    private void getBank(){
+        referenceList.clear();
+        progressBar.setVisibility(View.VISIBLE);
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.bank().enqueue(new Callback<GetBankResponseJson>() {
+            @Override
+            public void onResponse(Call<GetBankResponseJson> call, Response<GetBankResponseJson> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getBankList().size() > 0){
+                        List<Bank> banks = response.body().getBankList();
+                        for(int i =0; i < banks.size();i++){
+                            Reference reference = new Reference();
+                            reference.setId(String.valueOf(banks.get(i).getId()));
+                            reference.setNama(banks.get(i).getName());
+                            referenceList.add(reference);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetBankResponseJson> call, Throwable t) {
                 t.printStackTrace();
                 progressBar.setVisibility(View.GONE);
                 Log.e(TAG, t.getMessage());

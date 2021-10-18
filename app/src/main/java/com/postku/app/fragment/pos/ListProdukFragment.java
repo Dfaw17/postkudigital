@@ -61,7 +61,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
     private TextView textView;
     private ProdukAdapter adapter;
     private RecyclerView recyclerView;
-    private LinearLayout lempty;
+    private LinearLayout lempty, lbasket;
     private LinearLayout boxCart;
     private TextView qty, total;
     private ImageView imgTable, imgList;
@@ -86,6 +86,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         recyclerView = view.findViewById(R.id.recProduk);
         lempty = view.findViewById(R.id.layout_empty);
         boxCart = view.findViewById(R.id.container);
+        lbasket = view.findViewById(R.id.lbasket);
         qty = view.findViewById(R.id.text_qty);
         total = view.findViewById(R.id.text_total);
         imgTable = view.findViewById(R.id.img_meja);
@@ -94,7 +95,9 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
-        total.setOnClickListener(new View.OnClickListener() {
+
+
+        lbasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailOrderActivity.class);
@@ -291,7 +294,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
             public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 201){
-                        DHelper.pesan(context, response.body().getMessage());
+//                        DHelper.pesan(context, response.body().getMessage());
                         checkCart();
                     }
                 }
@@ -314,7 +317,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
             public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
-                        DHelper.pesan(context, response.body().getMessage());
+//                        DHelper.pesan(context, response.body().getMessage());
                         checkCart();
                     }
                 }

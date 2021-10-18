@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.postku.app.BaseApp;
 import com.postku.app.R;
+import com.postku.app.actvity.ppob.ResultTransaksiActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.CreateQrisResponse;
@@ -105,8 +106,10 @@ public class PaymentActivity extends AppCompatActivity {
                         break;
                     case R.id.rbQris:
                         metode = 2;
-                        inputNumber = String.valueOf(tagihan);
-                        pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
+                        inputNumber = String.format("%.0f",tagihan);
+                        Log.e("NOMINAL", inputNumber);
+//                        payQris(getIntent().getStringExtra(Constants.NAMA), inputNumber
+//                                .replaceAll(",","").replaceAll("\\.",""));
                         break;
                 }
             }
@@ -117,7 +120,7 @@ public class PaymentActivity extends AppCompatActivity {
         lpas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputNumber = String.valueOf(tagihan);
+                inputNumber = String.format("%.0f",tagihan);
                 totalBayar.setText(DHelper.toformatRupiah(inputNumber));
             }
         });
@@ -241,12 +244,12 @@ public class PaymentActivity extends AppCompatActivity {
                     DHelper.pesan(context, "Pembayaran harus diisi");
                     return;
                 }
-                if(rbTunai.isChecked() && Integer.parseInt(inputNumber) < tagihan){
+                if(rbTunai.isChecked() && Integer.parseInt(inputNumber.replaceAll(",","").replaceAll("\\.","")) < tagihan){
                     DHelper.pesan(context, "Pembayaran kurang");
                     return;
                 }
                 if(metode == 1){
-                    pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber);
+                    pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber.replaceAll(",","").replaceAll("\\.",""));
                 }else{
                     payQris(getIntent().getStringExtra(Constants.NAMA), inputNumber);
                 }
@@ -262,7 +265,7 @@ public class PaymentActivity extends AppCompatActivity {
         HashMap<String, RequestBody> map = new HashMap<>();
         map.put("cart", createPartFromString(String.valueOf(idCart)));
         map.put("payment_type", createPartFromString(String.valueOf(metode)));
-        map.put("uang_bayar", createPartFromString(inputNumber));
+        map.put("uang_bayar", createPartFromString(inputNumber.replaceAll(",","").replaceAll("\\.","")));
         map.put("pegawai", createPartFromString(user.getId()));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.createTransaction(map).enqueue(new Callback<TransactionResponse>() {
@@ -271,7 +274,7 @@ public class PaymentActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 201){
-                        Intent intent = new Intent(context, QrisActivity.class);
+                        Intent intent = new Intent(context, ResultTransactionActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra(Constants.ID, response.body().getTransaction().getId());
@@ -298,7 +301,7 @@ public class PaymentActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         HashMap<String, RequestBody> map = new HashMap<>();
         map.put("cart_code", createPartFromString(invoice));
-        map.put("amount", createPartFromString(inputNumber));
+        map.put("amount", createPartFromString(inputNumber.replaceAll(",","").replaceAll("\\.","")));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.payQithQris(map).enqueue(new Callback<CreateQrisResponse>() {
             @Override

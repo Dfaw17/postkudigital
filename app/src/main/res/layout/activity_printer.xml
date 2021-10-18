@@ -24,6 +24,41 @@
             android:visibility="visible">
 
             <LinearLayout
+                android:id="@+id/lprinter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/text_nama_printer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_medium"
+                    android:lineSpacingExtra="16sp"
+                    android:text="Nama Printer" />
+
+                <Button
+                    android:id="@+id/btn_unpair"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rectangle_oren"
+                    android:text="Unpair"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Test Printer" />
+
+            <LinearLayout
                 android:id="@+id/lempty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

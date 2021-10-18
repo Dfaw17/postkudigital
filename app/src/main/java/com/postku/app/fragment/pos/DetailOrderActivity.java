@@ -2,6 +2,7 @@ package com.postku.app.fragment.pos;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -135,6 +136,90 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onClick(View v) {
                 deleteCart(getIntent().getIntExtra(Constants.ID, 0));
+            }
+        });
+
+        final SelectAddFragment dialogFragment = new SelectAddFragment();
+        rlDiskon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.DISKON);
+                bundle.putString(Constants.NAMA, "Daftar Discount");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+
+        rlCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.CUSTOMER);
+                bundle.putString(Constants.NAMA, "Daftar Pelanggan");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+
+        rlTipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.TIPE_ORDER);
+                bundle.putString(Constants.NAMA, "Daftar Tipe Order");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+
+        rlLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.LABEL_ORDER);
+                bundle.putString(Constants.NAMA, "Daftar Label Order");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+
+        rlPajak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.PAJAK);
+                bundle.putString(Constants.NAMA, "Daftar Pajak");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+
+        rlService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.SERVICE_CHARGE);
+                bundle.putString(Constants.NAMA, "Daftar Service");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
+        final SelectTable dialogFragment1 = new SelectTable();
+        rlTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.METHOD, Constants.PROVINSI);
+                dialogFragment1.setArguments(bundle);
+                dialogFragment1.show(fm, TAG);
             }
         });
 

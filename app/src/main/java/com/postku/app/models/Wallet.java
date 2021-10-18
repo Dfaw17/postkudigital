@@ -16,21 +16,21 @@ public class Wallet implements Serializable {
 
     @Expose
     @SerializedName("balance")
-    private long balance;
+    private int balance;
 
     @Expose
     @SerializedName("balance_req")
-    private long balanceReq;
+    private int balanceReq;
 
     @Expose
     @SerializedName("status_req_deposit")
     private int statusReqDepo;
 
-    public long getBalanceReq() {
+    public int getBalanceReq() {
         return balanceReq;
     }
 
-    public void setBalanceReq(long balanceReq) {
+    public void setBalanceReq(int balanceReq) {
         this.balanceReq = balanceReq;
     }
 
@@ -50,11 +50,11 @@ public class Wallet implements Serializable {
         this.walletCode = walletCode;
     }
 
-    public long getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 

@@ -224,7 +224,7 @@ public class ManageStaffActivity extends AppCompatActivity {
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
         MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
+        service.updatepegawai(body, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 progressBar.setVisibility(View.GONE);

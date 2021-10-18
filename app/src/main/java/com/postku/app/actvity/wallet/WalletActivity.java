@@ -20,6 +20,7 @@ import com.postku.app.json.WalletResponseJson;
 import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
+import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import retrofit2.Call;
@@ -56,8 +57,9 @@ public class WalletActivity extends AppCompatActivity {
         rlriwayatppob = findViewById(R.id.rl_history_ppob);
 
         walletid = getIntent().getIntExtra(Constants.ID, 0);
-        sessionManager.setIdWallet(String.valueOf(walletid));
 
+        sessionManager.setIdWallet(String.valueOf(walletid));
+        textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(getIntent().getIntExtra(Constants.NOMINAL,0))));
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +118,7 @@ public class WalletActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         Wallet wallet = response.body().getWallet();
+                        Log.e("BALANCE", String.valueOf(wallet.getBalance()));
                         textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(wallet.getBalance())));
                         if(wallet.getStatusReqDepo() == 1) {
                             Intent intent = new Intent(context, KonfirmasiTopupActivity.class);

@@ -219,7 +219,7 @@ public class PosFragment extends Fragment {
                 public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                     if(response.isSuccessful()){
                         if(response.body().getStatusCode() == 201){
-                            DHelper.pesan(context, response.body().getMessage());
+//                            DHelper.pesan(context, response.body().getMessage());
                             checkCart();
                         }
                     }

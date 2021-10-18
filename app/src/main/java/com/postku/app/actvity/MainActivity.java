@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.plus.PostkuPlusActivity;
+import com.postku.app.actvity.profil.ProfileActivity;
 import com.postku.app.fragment.HomeFragment;
 import com.postku.app.fragment.absensi.AbsensiFragment;
 import com.postku.app.fragment.customer.CustomerFragment;
@@ -46,11 +47,17 @@ import com.postku.app.fragment.setting.SettingFragment;
 import com.postku.app.fragment.toko.TokoFragment;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.GetKritikResponse;
 import com.postku.app.models.User;
+import com.postku.app.services.ServiceGenerator;
+import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.postku.app.helpers.Constants.TAG;
 
@@ -78,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout rlsubs = headerView.findViewById(R.id.rlupgrade);
         RelativeLayout rlprofile = headerView.findViewById(R.id.rlprofile);
 
+
+
         rlsubs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         rlprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(context, ProfileActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -229,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDialogKritik(){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_add_stock, null);
@@ -240,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText edtNote = dialogView.findViewById(R.id.edittext2);
         final Button submit = dialogView.findViewById(R.id.btn_submit);
 
+        selectKategori.setHint("Pilih");
         title.setText("Saran dan Kritik");
         edtStock.setVisibility(View.GONE);
 
@@ -260,12 +272,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "pos:" + selectKategori.getText().toString().trim());
+                if(selectKategori.getText().toString().isEmpty()){
+                    selectKategori.setError(context.getString(R.string.error_empty));
+                    return;
+                }else if(edtNote.getText().toString().isEmpty()){
+                    edtNote.setError(context.getString(R.string.error_empty));
+                    edtNote.requestFocus();
+                    return;
+                }
+
+                postKritik(selectKategori.getText().toString(), edtNote.getText().toString());
                 alertDialog.dismiss();
             }
         });
     }
 
+    private void postKritik(String label, String isi){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.kritiksaran(user.getId(), label, isi).enqueue(new Callback<GetKritikResponse>() {
+            @Override
+            public void onResponse(Call<GetKritikResponse> call, Response<GetKritikResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        DHelper.pesan(context, response.body().getMessage());
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }else {
+                    DHelper.pesan(context, context.getString(R.string.error_connection));
+                }
+            }
 
+            @Override
+            public void onFailure(Call<GetKritikResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

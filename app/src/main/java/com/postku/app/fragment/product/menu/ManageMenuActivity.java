@@ -56,6 +56,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +67,7 @@ public class ManageMenuActivity extends AppCompatActivity {
     private Context context;
     private User user;
     private SessionManager sessionManager;
-    private TextView caption;
+    private TextView caption, hapus;
     private ImageView back;
     private RelativeLayout rlimage;
     private EditText edtNama, edtDeskripsi, edtHarga, edtModal;
@@ -78,7 +79,7 @@ public class ManageMenuActivity extends AppCompatActivity {
     ArrayList<String> stringArrayList = new ArrayList<>();
     List<Kategori> kategoriList = new ArrayList<>();
     File imageFileMenu;
-    private int idKategori = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +98,19 @@ public class ManageMenuActivity extends AppCompatActivity {
         selectKategori = findViewById(R.id.kategori);
         aSwitch = findViewById(R.id.switch1);
         submit = findViewById(R.id.btn_submit);
+        hapus = findViewById(R.id.text_delete);
         imageView = findViewById(R.id.img_produk);
-        getData();
+
         if(getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
+            getData();
             caption.setText("Tambah Menu");
+            hapus.setVisibility(View.GONE);
         }else {
             caption.setText("Edit Menu");
             id = getIntent().getIntExtra(Constants.ID, 0);
-            idKategori = getIntent().getIntExtra(Constants.ID_KATEGORI, 0);
+            hapus.setVisibility(View.VISIBLE);
             detail(String.valueOf(id));
+            getData();
         }
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +124,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Kategori k = kategoriList.get(position);
-                idKategori = k.getId();
+
             }
         });
 
@@ -165,6 +170,13 @@ public class ManageMenuActivity extends AppCompatActivity {
                 }else {
                     editMenu(String.valueOf(id));
                 }
+            }
+        });
+
+        hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMenu(String.valueOf(id));
             }
         });
 
@@ -246,6 +258,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                         selectKategori.setText(menus.getKategori());
                         Bitmap bitmap = imageView.getDrawingCache();
                         imageFileMenu = DHelper.createTempFile(context, bitmap);
+                        aSwitch.setChecked(menus.isActive());
                     }
                 }
             }
@@ -266,7 +279,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori", createPartFromString(String.valueOf(idKategori)));
+        map.put("kategori", createPartFromString(selectKategori.getText().toString()));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
@@ -293,6 +306,7 @@ public class ManageMenuActivity extends AppCompatActivity {
 
                     }
                 }
+                finish();
             }
 
             @Override
@@ -311,7 +325,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori", createPartFromString(String.valueOf(idKategori)));
+        map.put("kategori", createPartFromString(selectKategori.getText().toString()));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
@@ -358,6 +372,25 @@ public class ManageMenuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ActiveStockResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteMenu(String id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_menu", createPartFromString(id));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteMenu(map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

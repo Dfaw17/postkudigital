@@ -43,11 +43,12 @@ import static com.postku.app.helpers.Constants.TAG;
 public class HomeQrisActivity extends AppCompatActivity {
     private Context context;
     private SessionManager sessionManager;
-    private LinearLayout lsaldo, lriwayat, lclaim;
+    private LinearLayout lsaldo, lriwayat, lclaim, lempty;
     private RecyclerView recyclerView;
     private HistoryTransAdapter adapter;
     private List<Integer> idclaim = new ArrayList<>();
     private int total;
+    private TextView saldoQris;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,9 @@ public class HomeQrisActivity extends AppCompatActivity {
         lsaldo = findViewById(R.id.lsaldo);
         lclaim = findViewById(R.id.lclaim);
         lriwayat = findViewById(R.id.lriwayat);
+        lempty = findViewById(R.id.lempty);
         recyclerView = findViewById(R.id.rec_riwayat);
+        saldoQris = findViewById(R.id.text_saldo);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -108,7 +111,12 @@ public class HomeQrisActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                alertDialog.dismiss();
                 Log.e(TAG, "total:" + total + " idlist:" + new List[]{idclaim});
-                klaim();
+                if(idclaim.size() > 0){
+                    klaim();
+                }else {
+                    DHelper.pesan(context, "Tidak bisa klaim karena Saldo Qris kamu 0");
+                }
+
                 alertDialog.dismiss();
             }
         });
@@ -124,6 +132,7 @@ public class HomeQrisActivity extends AppCompatActivity {
     }
 
     private void getData(){
+        lempty.setVisibility(View.GONE);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.settlement(sessionManager.getIdToko()).enqueue(new Callback<GetHistoryTransResponse>() {
             @Override
@@ -131,7 +140,9 @@ public class HomeQrisActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getTransactionList().isEmpty()){
                         recyclerView.setVisibility(View.GONE);
+                        lempty.setVisibility(View.VISIBLE);
                     }else {
+                        lempty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new HistoryTransAdapter(context, response.body().getTransactionList());
                         recyclerView.setAdapter(adapter);
@@ -140,6 +151,7 @@ public class HomeQrisActivity extends AppCompatActivity {
                             idclaim.add(transactions.get(i).getId());
                         }
                         total = response.body().getTotal();
+                        saldoQris.setText("Rp" + DHelper.toformatRupiah(String.valueOf(total)));
                     }
                 }
             }

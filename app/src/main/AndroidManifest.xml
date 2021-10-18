@@ -21,13 +21,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".actvity.ppob.RiwayatPpobActivity"
+        <activity android:name=".fragment.report.RankingActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".actvity.ArtikelActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.profil.EditProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.profil.DataBankActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.profil.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".actvity.ppob.RiwayatPpobActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.wallet.RiwayatTopupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".actvity.ppob.ResultTransaksiActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".actvity.ppob.ResultTransaksiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.ppob.TransPpobActivity"
             android:theme="@style/AppTheme.NoActionBar" />
