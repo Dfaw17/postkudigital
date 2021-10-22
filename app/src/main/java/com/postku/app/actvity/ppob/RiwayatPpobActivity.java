@@ -32,6 +32,8 @@ import com.postku.app.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,7 +94,7 @@ public class RiwayatPpobActivity extends AppCompatActivity {
         dateEnd = formatDate.format(calendar.getTime());
         tanggal.setText(dateStart + " - " + dateEnd);
 
-        getData(date1, date2);
+        getData(true, date1, date2);
 
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,11 +132,17 @@ public class RiwayatPpobActivity extends AppCompatActivity {
 
     }
 
-    private void getData(String mDate1, String mDate2){
+    private void getData(boolean isFirst, String mDate1, String mDate2){
         progressBar.setVisibility(View.VISIBLE);
         lempty.setVisibility(View.GONE);
+        Map<String, String> data = new HashMap<>();
+        data.put("id_toko", sessionManager.getIdToko());
+        if(!isFirst){
+            data.put("date1", mDate1);
+            data.put("date2", mDate2);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.historyPppob(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<GetHistoryPpobResponse>() {
+        service.historyPppob(data).enqueue(new Callback<GetHistoryPpobResponse>() {
             @Override
             public void onResponse(Call<GetHistoryPpobResponse> call, Response<GetHistoryPpobResponse> response) {
                 progressBar.setVisibility(View.GONE);
@@ -181,7 +189,7 @@ public class RiwayatPpobActivity extends AppCompatActivity {
                 dateStart = formatDate.format(selectedDate.getStartDate().getTime());
                 dateEnd = formatDate.format(selectedDate.getEndDate().getTime());
                 tanggal.setText(dateStart + " - " + dateEnd);
-                getData(date1, date2);
+                getData(false, date1, date2);
 
             }
         });

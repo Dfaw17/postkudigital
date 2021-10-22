@@ -448,7 +448,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="end"
-                        android:text="delivery"
+                        android:text="-"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -506,7 +506,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="tipe pembayaran"
+                        android:text="pajak"
                         android:textSize="14sp" />
 
                     <TextView
@@ -516,6 +516,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="end"
+                        android:text="-"
                         android:textSize="14sp" />
                 </LinearLayout>
 

@@ -6,6 +6,7 @@ import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.CallbackQrisResponse;
 import com.postku.app.json.ClaimRequestJson;
 import com.postku.app.json.ClaimResponseJson;
+import com.postku.app.json.CreateCartRequest;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.CreateQrisResponse;
 import com.postku.app.json.CreateTokoResponse;
@@ -13,11 +14,14 @@ import com.postku.app.json.CustomerPostResponseJson;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.DetailTransactionResponse;
+import com.postku.app.json.GetAbsensiResponse;
 import com.postku.app.json.GetArtikelResponse;
 import com.postku.app.json.GetBankResponseJson;
 import com.postku.app.json.GetCartResponse;
 import com.postku.app.json.GetChannelResponseJson;
+import com.postku.app.json.GetCheckAbsenResponse;
 import com.postku.app.json.GetCustomerResponseJson;
+import com.postku.app.json.GetDetailAbseResponse;
 import com.postku.app.json.GetDetailArtikelResponse;
 import com.postku.app.json.GetDetailBannerResponse;
 import com.postku.app.json.GetHistoryClaimResponse;
@@ -78,6 +82,7 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface UserService {
 //    auth
@@ -86,6 +91,10 @@ public interface UserService {
     Call<RegisterResponseJson> createUser(@Field("username") String username,
                                           @Field("email") String email,
                                           @Field("password") String password);
+    @FormUrlEncoded
+    @POST("token/logout")
+    Call<GetCheckAbsenResponse> logout(@Field("username") String username);
+
     @Multipart
     @PUT("updateowner")
     Call<ResponseBody> updateOwner (@Part MultipartBody.Part image,
@@ -210,17 +219,13 @@ public interface UserService {
     Call<TransactionResponse> createTransaction(@PartMap Map<String, RequestBody> text);
 
     @GET("transaction")
-    Call<GetHistoryTransResponse> historyTrans(@Query("id_toko") String id,
-                                               @Query("date1") String date1,
-                                               @Query("date2") String date2);
+    Call<GetHistoryTransResponse> historyTrans(@QueryMap Map<String, String> options);
 
     @GET("transaction/detail/{code}")
     Call<DetailTransactionResponse> detail(@Path("code") String code);
 
     @GET("laporanbisnis")
-    Call<GetReportResponseJson> laporan(@Query("id_toko") String id,
-                                        @Query("date1") String date1,
-                                        @Query("date2") String date2);
+    Call<GetReportResponseJson> laporan(@QueryMap Map<String, String> options);
 
     @Multipart
     @POST("qris")
@@ -359,9 +364,7 @@ public interface UserService {
 
 
     @GET("transaction/ppob")
-    Call<GetHistoryPpobResponse> historyPppob(@Query("id_toko") String id,
-                                         @Query("date1") String date1,
-                                         @Query("date2") String date2);
+    Call<GetHistoryPpobResponse> historyPppob(@QueryMap Map<String, String> options);
 
     @GET("settlement")
     Call<GetHistoryTransResponse> settlement(@Query("id_toko") String id);
@@ -392,42 +395,52 @@ public interface UserService {
                                         @Field("isi") String is);
 
     @GET("report/menu")
-    Call<ResponseBody> reportmenu(@Query("id_toko") String id,
-                                  @Query("date1") String date1,
-                                  @Query("date2") String date2);
+    Call<ResponseBody> reportmenu(@QueryMap Map<String, String> options);
 
     @GET("report/employee")
-    Call<ResponseBody> reportemployee(@Query("id_toko") String id,
-                                      @Query("date1") String date1,
-                                      @Query("date2") String date2);
+    Call<ResponseBody> reportemployee(@QueryMap Map<String, String> options);
 
     @GET("report/kategori")
-    Call<ResponseBody> reportkategori(@Query("id_toko") String id,
-                                      @Query("date1") String date1,
-                                      @Query("date2") String date2);
+    Call<ResponseBody> reportkategori(@QueryMap Map<String, String> options);
 
     @GET("report/disc")
-    Call<ResponseBody> reportdisc(@Query("id_toko") String id,
-                                  @Query("date1") String date1,
-                                  @Query("date2") String date2);
+    Call<ResponseBody> reportdisc(@QueryMap Map<String, String> options);
 
     @GET("report/table")
-    Call<ResponseBody> reporttable(@Query("id_toko") String id,
-                                  @Query("date1") String date1,
-                                  @Query("date2") String date2);
+    Call<ResponseBody> reporttable(@QueryMap Map<String, String> options);
 
     @GET("report/pelanggan")
-    Call<ResponseBody> reportpelanggan(@Query("id_toko") String id,
-                                   @Query("date1") String date1,
-                                   @Query("date2") String date2);
+    Call<ResponseBody> reportpelanggan(@QueryMap Map<String, String> options);
 
     @GET("report/order_tipe")
-    Call<ResponseBody> reporttipe(@Query("id_toko") String id,
-                                       @Query("date1") String date1,
-                                       @Query("date2") String date2);
+    Call<ResponseBody> reporttipe(@QueryMap Map<String, String> options);
 
     @GET("report/label_order")
-    Call<ResponseBody> reportlabel(@Query("id_toko") String id,
-                                  @Query("date1") String date1,
-                                  @Query("date2") String date2);
+    Call<ResponseBody> reportlabel(@QueryMap Map<String, String> options);
+
+    @Multipart
+    @POST("subs")
+    Call<ResponseBody> subs(@PartMap Map<String, RequestBody> text);
+
+    @GET("absen")
+    Call<GetAbsensiResponse> dataAbsen(@QueryMap Map<String, String> options);
+
+    @GET("absen/check/{id}")
+    Call<GetCheckAbsenResponse> checkAbsen(@Path("id") String id);
+
+    @Multipart
+    @POST("absen")
+    Call<ResponseBody> absen(@Part MultipartBody.Part image,
+                             @PartMap Map<String, RequestBody> text);
+
+    @GET("absen/detail/{id}")
+    Call<GetDetailAbseResponse> detailAbsen(@Path("id") String id);
+
+    /*cart api v2*/
+
+    @POST("v2/cart")
+    Call<CreateCartResponse> createCart(@Body CreateCartRequest param);
+
+    @PATCH("v2/cart")
+    Call<CreateCartResponse> updateCart(@Body CreateCartRequest param);
 }

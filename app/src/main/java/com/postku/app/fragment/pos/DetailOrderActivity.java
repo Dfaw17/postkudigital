@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.MainActivity;
@@ -28,11 +29,15 @@ import com.postku.app.adapter.ItemCartAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.helpers.OnCartItemClickListener;
+import com.postku.app.json.CreateCartRequest;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.InsertItemResponse;
 import com.postku.app.models.Cart;
+import com.postku.app.models.ItemCart;
 import com.postku.app.models.User;
+import com.postku.app.models.order.MenuItem;
+import com.postku.app.models.order.OrderCart;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -42,7 +47,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -50,14 +57,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.postku.app.helpers.Constants.PAJAK;
 import static com.postku.app.helpers.Constants.TAG;
 
-public class DetailOrderActivity extends AppCompatActivity implements OnCartItemClickListener {
+public class DetailOrderActivity extends AppCompatActivity implements OnCartItemClickListener, SelectAddFragment.UpdateText, SelectTable.UpdateText {
     private Context context;
     private User user;
     private SessionManager sessionManager;
     private TextView totalItems,subTotal, discount, customer, meja, tipeOrder, labelOrder,
-    paymentMethod, grandTotal, deleteCart;
+            pajak, grandTotal, deleteCart;
     private RelativeLayout rlDiskon, rlCustomer, rlTable, rlTipe, rlLabel, rlPajak, rlService;
     private RecyclerView recyclerView;
     private Button simpan, bayar;
@@ -69,6 +77,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     double totalTagihan;
     public int quantity=0;
     private String invoice="";
+    private List<MenuItem> menuItemList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +100,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         meja = findViewById(R.id.text_meja);
         tipeOrder = findViewById(R.id.text_tipe_order);
         labelOrder = findViewById(R.id.text_label_order);
-        paymentMethod = findViewById(R.id.text_payment);
+        pajak = findViewById(R.id.text_payment);
         grandTotal = findViewById(R.id.text_total);
         deleteCart = findViewById(R.id.text_delete);
         simpan = findViewById(R.id.btn_print3);
@@ -105,6 +114,26 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
+        if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
+            discount.setText(sessionManager.getDiscount());
+        }
+        if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
+            customer.setText(sessionManager.getPelanggan());
+        }
+        if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
+            labelOrder.setText(sessionManager.getLabelOrder());
+        }
+        if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
+            tipeOrder.setText(sessionManager.getTipeOrder());
+        }
+        if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
+            pajak.setText(sessionManager.getPajak());
+        }
+        if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
+            meja.setText(sessionManager.getMeja());
+        }
+
+
         caption.setText("Detail Order");
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -117,11 +146,32 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         bayar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, PaymentActivity.class);
-                intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID, 0));
-                intent.putExtra(Constants.ADD, totalTagihan);
-                intent.putExtra(Constants.NAMA, invoice);
-                startActivity(intent);
+                CreateCartRequest request = new CreateCartRequest();
+
+                if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
+                    request.setDiscount(sessionManager.getIdDiscount());
+                }
+                if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
+                    request.setPelanggan(sessionManager.getIdPelanggan());
+                }
+                if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
+                    request.setLabelOrder(sessionManager.getIdLabelOrder());
+                }
+                if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
+                    request.setTipeOrder(sessionManager.getIdTipeOrder());
+                }
+                if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
+                    request.setPajak(sessionManager.getIdPajak());
+                }
+                if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
+                    request.setTable(sessionManager.getIdMeja());
+                }
+
+                List<Integer> listServicefee = new ArrayList<>();
+                listServicefee = sessionManager.getSeviceList();
+                request.setServiceFee(listServicefee);
+                request.setIdCart(getIntent().getIntExtra(Constants.ID, 0));
+                updCart(request);
             }
         });
 
@@ -217,7 +267,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             public void onClick(View v) {
                 FragmentManager fm = getSupportFragmentManager();
                 Bundle bundle = new Bundle();
-                bundle.putString(Constants.METHOD, Constants.PROVINSI);
+                bundle.putString(Constants.METHOD, "2");
                 dialogFragment1.setArguments(bundle);
                 dialogFragment1.show(fm, TAG);
             }
@@ -372,6 +422,16 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                             adapter = new ItemCartAdapter(context, response.body().getItemCartList(), DetailOrderActivity.this::onItemClick, true);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setVisibility(View.VISIBLE);
+//                            menuItemList.clear();
+//                            List<ItemCart> cartList = response.body().getItemCartList();
+//                            for(int i=0;i < cartList.size();i++){
+//                                final MenuItem item = new MenuItem();
+//                                item.setIdMenu(String.valueOf(cartList.get(i).getId()));
+//                                item.setQty(String.valueOf(cartList.get(i).getQty()));
+//                                item.setDisc(String.valueOf(cartList.get(i).getDiscount()));
+//                                menuItemList.add(item);
+//                            }
+
                         }else {
                             recyclerView.setVisibility(View.GONE);
                         }
@@ -492,5 +552,58 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             });
             builder.show();
         }
+    }
+
+    @Override
+    public void updateResult(String metode, String id, String nama) {
+        if(metode.equalsIgnoreCase(Constants.DISKON)){
+            sessionManager.setIdDiscount(id);
+            sessionManager.setDiscount(nama);
+            discount.setText(nama);
+        }else if(metode.equalsIgnoreCase(Constants.CUSTOMER)){
+            sessionManager.setIdPelanggan(id);
+            sessionManager.setPelanggan(nama);
+            customer.setText(nama);
+        }else if(metode.equalsIgnoreCase(Constants.TIPE_ORDER)){
+            sessionManager.setIdTipeOrder(id);
+            sessionManager.setTipeOrder(nama);
+            tipeOrder.setText(nama);
+        }else if(metode.equalsIgnoreCase(Constants.LABEL_ORDER)){
+            sessionManager.setIdLabelOrder(id);
+            sessionManager.setLabelOrder(nama);
+            labelOrder.setText(nama);
+        }else if(metode.equalsIgnoreCase(PAJAK)){
+            sessionManager.setIdPajak(id);
+            sessionManager.setPajak(nama);
+            pajak.setText(nama);
+        }
+    }
+
+    @Override
+    public void updateResult(String id, String nama) {
+        meja.setText(nama);
+    }
+
+    private void updCart(CreateCartRequest request){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.updateCart(request).enqueue(new Callback<CreateCartResponse>() {
+            @Override
+            public void onResponse(Call<CreateCartResponse> call, Response<CreateCartResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 201){
+                        Intent intent = new Intent(context, PaymentActivity.class);
+                        intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID, 0));
+                        intent.putExtra(Constants.ADD, totalTagihan);
+                        intent.putExtra(Constants.NAMA, invoice);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateCartResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

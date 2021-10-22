@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,8 @@ import com.postku.app.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +56,8 @@ public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private Calendar calendar;
     private HistoryTransAdapter adapter;
+    private LinearLayout lempty;
+    private ProgressBar progressBar;
     public HistoryFragment() {
         // Required empty public constructor
     }
@@ -68,6 +74,9 @@ public class HistoryFragment extends Fragment {
         textDateCompleted = view.findViewById(R.id.text_date);
         totalTrx = view.findViewById(R.id.text_total);
         recyclerView = view.findViewById(R.id.rec_history);
+        progressBar = view.findViewById(R.id.progressBar);
+        lempty = view.findViewById(R.id.lempty);
+
         calendar = Calendar.getInstance();
         date1 = formater.format(calendar.getTime());
         date2 = formater.format(calendar.getTime());
@@ -86,7 +95,7 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        getData(date1, date2);
+        getData(true, date1, date2);
 
 
         search.addTextChangedListener(new TextWatcher() {
@@ -134,7 +143,7 @@ public class HistoryFragment extends Fragment {
                  dateStart = formatDate.format(selectedDate.getStartDate().getTime());
                  dateEnd = formatDate.format(selectedDate.getEndDate().getTime());
                 textDateCompleted.setText(dateStart + " - " + dateEnd);
-                getData(date1, date2);
+                getData(false, date1, date2);
 
             }
         });
@@ -151,17 +160,30 @@ public class HistoryFragment extends Fragment {
     }
 
 
-    private void getData(String mDate1, String mDate2){
+    private void getData(boolean isFirst, String mDate1, String mDate2){
+        progressBar.setVisibility(View.VISIBLE);
+        lempty.setVisibility(View.GONE);
+        Map<String, String> data = new HashMap<>();
+        data.put("id_toko", sessionManager.getIdToko());
+        if(!isFirst){
+            data.put("date1", mDate1);
+            data.put("date2", mDate2);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.historyTrans(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<GetHistoryTransResponse>() {
+        service.historyTrans(data).enqueue(new Callback<GetHistoryTransResponse>() {
             @Override
             public void onResponse(Call<GetHistoryTransResponse> call, Response<GetHistoryTransResponse> response) {
+                progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         if(response.body().getTransactionList().size() > 0){
                             adapter = new HistoryTransAdapter(context, response.body().getTransactionList());
+                            recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                             totalTrx.setText("Rp" + DHelper.toformatRupiah(String.valueOf(response.body().getTotal())));
+                        }else {
+                            lempty.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -169,6 +191,7 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<GetHistoryTransResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
 
             }
         });

@@ -5,44 +5,43 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class OrderMenu extends RealmObject implements Serializable {
+public class MenuItem implements Serializable {
     @PrimaryKey
     @Expose
-    @SerializedName("idmenu")
-    private int idMenu;
+    @SerializedName("id_cart_item")
+    private String idMenu;
 
     @Expose
     @SerializedName("qty")
-    private int qty;
+    private String qty;
 
     @Expose
     @SerializedName("disc")
-    private int disc;
+    private String disc;
 
-    public int getIdMenu() {
+    public String getIdMenu() {
         return idMenu;
     }
 
-    public void setIdMenu(int idMenu) {
+    public void setIdMenu(String idMenu) {
         this.idMenu = idMenu;
     }
 
-    public int getQty() {
+    public String getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(String qty) {
         this.qty = qty;
     }
 
-    public int getDisc() {
+    public String getDisc() {
         return disc;
     }
 
-    public void setDisc(int disc) {
+    public void setDisc(String disc) {
         this.disc = disc;
     }
 }

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.fragment.pos.PosFragment;
 import com.postku.app.helpers.DHelper;
@@ -23,13 +24,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import io.realm.Realm;
+
 import static com.postku.app.helpers.Constants.TAG;
 
 public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.VH> {
     private Context context;
     private List<Menus> menusList;
     private OnItemClickListener onItemClickListener;
-
+    private Realm realm;
     public ProdukAdapter(Context context, List<Menus> menusList, OnItemClickListener onItemClickListener){
         this.context = context;
         this.menusList = menusList;
@@ -46,6 +49,7 @@ public class ProdukAdapter extends RecyclerView.Adapter<ProdukAdapter.VH> {
     @Override
     public void onBindViewHolder(@NonNull @NotNull VH holder, int position) {
         final Menus menus = menusList.get(position);
+        realm = BaseApp.getInstance(context).getRealmInstance();
         Glide.with(context)
                 .load(menus.getImage())
                 .placeholder(R.drawable.image_placeholder)

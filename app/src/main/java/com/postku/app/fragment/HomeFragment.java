@@ -66,6 +66,8 @@ public class HomeFragment extends Fragment {
     private TextView notFoundNews, readMore, marquetext;
     private SessionManager sessionManager;
     private Button toPos;
+    private int saldo = 0;
+    private int id;
 
     public HomeFragment() {
         // Required empty public constructor

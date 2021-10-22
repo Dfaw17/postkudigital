@@ -10,13 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.mazenrashed.printooth.Printooth;
 import com.postku.app.R;
 import com.postku.app.helpers.DHelper;
 
 public class SettingFragment extends Fragment {
     private Context context;
     private RelativeLayout rlPrinter, rlScanner;
+    private TextView namaPrinter;
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -29,6 +32,13 @@ public class SettingFragment extends Fragment {
         context = getActivity();
         rlPrinter = view.findViewById(R.id.rlprinter);
         rlScanner = view.findViewById(R.id.rlscanner);
+        namaPrinter = view.findViewById(R.id.text_printer_status);
+
+        if (Printooth.INSTANCE.getPairedPrinter()!=null){
+            namaPrinter.setText(Printooth.INSTANCE.getPairedPrinter().getName());
+        }else {
+            namaPrinter.setText("Belum terhubung");
+        }
 
         rlPrinter.setOnClickListener(new View.OnClickListener() {
             @Override

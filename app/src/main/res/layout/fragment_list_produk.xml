@@ -74,7 +74,7 @@
         android:elevation="5dp"
         android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="5 item"
+                android:text="0 item"
                 android:textColor="@color/colorBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />

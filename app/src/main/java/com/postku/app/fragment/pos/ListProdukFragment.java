@@ -37,6 +37,8 @@ import com.postku.app.models.Cart;
 import com.postku.app.models.ItemCart;
 import com.postku.app.models.Kategori;
 import com.postku.app.models.User;
+import com.postku.app.models.order.OrderLocal;
+import com.postku.app.models.order.OrderMenu;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -45,7 +47,10 @@ import com.postku.app.utils.SessionManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +73,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
     int idCart = 0;
     int idTable = 0;
     private List<ItemCart> itemCartList = new ArrayList<>();
+    Realm realm;
     public ListProdukFragment() {
         // Required empty public constructor
     }
@@ -78,6 +84,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_produk, container, false);
         context = getActivity();
+        realm = BaseApp.getInstance(context).getRealmInstance();
         sessionManager = new SessionManager(context);
         user = BaseApp.getInstance(context).getLoginUser();
         textView = view.findViewById(R.id.textView24);
@@ -121,7 +128,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
             public void onClick(View v) {
                 FragmentManager fm = getChildFragmentManager();
                 Bundle bundle = new Bundle();
-                bundle.putString(Constants.METHOD, Constants.PROVINSI);
+                bundle.putString(Constants.METHOD, "1");
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(fm, TAG);
             }
@@ -135,6 +142,8 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         super.onResume();
         getData(idCat);
         checkCart();
+//
+//        loadOrder();
     }
 
     private void getData(int id){
@@ -255,7 +264,45 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         }else {
             createCart(id);
         }
+//        if(checkOrder(id)){
+//
+//        }else {
+//
+//        }
+    }
 
+    private void loadOrder(){
+        List<OrderLocal> existingOrder = realm.where(OrderLocal.class).findAll();
+        int quantity = 0;
+        long cost = 0;
+
+        for(int o = 0; o < existingOrder.size();o++){
+            quantity += Objects.requireNonNull(existingOrder.get(o).getQty());
+            cost += Objects.requireNonNull(existingOrder.get(o).getTotalHarga());
+        }
+        qty.setText(quantity + " item");
+        total.setText("Total= Rp" + DHelper.toformatRupiah(String.valueOf(cost)));
+    }
+
+    private boolean checkOrder(int idItem){
+        RealmResults<OrderLocal> basket = realm.where(OrderLocal.class).equalTo("idMenu", idItem).findAll();
+        if(basket.size() > 0){
+            return true;
+        }
+        return false;
+    }
+
+    private void addMenu(int idMenu, int harga, int totalHarga, int qty, int disc){
+        OrderLocal local = new OrderLocal();
+        local.setIdMenu(idMenu);
+        local.setHarga(harga);
+        local.setTotalHarga(totalHarga);
+        local.setQty(qty);
+        local.setDisc(disc);
+
+        realm.beginTransaction();
+        realm.copyToRealm(local);
+        realm.commitTransaction();
     }
 
 
@@ -365,4 +412,5 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         idTable = Integer.parseInt(id);
         Log.e(TAG, "Meja:" + nama);
     }
+
 }

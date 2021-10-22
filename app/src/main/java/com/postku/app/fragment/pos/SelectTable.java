@@ -21,6 +21,7 @@ import com.postku.app.adapter.TableSelectAdapter;
 import com.postku.app.fragment.ReferenceFragment;
 import com.postku.app.fragment.meja.TableFragment;
 import com.postku.app.helpers.ClickInterface;
+import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetTableResponse;
 import com.postku.app.models.Meja;
@@ -50,6 +51,7 @@ public class SelectTable extends DialogFragment {
     private TextView caption;
     private Button select;
     private List<Meja> mejaList = new ArrayList<>();
+    private String callFrom;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class SelectTable extends DialogFragment {
         select = view.findViewById(R.id.button6);
 
         caption.setText("Daftar meja");
+        callFrom = getArguments().getString(Constants.METHOD);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,9 +88,19 @@ public class SelectTable extends DialogFragment {
                         DHelper.pesan(context, "Meja sudah dibooking");
                         return;
                     }else {
-                        UpdateText updateText = (UpdateText) getParentFragment();
-                        updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
-                        dismiss();
+                        if(callFrom.equalsIgnoreCase("1")){
+                            UpdateText updateText = (UpdateText) getParentFragment();
+                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                            sessionManager.setMeja(String.valueOf(adapter.getSelectedItem()));
+                            dismiss();
+                        }else {
+                            UpdateText updateText = (UpdateText) getActivity();
+                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                            sessionManager.setIdMeja(String.valueOf(adapter.getSelectedItem()));
+                            sessionManager.setMeja(adapter.getName());
+                            dismiss();
+                        }
+
                     }
                 }
             }

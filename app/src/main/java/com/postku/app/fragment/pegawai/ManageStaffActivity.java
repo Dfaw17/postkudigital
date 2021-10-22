@@ -128,6 +128,9 @@ public class ManageStaffActivity extends AppCompatActivity {
                     alamat.setError(context.getString(R.string.error_empty));
                     alamat.requestFocus();
                     return;
+                }else if(imageFileOwner == null){
+                    DHelper.pesan(context, "Harap upload foto pegawai");
+                    return;
                 }
 
                 if(NetworkUtils.isConnected(context)){

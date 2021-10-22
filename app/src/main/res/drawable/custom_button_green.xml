@@ -13,7 +13,7 @@
                 android:bottomRightRadius="10dp"/>
 
             <solid
-                android:color="@color/colorGreen"/>
+                android:color="@color/colorGreen2"/>
         </shape>
     </item>
     <item
@@ -28,7 +28,7 @@
                 android:bottomRightRadius="10dp"/>
 
             <solid
-                android:color="@color/colorGreen2"/>
+                android:color="@color/colorGreen"/>
         </shape>
     </item>
 

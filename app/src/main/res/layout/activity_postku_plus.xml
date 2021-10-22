@@ -46,13 +46,45 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView47"
+                    android:id="@+id/text_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:gravity="center_horizontal"
                     android:text="Tak kenal maka tak sayang, yuk kenalan dengan POSTKU Plus, akses seluruh fitur aplikasi tanpa biaya tambahan, tanpa embel2 fitur tambahan, hanya dengan Rp 1k/day" />
+
+                <LinearLayout
+                    android:id="@+id/laktif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/bg_dot_green"
+                    android:orientation="horizontal"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Aktif Sampai" />
+
+                    <TextView
+                        android:id="@+id/text_tanggal_aktif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="end"
+                        android:text="20 Januari 2022"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -150,6 +182,15 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+    </FrameLayout>
 
     <include layout="@layout/app_bar_custom" />
 

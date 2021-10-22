@@ -8,11 +8,19 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class OrderMenu extends RealmObject implements Serializable {
+public class OrderLocal extends RealmObject implements Serializable {
     @PrimaryKey
     @Expose
-    @SerializedName("idmenu")
+    @SerializedName("idMenu")
     private int idMenu;
+
+    @Expose
+    @SerializedName("nama")
+    private String nama;
+
+    @Expose
+    @SerializedName("harga")
+    private int harga;
 
     @Expose
     @SerializedName("qty")
@@ -22,12 +30,40 @@ public class OrderMenu extends RealmObject implements Serializable {
     @SerializedName("disc")
     private int disc;
 
+    @Expose
+    @SerializedName("total_harga")
+    private int totalHarga;
+
+    public int getTotalHarga() {
+        return totalHarga;
+    }
+
+    public void setTotalHarga(int totalHarga) {
+        this.totalHarga = totalHarga;
+    }
+
     public int getIdMenu() {
         return idMenu;
     }
 
     public void setIdMenu(int idMenu) {
         this.idMenu = idMenu;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public int getHarga() {
+        return harga;
+    }
+
+    public void setHarga(int harga) {
+        this.harga = harga;
     }
 
     public int getQty() {

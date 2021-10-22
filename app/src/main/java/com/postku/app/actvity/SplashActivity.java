@@ -30,15 +30,24 @@ public class SplashActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
                     if(sessionManager.isLogin()){
-                        if(sessionManager.getIdToko().equalsIgnoreCase("")){
-                            Intent intent = new Intent(context, SelectOutletActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
+                        if(user != null){
+                            if(sessionManager.getIdToko().equalsIgnoreCase("")){
+                                Intent intent = new Intent(context, SelectOutletActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Intent intent = new Intent(context, SelectOutletActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            }
                         }else {
-                            Intent intent = new Intent(context, SelectOutletActivity.class);
+                            Intent intent = new Intent(context, BeginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);

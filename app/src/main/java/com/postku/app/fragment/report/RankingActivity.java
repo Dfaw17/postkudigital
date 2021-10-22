@@ -34,7 +34,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -106,7 +108,7 @@ public class RankingActivity extends AppCompatActivity {
             }
         });
 
-        getData(metode, date1, date2);
+        getData(true, metode, date1, date2);
 
     }
 
@@ -125,7 +127,7 @@ public class RankingActivity extends AppCompatActivity {
                 dateStart = formatDate.format(selectedDate.getStartDate().getTime());
                 dateEnd = formatDate.format(selectedDate.getEndDate().getTime());
                 textDateCompleted.setText(dateStart + " - " + dateEnd);
-                getData(metode, date1, date2);
+                getData(false, metode, date1, date2);
 
             }
         });
@@ -141,13 +143,19 @@ public class RankingActivity extends AppCompatActivity {
         pickerFragement.show(getSupportFragmentManager(), "SUBLIME_PICKER");
     }
 
-    private void getData(String method, String mDate1, String mDate2){
+    private void getData(boolean isFirst, String method, String mDate1, String mDate2){
         rankingList.clear();
         progressBar.setVisibility(View.VISIBLE);
+        Map<String, String> data = new HashMap<>();
+        data.put("id_toko", sessionManager.getIdToko());
+        if(!isFirst){
+            data.put("date1", mDate1);
+            data.put("date2", mDate2);
+        }
         UserService service = ServiceGenerator.createService(UserService.class,
                 sessionManager.getToken(), null, null, null);
         if(method.equalsIgnoreCase(Constants.LAP_MENU)){
-            service.reportmenu(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<ResponseBody>() {
+            service.reportmenu(data).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressBar.setVisibility(View.GONE);
@@ -170,10 +178,10 @@ public class RankingActivity extends AppCompatActivity {
 
                                     topRanking.setVisibility(View.VISIBLE);
                                     nama.setText(rankingList.get(0).getNama());
-                                    qty.setText(rankingList.get(0).getQty());
+                                    qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for(int x=1;x < rankingList.size();x++){
+                                    for(int x=0;x < rankingList.size();x++){
                                         Ranking ranking = new Ranking();
                                         ranking.setNama(rankingList.get(x).getNama());
                                         ranking.setQty(rankingList.get(x).getQty());
@@ -211,7 +219,7 @@ public class RankingActivity extends AppCompatActivity {
                 }
             });
         }else if(method.equalsIgnoreCase(Constants.LAP_STAFF)){
-            service.reportemployee(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<ResponseBody>() {
+            service.reportemployee(data).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressBar.setVisibility(View.GONE);
@@ -233,7 +241,7 @@ public class RankingActivity extends AppCompatActivity {
                                     }
                                     topRanking.setVisibility(View.VISIBLE);
                                     nama.setText(rankingList.get(0).getNama());
-                                    qty.setText(rankingList.get(0).getQty());
+                                    qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
                                     for(int x=1;x < rankingList.size();x++){
@@ -272,7 +280,7 @@ public class RankingActivity extends AppCompatActivity {
                 }
             });
         }else if(method.equalsIgnoreCase(Constants.LAP_KATEGORI)){
-            service.reportemployee(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<ResponseBody>() {
+            service.reportkategori(data).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     progressBar.setVisibility(View.GONE);
@@ -294,7 +302,7 @@ public class RankingActivity extends AppCompatActivity {
                                     }
                                     topRanking.setVisibility(View.VISIBLE);
                                     nama.setText(rankingList.get(0).getNama());
-                                    qty.setText(rankingList.get(0).getQty());
+                                    qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
                                     for(int x=1;x < rankingList.size();x++){

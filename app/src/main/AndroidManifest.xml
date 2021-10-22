@@ -21,8 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragment.report.RankingActivity"
+        <activity android:name=".fragment.absensi.DetailAbsenActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".fragment.absensi.AbsenStaffActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.report.RankingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".actvity.ArtikelActivity"
             android:theme="@style/AppTheme.NoActionBar" />

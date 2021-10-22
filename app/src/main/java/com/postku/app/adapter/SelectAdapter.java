@@ -102,13 +102,15 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
             select = itemView.findViewById(R.id.select);
             check = itemView.findViewById(R.id.check);
             text = itemView.findViewById(R.id.text_nama);
+            if(!isMulti){
+                select.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        check.setChecked(lastSelectedPosition == getAdapterPosition());
+                    }
+                });
+            }
 
-            select.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    check.setChecked(lastSelectedPosition == getAdapterPosition());
-                }
-            });
         }
     }
 
@@ -129,5 +131,14 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
             }
         }
         return items;
+    }
+
+    public String getSelectedName(){
+        if (lastSelectedPosition >= 0) {
+            ServiceAdd serviceAdd = dataList.get(lastSelectedPosition);
+//            Toast.makeText(context, "Selected Item : " + arrayList.get(selectedPosition), Toast.LENGTH_SHORT).show();
+            return serviceAdd.getNama();
+        }
+        return "";
     }
 }

@@ -124,11 +124,15 @@ public class SelectAddFragment extends DialogFragment {
                 if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.SERVICE_CHARGE)){
                     if(adapter != null){
                         List<Integer> serviceFee = adapter.getSelectedItems();
-                        Log.e(TAG, Arrays.toString(new List[]{serviceFee}));
+                        sessionManager.saveServiceFee(serviceFee, "servicefee");
+                        dismiss();
                     }
                 }else {
                     if(adapter != null){
-                        Log.e(TAG, adapter.getSelectedItem() + "");
+                        UpdateText updateText = (UpdateText) getActivity();
+                        updateText.updateResult(getArguments().getString(Constants.METHOD),
+                                String.valueOf(adapter.getSelectedItem()), adapter.getSelectedName());
+                        dismiss();
                     }
                 }
             }
@@ -379,5 +383,9 @@ public class SelectAddFragment extends DialogFragment {
                 Log.e(TAG, t.getMessage());
             }
         });
+    }
+
+    public interface UpdateText{
+        void updateResult(String metode, String id, String nama);
     }
 }

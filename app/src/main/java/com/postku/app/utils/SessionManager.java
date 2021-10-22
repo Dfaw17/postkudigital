@@ -3,6 +3,12 @@ package com.postku.app.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 public class SessionManager {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
@@ -18,6 +24,22 @@ public class SessionManager {
     private static final String ACTIVE_CART = "activeCart";
     private static final String IS_CART_ACTIVE = "isCartActive";
     private static final String ID_WALLET = "idWallet";
+
+    private static final String DISCOUNT = "discount";
+    private static final String PELANGGAN = "pelanggan";
+    private static final String MEJA = "meja";
+    private static final String TIPE_ORDER = "tipeorder";
+    private static final String LABEL_ORDER = "labelorder";
+    private static final String PAJAK = "pajak";
+    private static final String SERVICE_FEE = "servicefee";
+
+    private static final String ID_DISCOUNT = "iddiscount";
+    private static final String ID_PELANGGAN = "idpelanggan";
+    private static final String ID_MEJA = "idmeja";
+    private static final String ID_TIPE_ORDER = "idtipeorder";
+    private static final String ID_LABEL_ORDER = "idlabelorder";
+    private static final String ID_PAJAK = "idpajak";
+
 
     public SessionManager(Context context){
         this.context = context;
@@ -53,6 +75,20 @@ public class SessionManager {
     public void deleteCart(){
         editor.putBoolean(IS_CART_ACTIVE,false);
         editor.remove("activeCart");
+        editor.remove(DISCOUNT);
+        editor.remove(ID_DISCOUNT);
+        editor.remove(PELANGGAN);
+        editor.remove(ID_PELANGGAN);
+        editor.remove(TIPE_ORDER);
+        editor.remove(ID_TIPE_ORDER);
+        editor.remove(LABEL_ORDER);
+        editor.remove(ID_LABEL_ORDER);
+        editor.remove(PAJAK);
+        editor.remove(ID_PAJAK);
+        editor.remove(MEJA);
+        editor.remove(ID_MEJA);
+        editor.remove(SERVICE_FEE);
+
         editor.commit();
     }
 
@@ -132,5 +168,127 @@ public class SessionManager {
 
     public String getIdWallet(){
         return sharedPref.getString(ID_WALLET, "");
+    }
+
+    public void saveServiceFee(List<Integer> list, String s){
+        Gson gson = new Gson();
+        String data = gson.toJson(list);
+        editor.putString(SERVICE_FEE, data);
+        editor.apply();
+    }
+
+    public List<Integer> getSeviceList(){
+        Gson gson = new Gson();
+        String json = sharedPref.getString(SERVICE_FEE, null);
+        Type type = new TypeToken<List<Integer>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void setDiscount(String s){
+        editor.putString(DISCOUNT, s);
+        editor.commit();
+    }
+
+    public String getDiscount(){
+        return sharedPref.getString(DISCOUNT, "");
+    }
+
+    public void setPelanggan(String s){
+        editor.putString(PELANGGAN, s);
+        editor.commit();
+    }
+
+    public String getPelanggan(){
+        return sharedPref.getString(PELANGGAN, "");
+    }
+
+    public void setMeja(String s){
+        editor.putString(MEJA, s);
+        editor.commit();
+    }
+
+    public String getMeja(){
+        return sharedPref.getString(MEJA, "");
+    }
+
+    public void setTipeOrder(String s){
+        editor.putString(TIPE_ORDER, s);
+        editor.commit();
+    }
+
+    public String getTipeOrder(){
+        return sharedPref.getString(TIPE_ORDER, "");
+    }
+
+    public void setLabelOrder(String s){
+        editor.putString(LABEL_ORDER, s);
+        editor.commit();
+    }
+
+    public String getLabelOrder(){
+        return sharedPref.getString(LABEL_ORDER, "");
+    }
+
+    public void setPajak(String s){
+        editor.putString(PAJAK, s);
+        editor.commit();
+    }
+
+    public String getPajak(){
+        return sharedPref.getString(PAJAK, "");
+    }
+
+    public void setIdDiscount(String s){
+        editor.putString(ID_DISCOUNT, s);
+        editor.commit();
+    }
+
+    public String getIdDiscount(){
+        return sharedPref.getString(ID_DISCOUNT, "");
+    }
+
+    public void setIdPelanggan(String s){
+        editor.putString(ID_PELANGGAN, s);
+        editor.commit();
+    }
+
+    public String getIdPelanggan(){
+        return sharedPref.getString(ID_PELANGGAN, "");
+    }
+
+    public void setIdMeja(String s){
+        editor.putString(ID_MEJA, s);
+        editor.commit();
+    }
+
+    public String getIdMeja(){
+        return sharedPref.getString(ID_MEJA, "");
+    }
+
+    public void setIdTipeOrder(String s){
+        editor.putString(ID_TIPE_ORDER, s);
+        editor.commit();
+    }
+
+    public String getIdTipeOrder(){
+        return sharedPref.getString(ID_TIPE_ORDER, "");
+    }
+
+    public void setIdLabelOrder(String s){
+        editor.putString(ID_LABEL_ORDER, s);
+        editor.commit();
+    }
+
+    public String getIdLabelOrder(){
+        return sharedPref.getString(ID_LABEL_ORDER, "");
+    }
+
+    public void setIdPajak(String s){
+        editor.putString(ID_PAJAK, s);
+        editor.commit();
+    }
+
+    public String getIdPajak(){
+        return sharedPref.getString(ID_PAJAK, "");
     }
 }

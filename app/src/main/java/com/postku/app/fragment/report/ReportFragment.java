@@ -31,6 +31,8 @@ import com.postku.app.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -89,7 +91,7 @@ public class ReportFragment extends Fragment {
         dateStart = formatDate.format(calendar.getTime());
         dateEnd = formatDate.format(calendar.getTime());
 
-        getData(date1, date2);
+        getData(true, date1, date2);
 
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +125,7 @@ public class ReportFragment extends Fragment {
                 dateStart = formatDate.format(selectedDate.getStartDate().getTime());
                 dateEnd = formatDate.format(selectedDate.getEndDate().getTime());
                 textDateCompleted.setText(dateStart + " - " + dateEnd);
-                getData(date1, date2);
+                getData(false, date1, date2);
 
             }
         });
@@ -139,9 +141,15 @@ public class ReportFragment extends Fragment {
         pickerFragement.show(getChildFragmentManager(), "SUBLIME_PICKER");
     }
 
-    private void getData(String mDate1, String mDate2){
+    private void getData(boolean isFirst, String mDate1, String mDate2){
+        Map<String, String> data = new HashMap<>();
+        data.put("id_toko", sessionManager.getIdToko());
+        if(!isFirst){
+            data.put("date1", mDate1);
+            data.put("date2", mDate2);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.laporan(sessionManager.getIdToko(), mDate1, mDate2).enqueue(new Callback<GetReportResponseJson>() {
+        service.laporan(data).enqueue(new Callback<GetReportResponseJson>() {
             @Override
             public void onResponse(Call<GetReportResponseJson> call, Response<GetReportResponseJson> response) {
                 if(response.isSuccessful()){
