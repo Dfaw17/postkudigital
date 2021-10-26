@@ -79,6 +79,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     public int quantity=0;
     private String invoice="";
     private List<MenuItem> menuItemList = new ArrayList<>();
+    private List<Integer> serviceFeeList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,30 +149,43 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onClick(View v) {
                 UpdateCartRequest request = new UpdateCartRequest();
-
-                if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
+                Log.e(TAG, sessionManager.getIdDiscount() + "---------");
+                if(sessionManager.getIdDiscount() > 0){
                     request.setDiscount(sessionManager.getIdDiscount());
+                }else {
+                    request.setDiscount(null);
                 }
-                if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
+                if(sessionManager.getIdPelanggan() > 0){
                     request.setPelanggan(sessionManager.getIdPelanggan());
+                }else {
+                    request.setPelanggan(null);
                 }
-                if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
+                if(sessionManager.getIdLabelOrder() > 0){
                     request.setLabelOrder(sessionManager.getIdLabelOrder());
+                }else {
+                    request.setLabelOrder(null);
                 }
-                if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
+                if(sessionManager.getIdTipeOrder() > 0){
                     request.setTipeOrder(sessionManager.getIdTipeOrder());
+                }else {
+                    request.setTipeOrder(null);
                 }
-                if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
+                if(sessionManager.getIdPajak() > 0){
                     request.setPajak(sessionManager.getIdPajak());
+                }else {
+                    request.setPajak(null);
                 }
-                if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
+                if(sessionManager.getIdMeja() > 0){
                     request.setTable(sessionManager.getIdMeja());
+                }else {
+                    request.setTable(null);
                 }
 
-                List<Integer> listServicefee = new ArrayList<>();
-                listServicefee = sessionManager.getSeviceList();
+                if(sessionManager.getSeviceList() != null){
+                    serviceFeeList = sessionManager.getSeviceList();
+                }
                 request.setOrderMenus(menuItemList);
-                request.setServiceFee(listServicefee);
+                request.setServiceFee(serviceFeeList);
                 request.setIdCart(getIntent().getIntExtra(Constants.ID, 0));
                 updCart(request);
             }
@@ -428,9 +442,9 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                             List<ItemCart> cartList = response.body().getItemCartList();
                             for(int i=0;i < cartList.size();i++){
                                 final MenuItem item = new MenuItem();
-                                item.setIdMenu(String.valueOf(cartList.get(i).getId()));
-                                item.setQty(String.valueOf(cartList.get(i).getQty()));
-                                item.setDisc(String.valueOf(cartList.get(i).getDiscount()));
+                                item.setIdMenu(cartList.get(i).getId());
+                                item.setQty(cartList.get(i).getQty());
+                                item.setDisc(cartList.get(i).getDiscount());
                                 menuItemList.add(item);
                             }
 
@@ -558,7 +572,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     }
 
     @Override
-    public void updateResult(String metode, String id, String nama) {
+    public void updateResult(String metode, int id, String nama) {
         if(metode.equalsIgnoreCase(Constants.DISKON)){
             sessionManager.setIdDiscount(id);
             sessionManager.setDiscount(nama);
@@ -593,11 +607,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onResponse(Call<CreateCartResponse> call, Response<CreateCartResponse> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getStatusCode() == 201){
+                    if(response.body().getStatusCode() == 200){
                         Intent intent = new Intent(context, PaymentActivity.class);
                         intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID, 0));
                         intent.putExtra(Constants.ADD, totalTagihan);
-                        intent.putExtra(Constants.NAMA, invoice);
+                        intent.putExtra(Constants.INVOICE, invoice);
                         startActivity(intent);
                     }
                 }

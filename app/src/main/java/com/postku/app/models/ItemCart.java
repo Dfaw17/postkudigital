@@ -72,7 +72,7 @@ public class ItemCart implements Serializable {
 
     @Expose
     @SerializedName("discount")
-    private String discount;
+    private Integer discount;
 
     public int getId() {
         return id;
@@ -202,11 +202,11 @@ public class ItemCart implements Serializable {
         this.toko = toko;
     }
 
-    public String getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 }

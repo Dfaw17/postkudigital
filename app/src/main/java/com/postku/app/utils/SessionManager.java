@@ -190,7 +190,7 @@ public class SessionManager {
     }
 
     public String getDiscount(){
-        return sharedPref.getString(DISCOUNT, "");
+        return sharedPref.getString(DISCOUNT, "0");
     }
 
     public void setPelanggan(String s){
@@ -199,7 +199,7 @@ public class SessionManager {
     }
 
     public String getPelanggan(){
-        return sharedPref.getString(PELANGGAN, "");
+        return sharedPref.getString(PELANGGAN, "0");
     }
 
     public void setMeja(String s){
@@ -208,7 +208,7 @@ public class SessionManager {
     }
 
     public String getMeja(){
-        return sharedPref.getString(MEJA, "");
+        return sharedPref.getString(MEJA, "0");
     }
 
     public void setTipeOrder(String s){
@@ -217,7 +217,7 @@ public class SessionManager {
     }
 
     public String getTipeOrder(){
-        return sharedPref.getString(TIPE_ORDER, "");
+        return sharedPref.getString(TIPE_ORDER, "0");
     }
 
     public void setLabelOrder(String s){
@@ -238,57 +238,57 @@ public class SessionManager {
         return sharedPref.getString(PAJAK, "");
     }
 
-    public void setIdDiscount(String s){
-        editor.putString(ID_DISCOUNT, s);
+    public void setIdDiscount(int s){
+        editor.putInt(ID_DISCOUNT, s);
         editor.commit();
     }
 
-    public String getIdDiscount(){
-        return sharedPref.getString(ID_DISCOUNT, "");
+    public int getIdDiscount(){
+        return sharedPref.getInt(ID_DISCOUNT, 0);
     }
 
-    public void setIdPelanggan(String s){
-        editor.putString(ID_PELANGGAN, s);
+    public void setIdPelanggan(int s){
+        editor.putInt(ID_PELANGGAN, s);
         editor.commit();
     }
 
-    public String getIdPelanggan(){
-        return sharedPref.getString(ID_PELANGGAN, "");
+    public int getIdPelanggan(){
+        return sharedPref.getInt(ID_PELANGGAN, 0);
     }
 
-    public void setIdMeja(String s){
-        editor.putString(ID_MEJA, s);
+    public void setIdMeja(int s){
+        editor.putInt(ID_MEJA, s);
         editor.commit();
     }
 
-    public String getIdMeja(){
-        return sharedPref.getString(ID_MEJA, "");
+    public int getIdMeja(){
+        return sharedPref.getInt(ID_MEJA, 0);
     }
 
-    public void setIdTipeOrder(String s){
-        editor.putString(ID_TIPE_ORDER, s);
+    public void setIdTipeOrder(int s){
+        editor.putInt(ID_TIPE_ORDER, s);
         editor.commit();
     }
 
-    public String getIdTipeOrder(){
-        return sharedPref.getString(ID_TIPE_ORDER, "");
+    public int getIdTipeOrder(){
+        return sharedPref.getInt(ID_TIPE_ORDER, 0);
     }
 
-    public void setIdLabelOrder(String s){
-        editor.putString(ID_LABEL_ORDER, s);
+    public void setIdLabelOrder(int s){
+        editor.putInt(ID_LABEL_ORDER, s);
         editor.commit();
     }
 
-    public String getIdLabelOrder(){
-        return sharedPref.getString(ID_LABEL_ORDER, "");
+    public int getIdLabelOrder(){
+        return sharedPref.getInt(ID_LABEL_ORDER, 0);
     }
 
-    public void setIdPajak(String s){
-        editor.putString(ID_PAJAK, s);
+    public void setIdPajak(int s){
+        editor.putInt(ID_PAJAK, s);
         editor.commit();
     }
 
-    public String getIdPajak(){
-        return sharedPref.getString(ID_PAJAK, "");
+    public int getIdPajak(){
+        return sharedPref.getInt(ID_PAJAK, 0);
     }
 }

@@ -9,31 +9,31 @@ import java.util.List;
 public class UpdateCartRequest {
     @Expose
     @SerializedName("id_cart")
-    private int idCart;
+    private Integer idCart;
 
     @Expose
     @SerializedName("discount")
-    private String discount;
+    private Integer discount;
 
     @Expose
     @SerializedName("table")
-    private String table;
+    private Integer table;
 
     @Expose
     @SerializedName("pajak")
-    private String pajak;
+    private Integer pajak;
 
     @Expose
     @SerializedName("pelanggan")
-    private String pelanggan;
+    private Integer pelanggan;
 
     @Expose
     @SerializedName("tipe_order")
-    private String tipeOrder;
+    private Integer tipeOrder;
 
     @Expose
     @SerializedName("label_order")
-    private String labelOrder;
+    private Integer labelOrder;
 
     @Expose
     @SerializedName("service_fee")
@@ -47,55 +47,55 @@ public class UpdateCartRequest {
         return idCart;
     }
 
-    public void setIdCart(int idCart) {
+    public void setIdCart(Integer idCart) {
         this.idCart = idCart;
     }
 
-    public String getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
-    public String getTable() {
+    public int getTable() {
         return table;
     }
 
-    public void setTable(String table) {
+    public void setTable(Integer table) {
         this.table = table;
     }
 
-    public String getPajak() {
+    public int getPajak() {
         return pajak;
     }
 
-    public void setPajak(String pajak) {
+    public void setPajak(Integer pajak) {
         this.pajak = pajak;
     }
 
-    public String getPelanggan() {
+    public int getPelanggan() {
         return pelanggan;
     }
 
-    public void setPelanggan(String pelanggan) {
+    public void setPelanggan(Integer pelanggan) {
         this.pelanggan = pelanggan;
     }
 
-    public String getTipeOrder() {
+    public int getTipeOrder() {
         return tipeOrder;
     }
 
-    public void setTipeOrder(String tipeOrder) {
+    public void setTipeOrder(Integer tipeOrder) {
         this.tipeOrder = tipeOrder;
     }
 
-    public String getLabelOrder() {
+    public int getLabelOrder() {
         return labelOrder;
     }
 
-    public void setLabelOrder(String labelOrder) {
+    public void setLabelOrder(Integer labelOrder) {
         this.labelOrder = labelOrder;
     }
 

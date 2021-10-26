@@ -96,7 +96,7 @@ public class SelectTable extends DialogFragment {
                         }else {
                             UpdateText updateText = (UpdateText) getActivity();
                             updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
-                            sessionManager.setIdMeja(String.valueOf(adapter.getSelectedItem()));
+                            sessionManager.setIdMeja(adapter.getSelectedItem());
                             sessionManager.setMeja(adapter.getName());
                             dismiss();
                         }

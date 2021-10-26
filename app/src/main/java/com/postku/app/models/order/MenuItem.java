@@ -11,37 +11,37 @@ public class MenuItem implements Serializable {
     @PrimaryKey
     @Expose
     @SerializedName("id_cart_item")
-    private String idMenu;
+    private int idMenu;
 
     @Expose
     @SerializedName("qty")
-    private String qty;
+    private int qty;
 
     @Expose
     @SerializedName("disc")
-    private String disc;
+    private Integer disc;
 
-    public String getIdMenu() {
+    public int getIdMenu() {
         return idMenu;
     }
 
-    public void setIdMenu(String idMenu) {
+    public void setIdMenu(int idMenu) {
         this.idMenu = idMenu;
     }
 
-    public String getQty() {
+    public int getQty() {
         return qty;
     }
 
-    public void setQty(String qty) {
+    public void setQty(int qty) {
         this.qty = qty;
     }
 
-    public String getDisc() {
+    public Integer getDisc() {
         return disc;
     }
 
-    public void setDisc(String disc) {
+    public void setDisc(Integer disc) {
         this.disc = disc;
     }
 }

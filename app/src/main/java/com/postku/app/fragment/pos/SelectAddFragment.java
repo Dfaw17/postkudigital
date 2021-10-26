@@ -131,7 +131,7 @@ public class SelectAddFragment extends DialogFragment {
                     if(adapter != null){
                         UpdateText updateText = (UpdateText) getActivity();
                         updateText.updateResult(getArguments().getString(Constants.METHOD),
-                                String.valueOf(adapter.getSelectedItem()), adapter.getSelectedName());
+                                adapter.getSelectedItem(), adapter.getSelectedName());
                         dismiss();
                     }
                 }
@@ -386,6 +386,6 @@ public class SelectAddFragment extends DialogFragment {
     }
 
     public interface UpdateText{
-        void updateResult(String metode, String id, String nama);
+        void updateResult(String metode, int id, String nama);
     }
 }
