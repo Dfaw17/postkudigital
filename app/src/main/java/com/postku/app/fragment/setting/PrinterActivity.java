@@ -117,10 +117,10 @@ public class PrinterActivity extends AppCompatActivity {
         Resources resources = getResources();
         al.add(new RawPrintable.Builder(new byte[]{27, 100, 4}).build()); // feed lines example in raw mode
 
-        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_struk);
-//        al.add(new ImagePrintable.Builder(image)
-//                .setNewLinesAfter(1)
-//                .build());
+        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_logo_print);
+        al.add(new ImagePrintable.Builder(image)
+                .setNewLinesAfter(1)
+                .build());
 
         al.add( (new TextPrintable.Builder())
                 .setText(sessionManager.getNamaToko())
@@ -199,7 +199,7 @@ public class PrinterActivity extends AppCompatActivity {
 
         int lenDisc = 32 - 9;
         al.add( (new TextPrintable.Builder())
-                .setText("Rp5000(2)" + String.format("%" + lenInv + "s", "Rp7.500"))
+                .setText("Rp5000(2)" + String.format("%" + lenDisc + "s", "Rp7.500"))
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
                 .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
                 .setFontSize(FONT_SMALL)
