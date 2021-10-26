@@ -33,6 +33,7 @@ import com.postku.app.json.CreateCartRequest;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.InsertItemResponse;
+import com.postku.app.json.UpdateCartRequest;
 import com.postku.app.models.Cart;
 import com.postku.app.models.ItemCart;
 import com.postku.app.models.User;
@@ -146,7 +147,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         bayar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateCartRequest request = new CreateCartRequest();
+                UpdateCartRequest request = new UpdateCartRequest();
 
                 if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
                     request.setDiscount(sessionManager.getIdDiscount());
@@ -169,6 +170,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
                 List<Integer> listServicefee = new ArrayList<>();
                 listServicefee = sessionManager.getSeviceList();
+                request.setOrderMenus(menuItemList);
                 request.setServiceFee(listServicefee);
                 request.setIdCart(getIntent().getIntExtra(Constants.ID, 0));
                 updCart(request);
@@ -422,15 +424,15 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                             adapter = new ItemCartAdapter(context, response.body().getItemCartList(), DetailOrderActivity.this::onItemClick, true);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setVisibility(View.VISIBLE);
-//                            menuItemList.clear();
-//                            List<ItemCart> cartList = response.body().getItemCartList();
-//                            for(int i=0;i < cartList.size();i++){
-//                                final MenuItem item = new MenuItem();
-//                                item.setIdMenu(String.valueOf(cartList.get(i).getId()));
-//                                item.setQty(String.valueOf(cartList.get(i).getQty()));
-//                                item.setDisc(String.valueOf(cartList.get(i).getDiscount()));
-//                                menuItemList.add(item);
-//                            }
+                            menuItemList.clear();
+                            List<ItemCart> cartList = response.body().getItemCartList();
+                            for(int i=0;i < cartList.size();i++){
+                                final MenuItem item = new MenuItem();
+                                item.setIdMenu(String.valueOf(cartList.get(i).getId()));
+                                item.setQty(String.valueOf(cartList.get(i).getQty()));
+                                item.setDisc(String.valueOf(cartList.get(i).getDiscount()));
+                                menuItemList.add(item);
+                            }
 
                         }else {
                             recyclerView.setVisibility(View.GONE);
@@ -442,6 +444,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onFailure(Call<DetailCartResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+                Log.e(TAG, t.getMessage());
             }
         });
     }
@@ -584,7 +587,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         meja.setText(nama);
     }
 
-    private void updCart(CreateCartRequest request){
+    private void updCart(UpdateCartRequest request){
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.updateCart(request).enqueue(new Callback<CreateCartResponse>() {
             @Override

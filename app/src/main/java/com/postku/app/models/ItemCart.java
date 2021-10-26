@@ -16,7 +16,7 @@ public class ItemCart implements Serializable {
 
     @Expose
     @SerializedName("disc_name")
-    private String discName;
+    private DiscountName discName;
 
     @Expose
     @SerializedName("qty")
@@ -90,11 +90,11 @@ public class ItemCart implements Serializable {
         this.menuName = menuName;
     }
 
-    public String getDiscName() {
+    public DiscountName getDiscName() {
         return discName;
     }
 
-    public void setDiscName(String discName) {
+    public void setDiscName(DiscountName discName) {
         this.discName = discName;
     }
 
