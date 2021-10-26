@@ -261,7 +261,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
             String grandItem = "";
             hargaitem = "Rp" + DHelper.toformatRupiah(String.valueOf(itemCartList.get(i).getMenuName().getHarga())) + "x" + itemCartList.get(i).getQty();
             double grandTotalItem = Math.round(itemCartList.get(i).getGrandTotalPrice());
-            grandItem = "Rp" + DHelper.toformatRupiah(String.valueOf(grandItem));
+            grandItem = "Rp" + DHelper.toformatRupiah(String.valueOf(grandTotalItem));
 
             int lenPrice = 32 - hargaitem.length();
 
