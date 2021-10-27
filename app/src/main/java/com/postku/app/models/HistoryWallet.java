@@ -24,7 +24,7 @@ public class HistoryWallet implements Serializable {
     private int type;
 
     @Expose
-    @SerializedName("adjusment_balance")
+    @SerializedName("adjustment_balance")
     private int balance;
 
     @Expose

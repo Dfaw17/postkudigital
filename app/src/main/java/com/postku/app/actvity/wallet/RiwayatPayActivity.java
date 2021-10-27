@@ -92,7 +92,7 @@ public class RiwayatPayActivity extends AppCompatActivity {
                             lempty.setVisibility(View.VISIBLE);
                         }else {
                             recyclerView.setVisibility(View.VISIBLE);
-                            adapter = new HistoryWalletAdapter(context, response.body().getHistoryWalletList());
+                            adapter = new HistoryWalletAdapter(context, response.body().getHistoryWalletList(), RiwayatPayActivity.this);
                             recyclerView.setAdapter(adapter);
                         }
                     }else {
