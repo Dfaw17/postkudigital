@@ -171,7 +171,7 @@ public class PostkuPlusActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(response.body().string());
                         String statusCode = object.getString("status_code");
                         String message = object.getString("msg");
-
+                        user.setSubs(true);
                         if(statusCode.equalsIgnoreCase("200")){
                             dialogSuccess(message, true);
                             laktif.setVisibility(View.VISIBLE);

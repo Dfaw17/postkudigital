@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,9 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
     private SessionManager preferences;
     private User user;
     private CircleImageView circleImageView;
-    private TextView textNama, textUsername, textPhone, textEmail, logout;
+    private ImageView backButton;
+    private TextView textNama, textUsername, textPhone, textEmail, logout, caption;
     private RelativeLayout rlpostku, rledit, rlrekening, rltoko;
     private ProgressBar progressBar;
+    private LinearLayout lrekening, ltoko;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +60,20 @@ public class ProfileActivity extends AppCompatActivity {
         rledit = findViewById(R.id.rledit);
         rlrekening = findViewById(R.id.rlrekening);
         rltoko = findViewById(R.id.rltoko);
+        lrekening = findViewById(R.id.lrekening);
+        ltoko = findViewById(R.id.ltoko);
         logout = findViewById(R.id.logout);
         progressBar = findViewById(R.id.progressBar);
+        caption = findViewById(R.id.text_caption);
+        backButton = findViewById(R.id.back_button);
+
+        caption.setText("Profile");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Glide.with(context)
                 .load(user.getProfilePic())
@@ -67,6 +83,14 @@ public class ProfileActivity extends AppCompatActivity {
         textUsername.setText(user.getUsername());
         textPhone.setText(user.getPhone());
         textEmail.setText(user.getEmail());
+
+        if(user.isOwner()){
+            lrekening.setVisibility(View.VISIBLE);
+            ltoko.setVisibility(View.VISIBLE);
+        }else {
+            lrekening.setVisibility(View.GONE);
+            ltoko.setVisibility(View.GONE);
+        }
 
         rlpostku.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class TopupSuksesFragment extends Fragment {
     private RecyclerView recyclerView;
     private HistoryTopupAdapter adapter;
     private int idwallet;
+    private SwipeRefreshLayout swipe;
     public TopupSuksesFragment() {
         // Required empty public constructor
     }
@@ -51,6 +53,7 @@ public class TopupSuksesFragment extends Fragment {
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rec_history);
+        swipe = view.findViewById(R.id.swipe);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -58,6 +61,13 @@ public class TopupSuksesFragment extends Fragment {
 
         Log.e(TAG, "walletid:" + ((RiwayatTopupActivity)context).walletId);
         idwallet = ((RiwayatTopupActivity)context).walletId;
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
+            }
+        });
         return view;
     }
 

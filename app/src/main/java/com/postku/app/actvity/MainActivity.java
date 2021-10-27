@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textNama, textJabatan, textNamaToko;
     private CircleImageView avatar;
     String[] listCategory;
+    private LinearLayout lfooter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +87,71 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = new SessionManager(context);
         drawerLayout = findViewById(R.id.action_main);
         navigationView = findViewById(R.id.nav_view);
+        lfooter = findViewById(R.id.linearLayout);
         View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, navigationView, false);
         navigationView.addHeaderView(headerView);
         RelativeLayout rlsubs = headerView.findViewById(R.id.rlupgrade);
         RelativeLayout rlprofile = headerView.findViewById(R.id.rlprofile);
 
+        lfooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogKritik();
+            }
+        });
+
+//        manajemen menu
+        Menu menu = navigationView.getMenu();
+        MenuItem mReport = menu.findItem(R.id.report);
+        MenuItem mToko = menu.findItem(R.id.toko);
+        MenuItem mStaff = menu.findItem(R.id.pegawai);
+        MenuItem mAbsensi = menu.findItem(R.id.absensi);
+        MenuItem mTable = menu.findItem(R.id.meja);
+        MenuItem mSetting = menu.findItem(R.id.setting);
+        MenuItem mDiskon = menu.findItem(R.id.diskon);
+        MenuItem mCustomer = menu.findItem(R.id.customer);
+        if(user.isSubs()){
+            if(user.isOwner()){
+                mReport.setVisible(true);
+                mToko.setVisible(true);
+                mStaff.setVisible(true);
+                mAbsensi.setVisible(true);
+                mTable.setVisible(true);
+                mSetting.setVisible(true);
+                mDiskon.setVisible(true);
+                mCustomer.setVisible(true);
+            }else {
+                mReport.setVisible(false);
+                mToko.setVisible(false);
+                mStaff.setVisible(false);
+                mAbsensi.setVisible(false);
+                mTable.setVisible(false);
+                mSetting.setVisible(true);
+                mDiskon.setVisible(false);
+                mCustomer.setVisible(false);
+            }
+
+        }else {
+            if(user.isOwner()){
+                mReport.setVisible(true);
+                mToko.setVisible(false);
+                mStaff.setVisible(false);
+                mAbsensi.setVisible(false);
+                mTable.setVisible(false);
+                mSetting.setVisible(false);
+                mDiskon.setVisible(false);
+                mCustomer.setVisible(false);
+            }else {
+                mReport.setVisible(false);
+                mToko.setVisible(false);
+                mStaff.setVisible(false);
+                mAbsensi.setVisible(false);
+                mTable.setVisible(false);
+                mSetting.setVisible(false);
+                mDiskon.setVisible(false);
+                mCustomer.setVisible(false);
+            }
+        }
 
 
         rlsubs.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment f = null;
                 toolbar.setTitle(item.getTitle());
                 int itemId = item.getItemId();
+
                 switch (itemId){
                     case R.id.home:
                         loadFragment(new HomeFragment());
@@ -190,10 +253,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.chat:
                         toolbar.setTitle("Beranda");
                         showContactUs();
-                        break;
-                    case R.id.spacer:
-                        toolbar.setTitle("Beranda");
-                        showDialogKritik();
                         break;
                     case R.id.setting:
                         loadFragment(new SettingFragment());

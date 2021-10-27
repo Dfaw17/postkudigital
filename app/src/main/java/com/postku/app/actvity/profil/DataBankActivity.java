@@ -2,11 +2,16 @@ package com.postku.app.actvity.profil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -86,6 +91,21 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
             noRekening.setText(user.getNoRekening());
         }
 
+        imgBuku.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(DataBankActivity.this, new String[]{Manifest.permission.CAMERA}, Constants.PERMISSION_CAMERA_CODE);
+                    return;
+
+                }else if(ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(DataBankActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.PERMISSION_READ_DATA);
+                    return;
+                }
+                dialogImagePicker(1);
+            }
+        });
+
         final ReferenceFragment dialogFragment = new ReferenceFragment();
         selectBank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +139,46 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
                 }
             }
         });
+    }
+
+    private void dialogImagePicker(int sourceFrom){
+        String[]items = {"Kamera", "Galery"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Ambil gambar");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(sourceFrom == 1){
+                    switch (which){
+                        case 0:
+                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(cameraIntent, Constants.CAMERA_PROFILE_REQUEST);
+                            break;
+                        case 1:
+                            Intent intent = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivityForResult(intent, Constants.GALERY_PROFILE_REQUEST);
+                            break;
+                    }
+                }else{
+                    switch (which){
+                        case 0:
+                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(cameraIntent, Constants.CAMERA_TOKO_REQUEST);
+                            break;
+                        case 1:
+                            Intent intent = new Intent(Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivityForResult(intent, Constants.GALERY_TOKO_REQUEST);
+                            break;
+                    }
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void updateAccount(String idUser){

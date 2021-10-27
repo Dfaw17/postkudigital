@@ -90,7 +90,8 @@ public class ReportFragment extends Fragment {
         date2 = formater.format(calendar.getTime());
         dateStart = formatDate.format(calendar.getTime());
         dateEnd = formatDate.format(calendar.getTime());
-
+        textDateCompleted.setText(dateStart + " - " + dateEnd);
+        
         getData(true, date1, date2);
 
         selectDate.setOnClickListener(new View.OnClickListener() {

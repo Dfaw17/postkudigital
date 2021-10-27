@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.postku.app.R;
 import com.postku.app.adapter.HistoryClaimAdapter;
@@ -34,6 +35,7 @@ public class RiwayatDoneFragment extends Fragment {
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private HistoryClaimAdapter adapter;
+    private SwipeRefreshLayout swipe;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,10 +46,19 @@ public class RiwayatDoneFragment extends Fragment {
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rec_history);
+        swipe = view.findViewById(R.id.swipe);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
+            }
+        });
 
         return view;
     }

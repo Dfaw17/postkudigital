@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.ppob.PpobKategoriActivity;
 import com.postku.app.actvity.ppob.RiwayatPpobActivity;
@@ -17,6 +18,7 @@ import com.postku.app.actvity.qris.HomeQrisActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.User;
 import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -34,11 +36,13 @@ public class WalletActivity extends AppCompatActivity {
     private RelativeLayout rlriwayatpostku, rlriwayattopup, rlriwayatppob;
     private TextView textSaldo;
     private int walletid;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
         context = this;
+        user = BaseApp.getInstance(context).getLoginUser();
         sessionManager = new SessionManager(context);
         textSaldo = findViewById(R.id.text_saldo);
         topup = findViewById(R.id.ltopup);
@@ -63,15 +67,25 @@ public class WalletActivity extends AppCompatActivity {
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkStatusDeposit();
+                if(user.isOwner()){
+                    checkStatusDeposit();
+                }else {
+                    DHelper.pesan(context, "Maaf, kamu tidak punya wewenang akses menu ini");
+                }
+
             }
         });
 
         qris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, HomeQrisActivity.class);
-                startActivity(intent);
+                if(user.isOwner()){
+                    Intent intent = new Intent(context, HomeQrisActivity.class);
+                    startActivity(intent);
+                }else {
+                    DHelper.pesan(context, "Maaf, kamu tidak punya wewenang akses menu ini");
+                }
+
             }
         });
 
@@ -105,6 +119,14 @@ public class WalletActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RiwayatPpobActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        lainnya.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PpobKategoriActivity.class);
                 startActivity(intent);
             }
         });

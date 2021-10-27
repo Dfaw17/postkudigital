@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
@@ -33,6 +34,7 @@ import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.HomeResponseJson;
 import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.User;
 import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -68,6 +70,8 @@ public class HomeFragment extends Fragment {
     private Button toPos;
     private int saldo = 0;
     private int id;
+    private User user;
+    private SwipeRefreshLayout swipe;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,6 +103,15 @@ public class HomeFragment extends Fragment {
         toPos = view.findViewById(R.id.btn_start);
         lsaldo = view.findViewById(R.id.lsaldo);
         lqris = view.findViewById(R.id.lqris);
+        swipe = view.findViewById(R.id.swipe);
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getHome(sessionManager.getIdToko());
+                swipe.setRefreshing(false);
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -133,6 +146,7 @@ public class HomeFragment extends Fragment {
         lsaldo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 checkStatusDeposit();
             }
         });

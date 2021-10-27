@@ -50,6 +50,8 @@ public class HistoryPpobAdapter extends RecyclerView.Adapter<HistoryPpobAdapter.
         holder.tanggal.setText(DHelper.strTodatetime(ppob.getCreatedAt()));
         holder.nominal.setText("Rp" + DHelper.toformatRupiah(String.valueOf(ppob.getPricePostku())));
 
+
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

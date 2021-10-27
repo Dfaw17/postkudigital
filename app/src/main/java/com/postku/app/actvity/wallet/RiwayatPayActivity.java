@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ public class RiwayatPayActivity extends AppCompatActivity {
     private LinearLayout lempty;
     private ProgressBar progressBar;
     private HistoryWalletAdapter adapter;
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class RiwayatPayActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rec_riwayat);
         lempty = findViewById(R.id.lempty);
         progressBar = findViewById(R.id.progressBar);
+        swipe = findViewById(R.id.swipe);
 
         caption.setText("Riwayat Postkupay");
 
@@ -65,6 +68,13 @@ public class RiwayatPayActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         Log.e("WALLET", "walll:" + getIntent().getIntExtra(Constants.ID, 0));
         getData(getIntent().getIntExtra(Constants.ID, 0));
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(getIntent().getIntExtra(Constants.ID, 0));
+                swipe.setRefreshing(false);
+            }
+        });
     }
 
     private void getData(int walletId) {

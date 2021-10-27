@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.fragment.pegawai.ManageStaffActivity;
 import com.postku.app.helpers.Constants;
@@ -63,6 +64,9 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        context = this;
+        user = BaseApp.getInstance(context).getLoginUser();
+        sessionManager = new SessionManager(context);
         backButton = findViewById(R.id.back_button);
         caption = findViewById(R.id.text_caption);
         imgStaff = findViewById(R.id.img_toko);
@@ -75,7 +79,7 @@ public class EditProfileActivity extends AppCompatActivity {
         alamat = findViewById(R.id.edt_alamat);
         progressBar = findViewById(R.id.progressBar);
 
-        caption.setText("Profile Owner");
+        caption.setText("Profile");
 
         Glide.with(context)
                 .load(user.getProfilePic())

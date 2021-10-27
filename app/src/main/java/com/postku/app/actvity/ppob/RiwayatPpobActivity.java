@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -56,7 +57,7 @@ public class RiwayatPpobActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private LinearLayout lempty;
     private HistoryPpobAdapter adapter;
-
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public class RiwayatPpobActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rec_history);
         progressBar = findViewById(R.id.progressBar);
         lempty = findViewById(R.id.lempty);
+        swipe = findViewById(R.id.swipe);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +129,14 @@ public class RiwayatPpobActivity extends AppCompatActivity {
                         adapter.getFilter().filter(s.toString());
                     }
                 }
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(false, date1, date2);
+                swipe.setRefreshing(false);
             }
         });
 

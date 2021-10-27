@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -58,6 +59,7 @@ public class HistoryFragment extends Fragment {
     private HistoryTransAdapter adapter;
     private LinearLayout lempty;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipe;
     public HistoryFragment() {
         // Required empty public constructor
     }
@@ -76,6 +78,7 @@ public class HistoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         progressBar = view.findViewById(R.id.progressBar);
         lempty = view.findViewById(R.id.lempty);
+        swipe = view.findViewById(R.id.swipe);
 
         calendar = Calendar.getInstance();
         date1 = formater.format(calendar.getTime());
@@ -122,6 +125,14 @@ public class HistoryFragment extends Fragment {
                         adapter.getFilter().filter(s.toString());
                     }
                 }
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(false, date1, date2);
+                swipe.setRefreshing(false);
             }
         });
 
