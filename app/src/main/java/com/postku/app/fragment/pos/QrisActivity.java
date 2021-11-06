@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -57,6 +58,7 @@ public class QrisActivity extends AppCompatActivity {
     private User user;
     private int idCart;
     private String reffCode="";
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class QrisActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         imgQr = findViewById(R.id.img_qrcode);
         textTimer = findViewById(R.id.text_timer);
+        progressBar = findViewById(R.id.progressBar9);
 
         caption.setText("QRIS");
         idCart = getIntent().getIntExtra(Constants.ID, 0);
@@ -85,10 +88,12 @@ public class QrisActivity extends AppCompatActivity {
     }
 
     private void showData(String code){
+        progressBar.setVisibility(View.VISIBLE);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.checkQris(code).enqueue(new Callback<CreateQrisResponse>() {
             @Override
             public void onResponse(Call<CreateQrisResponse> call, Response<CreateQrisResponse> response) {
+                progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         invoice.setText(response.body().getData().getExternalId());
@@ -116,6 +121,7 @@ public class QrisActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CreateQrisResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 t.printStackTrace();
             }
         });
@@ -160,10 +166,13 @@ public class QrisActivity extends AppCompatActivity {
             public void onResponse(Call<CallbackQrisResponse> call, Response<CallbackQrisResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
-                        if(response.body().getData().getStatus().equalsIgnoreCase("COMPLETED")){
-                            countDownTimer.cancel();
-                            pay(idCart, amount);
+                        if(response.body().getData() != null){
+                            if(response.body().getData().getStatus().equalsIgnoreCase("COMPLETED")){
+                                countDownTimer.cancel();
+                                pay(idCart, amount);
+                            }
                         }
+
                     }
                 }
             }
@@ -227,7 +236,7 @@ public class QrisActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        checkCallback(getIntent().getStringExtra(Constants.ID), nominal);
+                        checkCallback(getIntent().getStringExtra(Constants.INVOICE), nominal);
                     }
                 }, 5000);
             }

@@ -56,6 +56,7 @@ public class PaymentActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView backButton;
     private TextView caption;
+    private int countFail = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -354,7 +355,15 @@ public class PaymentActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }else {
-                        DHelper.pesan(context, response.body().getMessage());
+                        if(response.body().getStatusCode() == 400){
+                            countFail+=1;
+                            String inv = getIntent().getStringExtra(Constants.INVOICE);
+                            inv = inv + "-" + countFail;
+                            payQris(inv, inputNumber);
+                        }else {
+                            DHelper.pesan(context, response.body().getMessage());
+                        }
+
                     }
                 }else{
 
