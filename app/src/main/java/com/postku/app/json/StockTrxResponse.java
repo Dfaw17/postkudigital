@@ -12,7 +12,7 @@ public class StockTrxResponse {
     private String message;
 
     @Expose
-    @SerializedName("status_code")
+    @SerializedName("status")
     private int statusCode;
 
     @Expose

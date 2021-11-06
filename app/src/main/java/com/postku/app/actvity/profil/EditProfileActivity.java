@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonObject;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.fragment.pegawai.ManageStaffActivity;
@@ -35,10 +36,14 @@ import com.postku.app.utils.Log;
 import com.postku.app.utils.NetworkUtils;
 import com.postku.app.utils.SessionManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import io.realm.Realm;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -80,17 +85,14 @@ public class EditProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         caption.setText("Profile");
-
-        Glide.with(context)
-                .load(user.getProfilePic())
-                .placeholder(R.drawable.image_placeholder)
-                .into(imgStaff);
-
-        username.setText(user.getUsername());
-        nama.setText(user.getNama());
-        phone.setText(user.getPhone());
-        email.setText(user.getEmail());
-        alamat.setText(user.getAddress());
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        Log.e("PC", user.getProfilePic() + "");
+        detailAccount();
 
         imgStaff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +105,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(EditProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.PERMISSION_READ_DATA);
                     return;
                 }
-                dialogImagePicker(1);
+                dialogImagePicker();
             }
         });
 
@@ -140,39 +142,63 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-    private void dialogImagePicker(int sourceFrom){
+    private void detailAccount(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailAccount(user.getId()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int code = Integer.parseInt(object.getString("status_code"));
+                        if(code == 200){
+                            JSONObject json = object.getJSONObject("data");
+                            Glide.with(context)
+                                    .load(json.getString("profile_pic"))
+                                    .placeholder(R.drawable.image_placeholder)
+                                    .into(imgStaff);
+
+                            username.setText(json.getString("username"));
+                            nama.setText(json.getString("nama"));
+                            phone.setText(json.getString("phone"));
+                            email.setText(json.getString("email"));
+                            alamat.setText(json.getString("address"));
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
+    }
+
+    private void dialogImagePicker(){
         String[]items = {"Kamera", "Galery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Ambil gambar");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(sourceFrom == 1){
-                    switch (which){
-                        case 0:
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(cameraIntent, Constants.CAMERA_PROFILE_REQUEST);
-                            break;
-                        case 1:
-                            Intent intent = new Intent(Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                            startActivityForResult(intent, Constants.GALERY_PROFILE_REQUEST);
-                            break;
-                    }
-                }else{
-                    switch (which){
-                        case 0:
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(cameraIntent, Constants.CAMERA_TOKO_REQUEST);
-                            break;
-                        case 1:
-                            Intent intent = new Intent(Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                            startActivityForResult(intent, Constants.GALERY_TOKO_REQUEST);
-                            break;
-                    }
+                switch (which){
+                    case 0:
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, Constants.CAMERA_PROFILE_REQUEST);
+                        break;
+                    case 1:
+                        Intent intent = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivityForResult(intent, Constants.GALERY_PROFILE_REQUEST);
+                        break;
                 }
             }
         });
@@ -188,8 +214,11 @@ public class EditProfileActivity extends AppCompatActivity {
         map.put("nama", createPartFromString(nama.getText().toString().trim()));
         map.put("phone", createPartFromString(phone.getText().toString().trim()));
         map.put("address", createPartFromString(alamat.getText().toString().trim()));
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
+        MultipartBody.Part body = null;
+        if(imageFileOwner != null){
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
+            body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -197,6 +226,26 @@ public class EditProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     DHelper.pesan(context, "Success");
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if(object.getString("status_code").equalsIgnoreCase("200")){
+                            JSONObject jsonObject = object.getJSONObject("data");
+                            Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                            realm.beginTransaction();
+                            user.setEmail(jsonObject.getString("email"));
+                            user.setNama(jsonObject.getString("nama"));
+                            user.setPhone(jsonObject.getString("phone"));
+                            user.setAddress(jsonObject.getString("address"));
+                            user.setProfilePic(jsonObject.getString("profile_pic"));
+                            realm.commitTransaction();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     finish();
                 }else {
                     Log.e(TAG, response.errorBody().toString());
@@ -222,16 +271,23 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(resultCode == RESULT_OK){
             if(requestCode == Constants.CAMERA_PROFILE_REQUEST){
+                Log.e("RESULT", resultCode + "---" + requestCode + "--" + data);
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                imgStaff.destroyDrawingCache();
+                imgStaff.setImageResource(0);
                 imgStaff.setImageBitmap(bitmap);
                 imageFileOwner = DHelper.createTempFile(context, bitmap);
             }else if(requestCode == Constants.GALERY_PROFILE_REQUEST){
                 if(data != null){
                     Uri contentUri = data.getData();
                     try {
+                        Log.e("RESULT", resultCode + "---" + requestCode + "--" + data);
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                        imgStaff.destroyDrawingCache();
+                        imgStaff.setImageResource(0);
                         imgStaff.setImageBitmap(bitmap);
                         imageFileOwner = DHelper.createTempFile(context, bitmap);
 

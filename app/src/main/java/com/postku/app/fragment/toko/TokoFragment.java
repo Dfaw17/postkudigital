@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,6 +47,7 @@ public class TokoFragment extends Fragment {
     private ProgressBar progressBar;
     private User user;
     private SessionManager sessionManager;
+    private SwipeRefreshLayout swipe;
     public TokoFragment() {
         // Required empty public constructor
     }
@@ -62,6 +64,7 @@ public class TokoFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar);
+        swipe = view.findViewById(R.id.swipe);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -103,6 +106,15 @@ public class TokoFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getToko();
+                swipe.setRefreshing(false);
+            }
+        });
+
         return view;
     }
 

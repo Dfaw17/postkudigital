@@ -17,6 +17,8 @@ import com.postku.app.R;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.TopupResponseJson;
+import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.NetworkUtils;
@@ -55,14 +57,18 @@ public class TopUpSaldoActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar6);
         caption.setText("Topup Saldo");
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         text20.setSelected(false);
         text50.setSelected(false);
         text100.setSelected(false);
 
-        id = getIntent().getIntExtra(Constants.ID, 0);
-        nominal = getIntent().getIntExtra(Constants.NOMINAL,0);
-
-
+        checkStatusDeposit();
 
         text20.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +140,41 @@ public class TopUpSaldoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkStatusDeposit(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailWallet(sessionManager.getIdToko()).enqueue(new Callback<WalletResponseJson>() {
+            @Override
+            public void onResponse(Call<WalletResponseJson> call, Response<WalletResponseJson> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        Wallet wallet = response.body().getWallet();
+
+                        if(wallet.getStatusReqDepo() == 1) {
+                            Intent intent = new Intent(context, KonfirmasiTopupActivity.class);
+                            intent.putExtra(Constants.ID, wallet.getId());
+                            intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
+                            intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
+                            startActivity(intent);
+
+                        }else if(wallet.getStatusReqDepo() == 2){
+                            Intent intent = new Intent(context, TopupPendingActivity.class);
+                            startActivity(intent);
+                        }
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }else {
+                    DHelper.pesan(context, context.getString(R.string.error_connection));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletResponseJson> call, Throwable t) {
+
+            }
+        });
     }
 
     private void topup(String nominal){

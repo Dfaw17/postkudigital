@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class DetailClaimActivity extends AppCompatActivity {
     private ImageView backButton;
     private HistoryTransAdapter adapter;
     private String imgUrl = "";
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,15 @@ public class DetailClaimActivity extends AppCompatActivity {
         total = findViewById(R.id.text_total);
         rlcekbukti = findViewById(R.id.rlcekbukti);
         recyclerView = findViewById(R.id.rec_history);
+        swipe = findViewById(R.id.swipe);
+
+        caption.setText("Detail Claim");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -70,6 +81,14 @@ public class DetailClaimActivity extends AppCompatActivity {
         });
 
         getData(String.valueOf(getIntent().getIntExtra(Constants.ID, 0)));
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(String.valueOf(getIntent().getIntExtra(Constants.ID, 0)));
+                swipe.setRefreshing(false);
+            }
+        });
     }
 
     private void getData(String id){

@@ -90,7 +90,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center_vertical"
-                android:text="Total = Rp65.000"
+                android:text="Total = Rp0"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -1,6 +1,7 @@
 package com.postku.app.actvity.wallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ public class WalletActivity extends AppCompatActivity {
     private TextView textSaldo;
     private int walletid;
     private User user;
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,16 +61,27 @@ public class WalletActivity extends AppCompatActivity {
         rlriwayatpostku = findViewById(R.id.rl_history_postku);
         rlriwayattopup = findViewById(R.id.rl_history_topup);
         rlriwayatppob = findViewById(R.id.rl_history_ppob);
+        swipe = findViewById(R.id.swipe);
 
         walletid = getIntent().getIntExtra(Constants.ID, 0);
 
         sessionManager.setIdWallet(String.valueOf(walletid));
         textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(getIntent().getIntExtra(Constants.NOMINAL,0))));
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                detailwallet();
+                swipe.setRefreshing(false);
+            }
+        });
+
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(user.isOwner()){
-                    checkStatusDeposit();
+                    Intent intent = new Intent(context, TopUpSaldoActivity.class);
+                    startActivity(intent);
                 }else {
                     DHelper.pesan(context, "Maaf, kamu tidak punya wewenang akses menu ini");
                 }
@@ -132,7 +145,9 @@ public class WalletActivity extends AppCompatActivity {
         });
     }
 
-    private void checkStatusDeposit(){
+
+
+    private void detailwallet(){
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.detailWallet(sessionManager.getIdToko()).enqueue(new Callback<WalletResponseJson>() {
             @Override
@@ -142,24 +157,7 @@ public class WalletActivity extends AppCompatActivity {
                         Wallet wallet = response.body().getWallet();
                         Log.e("BALANCE", String.valueOf(wallet.getBalance()));
                         textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(wallet.getBalance())));
-                        if(wallet.getStatusReqDepo() == 1) {
-                            Intent intent = new Intent(context, KonfirmasiTopupActivity.class);
-                            intent.putExtra(Constants.ID, wallet.getId());
-                            intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
-                            intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
-                            startActivity(intent);
 
-                        }else if(wallet.getStatusReqDepo() == 2){
-                            Intent intent = new Intent(context, TopupPendingActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Intent intent = new Intent(context, TopUpSaldoActivity.class);
-                            intent.putExtra(Constants.ID, wallet.getId());
-                            intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
-                            intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
-                            startActivity(intent);
-
-                        }
                     }else {
                         DHelper.pesan(context, response.body().getMessage());
                     }

@@ -47,7 +47,15 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
         holder.nama.setText(itemCart.getMenuName().getNama());
         holder.harga.setText("Rp" + DHelper.toformatRupiah(String.valueOf(itemCart.getMenuName().getHarga())) + " x " + itemCart.getQty());
         double grandTotal = Math.round(itemCart.getGrandTotalPrice());
+        double disc = Math.round(itemCart.getTotalDisc());
         holder.total.setText("Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
+        if(disc > 0){
+            holder.diskon.setText("-Rp" + DHelper.toformatRupiah(String.valueOf(disc)));
+            holder.diskon.setVisibility(View.VISIBLE);
+        }else {
+            holder.diskon.setVisibility(View.GONE);
+        }
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +87,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
 
     class VH extends RecyclerView.ViewHolder{
         private RelativeLayout item;
-        private TextView nama, harga, total;
+        private TextView nama, harga, total, diskon;
         private ImageView edit, delete;
         public VH(View view){
             super(view);
@@ -89,6 +97,7 @@ public class ItemCartAdapter extends RecyclerView.Adapter<ItemCartAdapter.VH> {
             total = view.findViewById(R.id.text_total);
             edit = view.findViewById(R.id.img_edit);
             delete = view.findViewById(R.id.img_delete);
+            diskon = view.findViewById(R.id.text_diskon);
         }
     }
 }

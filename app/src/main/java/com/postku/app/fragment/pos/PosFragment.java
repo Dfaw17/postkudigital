@@ -188,7 +188,8 @@ public class PosFragment extends Fragment {
                             double grandTotal = Math.round(cart.getGrandTotal());
                             total.setText("Total= Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
                         }else {
-                            boxCart.setVisibility(View.GONE);
+                            boxCart.setVisibility(View.VISIBLE);
+
                         }
                     }
                 }

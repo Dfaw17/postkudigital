@@ -36,10 +36,14 @@ import com.postku.app.utils.Log;
 import com.postku.app.utils.NetworkUtils;
 import com.postku.app.utils.SessionManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import io.realm.Realm;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -77,19 +81,14 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
         progressBar = findViewById(R.id.progressBar3);
 
         caption.setText("Profile Owner");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        Glide.with(context)
-                .load(user.getProfilePic())
-                .placeholder(R.drawable.image_placeholder)
-                .into(imgBuku);
-
-        if(user.getJenisBank() != null){
-            selectBank.setText(user.getJenisBank());
-        }
-
-        if(user.getNoRekening() != null){
-            noRekening.setText(user.getNoRekening());
-        }
+        detailAccount();
 
         imgBuku.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +101,7 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
                     ActivityCompat.requestPermissions(DataBankActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.PERMISSION_READ_DATA);
                     return;
                 }
-                dialogImagePicker(1);
+                dialogImagePicker();
             }
         });
 
@@ -141,39 +140,66 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
         });
     }
 
-    private void dialogImagePicker(int sourceFrom){
+    private void detailAccount(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailAccount(user.getId()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int code = Integer.parseInt(object.getString("status_code"));
+                        if(code == 200){
+                            JSONObject json = object.getJSONObject("data");
+                            Glide.with(context)
+                                    .load(json.getString("rekening_book_pic"))
+                                    .placeholder(R.drawable.image_placeholder)
+                                    .into(imgBuku);
+
+                            if(user.getJenisBank() != null){
+                                selectBank.setText(json.getString("jenis_bank"));
+                            }
+
+                            if(user.getNoRekening() != null){
+                                noRekening.setText(json.getString("no_rekening"));
+                            }
+
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
+    }
+
+    private void dialogImagePicker(){
         String[]items = {"Kamera", "Galery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Ambil gambar");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(sourceFrom == 1){
-                    switch (which){
-                        case 0:
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(cameraIntent, Constants.CAMERA_PROFILE_REQUEST);
-                            break;
-                        case 1:
-                            Intent intent = new Intent(Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                            startActivityForResult(intent, Constants.GALERY_PROFILE_REQUEST);
-                            break;
-                    }
-                }else{
-                    switch (which){
-                        case 0:
-                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(cameraIntent, Constants.CAMERA_TOKO_REQUEST);
-                            break;
-                        case 1:
-                            Intent intent = new Intent(Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                            startActivityForResult(intent, Constants.GALERY_TOKO_REQUEST);
-                            break;
-                    }
+                switch (which){
+                    case 0:
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, Constants.CAMERA_PROFILE_REQUEST);
+                        break;
+                    case 1:
+                        Intent intent = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivityForResult(intent, Constants.GALERY_PROFILE_REQUEST);
+                        break;
                 }
             }
         });
@@ -187,14 +213,35 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
         map.put("id_user", createPartFromString(idUser));
         map.put("no_rekening", createPartFromString(noRekening.getText().toString().trim()));
         map.put("jenis_bank", createPartFromString(selectBank.getText().toString().trim()));
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("rekening_book_pic", imageFileOwner.getName(), reqFile);
+        MultipartBody.Part body = null;
+        if(imageFileOwner != null){
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
+            body = MultipartBody.Part.createFormData("rekening_book_pic", imageFileOwner.getName(), reqFile);
+        }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int code = Integer.parseInt(object.getString("status_code"));
+                        if(code == 200){
+                            JSONObject jsonObject = object.getJSONObject("data");
+                            Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                            realm.beginTransaction();
+                            user.setRekeningBookPic(jsonObject.getString("rekening_book_pic"));
+                            user.setJenisBank(jsonObject.getString("jenis_bank"));
+                            user.setNoRekening(jsonObject.getString("no_rekening"));
+                            realm.commitTransaction();
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     DHelper.pesan(context, "Success");
                     finish();
                 }else {
@@ -224,6 +271,7 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
         if(resultCode == RESULT_OK){
             if(requestCode == Constants.CAMERA_PROFILE_REQUEST){
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                imgBuku.destroyDrawingCache();
                 imgBuku.setImageBitmap(bitmap);
                 imageFileOwner = DHelper.createTempFile(context, bitmap);
             }else if(requestCode == Constants.GALERY_PROFILE_REQUEST){
@@ -231,6 +279,7 @@ public class DataBankActivity extends AppCompatActivity implements ReferenceFrag
                     Uri contentUri = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                        imgBuku.destroyDrawingCache();
                         imgBuku.setImageBitmap(bitmap);
                         imageFileOwner = DHelper.createTempFile(context, bitmap);
 

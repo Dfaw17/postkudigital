@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.postku.app.R;
 import com.postku.app.adapter.KategoriAdapter;
@@ -59,6 +60,7 @@ public class ServiceFeeFragment extends Fragment {
     private User user;
     private SessionManager sessionManager;
     private ServiceFeeAdapter adapter;
+    private SwipeRefreshLayout swipe;
     public ServiceFeeFragment() {
 
     }
@@ -73,6 +75,7 @@ public class ServiceFeeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar2);
+        swipe = view.findViewById(R.id.swipe);
 
         search.setHint("Cari Biaya layanan");
 
@@ -109,6 +112,14 @@ public class ServiceFeeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog(false, "", "", "");
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
             }
         });
 

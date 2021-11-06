@@ -101,7 +101,8 @@
                 android:layout_toStartOf="@id/img_save"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:src="@drawable/ic_group" />
+                android:src="@drawable/ic_group"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/img_save"
@@ -133,7 +134,7 @@
                 android:clickable="false"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center_vertical"
-                android:text="Total = Rp65.000"
+                android:text="Total = Rp0"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold" />

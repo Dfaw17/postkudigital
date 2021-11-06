@@ -4,6 +4,7 @@ import androidx.transition.Slide;
 
 import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.CallbackQrisResponse;
+import com.postku.app.json.CheckSubsResponse;
 import com.postku.app.json.ClaimRequestJson;
 import com.postku.app.json.ClaimResponseJson;
 import com.postku.app.json.CreateCartRequest;
@@ -24,6 +25,7 @@ import com.postku.app.json.GetCustomerResponseJson;
 import com.postku.app.json.GetDetailAbseResponse;
 import com.postku.app.json.GetDetailArtikelResponse;
 import com.postku.app.json.GetDetailBannerResponse;
+import com.postku.app.json.GetDetailTransPpobResponse;
 import com.postku.app.json.GetHistoryClaimResponse;
 import com.postku.app.json.GetHistoryPpobResponse;
 import com.postku.app.json.GetHistoryTopupResponse;
@@ -59,6 +61,7 @@ import com.postku.app.json.TaxPostResponseJson;
 import com.postku.app.json.TopupResponseJson;
 import com.postku.app.json.TransactionResponse;
 import com.postku.app.json.TransppobResponseJson;
+import com.postku.app.json.UpdCartItemRequest;
 import com.postku.app.json.UpdateCartRequest;
 import com.postku.app.json.WalletResponseJson;
 
@@ -101,10 +104,17 @@ public interface UserService {
     Call<ResponseBody> updateOwner (@Part MultipartBody.Part image,
                                     @PartMap Map<String, RequestBody> text);
 
+    @GET("account")
+    Call<ResponseBody> detailAccount(@Query("id_user") String id);
+
     @Multipart
     @PUT("updatepegawai")
     Call<ResponseBody> updatepegawai (@Part MultipartBody.Part image,
                                     @PartMap Map<String, RequestBody> text);
+
+    @Multipart
+    @PUT("delete_pegawai")
+    Call<ResponseBody> deletePegawai(@PartMap Map<String, RequestBody> text);
 //    toko
     @Multipart
     @POST("toko")
@@ -184,7 +194,7 @@ public interface UserService {
     Call<StockTrxResponse> historyStock(@Query("id_menu") String id);
 
     @Multipart
-    @GET("stock/trx")
+    @POST("stock/trx")
     Call<StockTrxResponse> stocktrx(@PartMap Map<String, RequestBody> text);
 //    cart
     @GET("cart")
@@ -214,6 +224,9 @@ public interface UserService {
     @Multipart
     @PATCH("cartitem")
     Call<InsertItemResponse> updateItem(@PartMap Map<String, RequestBody> text);
+
+    @PATCH("v2/cartitem")
+    Call<InsertItemResponse> updCartItem(@Body UpdCartItemRequest param);
 
     @Multipart
     @POST("transaction")
@@ -367,6 +380,13 @@ public interface UserService {
     @GET("transaction/ppob")
     Call<GetHistoryPpobResponse> historyPppob(@QueryMap Map<String, String> options);
 
+    @GET("transaction/ppob/detail")
+    Call<GetDetailTransPpobResponse>detailTransPpob(@Query("ref_id") String refId);
+
+    @Multipart
+    @PUT("transaction/ppob")
+    Call<ResponseBody> refundPpob(@PartMap Map<String, RequestBody> text);
+
     @GET("settlement")
     Call<GetHistoryTransResponse> settlement(@Query("id_toko") String id);
 
@@ -423,6 +443,9 @@ public interface UserService {
     @POST("subs")
     Call<ResponseBody> subs(@PartMap Map<String, RequestBody> text);
 
+    @GET("check_subscribtion")
+    Call<CheckSubsResponse> checkSubs(@Query("id_toko") String id);
+
     @GET("absen")
     Call<GetAbsensiResponse> dataAbsen(@QueryMap Map<String, String> options);
 
@@ -444,4 +467,5 @@ public interface UserService {
 
     @PATCH("v2/cart")
     Call<CreateCartResponse> updateCart(@Body UpdateCartRequest param);
+
 }

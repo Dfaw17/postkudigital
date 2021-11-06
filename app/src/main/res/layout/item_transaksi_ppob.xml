@@ -9,8 +9,7 @@
         android:id="@+id/view3"
         android:layout_width="20dp"
         android:layout_height="80dp"
-        android:background="@drawable/custom_curve_rigth_color"
-        android:backgroundTint="@color/colorPrimary" />
+        android:background="@drawable/custom_curve_rigth_color" />
 
     <RelativeLayout
         android:id="@+id/item"

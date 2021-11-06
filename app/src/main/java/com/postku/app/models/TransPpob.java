@@ -60,12 +60,24 @@ public class TransPpob implements Serializable {
     private int pricePostku;
 
     @Expose
+    @SerializedName("wallet")
+    private int walletId;
+
+    @Expose
     @SerializedName("is_refunded")
     private boolean isRefunded;
 
     @Expose
     @SerializedName("created_at")
     private Date createdAt;
+
+    public int getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(int walletId) {
+        this.walletId = walletId;
+    }
 
     public int getId() {
         return id;

@@ -2,6 +2,7 @@ package com.postku.app.actvity.plus;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -25,6 +26,7 @@ import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.CheckSubsResponse;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -35,9 +37,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
+import io.realm.Realm;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -52,13 +59,15 @@ public class PostkuPlusActivity extends AppCompatActivity {
     private User user;
     private ImageView backButton;
     private TextView caption, textmessage, tglAktif;
-    private LinearLayout laktif;
+    private LinearLayout laktif, lsubs;
     private BottomSheetBehavior mBehavior;
     private BottomSheetDialog mBottomSheetDialog;
     private Button submit;
     private int saldo = 0;
     private int walletid;
     int total = 0;
+    private SwipeRefreshLayout swipe;
+    DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,21 +81,22 @@ public class PostkuPlusActivity extends AppCompatActivity {
         textmessage = findViewById(R.id.text_message);
         tglAktif = findViewById(R.id.text_tanggal_aktif);
         laktif = findViewById(R.id.laktif);
+        lsubs = findViewById(R.id.footer);
         View bottom_sheet = findViewById(R.id.bottom_sheet);
         mBehavior = BottomSheetBehavior.from(bottom_sheet);
+        swipe = findViewById(R.id.swipe);
 
+        check();
+        caption.setText("Postkuplus");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         saldo = getIntent().getIntExtra(Constants.NOMINAL, 0);
         walletid = getIntent().getIntExtra(Constants.ID, 0);
-
-        if(user.isSubs()){
-            laktif.setVisibility(View.VISIBLE);
-            textmessage.setVisibility(View.GONE);
-            tglAktif.setText(user.getSubsDate());
-        }else {
-            textmessage.setVisibility(View.VISIBLE);
-            laktif.setVisibility(View.GONE);
-        }
 
         caption.setText("Postku Plus");
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +110,52 @@ public class PostkuPlusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopUp();
+            }
+        });
+    }
+
+    private void check(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.checkSubs(sessionManager.getIdToko()).enqueue(new Callback<CheckSubsResponse>() {
+            @Override
+            public void onResponse(Call<CheckSubsResponse> call, Response<CheckSubsResponse> response) {
+               if(response.isSuccessful()){
+                   if(response.body().getStatusCode() == 200){
+                       if(response.body().isStatusSub()){
+                           laktif.setVisibility(View.VISIBLE);
+                           textmessage.setVisibility(View.GONE);
+                           SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                           String finalDate = timeFormat.format(response.body().getActiveUntil());
+                           tglAktif.setText(finalDate);
+                           lsubs.setVisibility(View.GONE);
+                           Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                           realm.beginTransaction();
+                           user.setSubs(true);
+                           realm.commitTransaction();
+                       }else {
+                           textmessage.setVisibility(View.VISIBLE);
+                           laktif.setVisibility(View.GONE);
+                           lsubs.setVisibility(View.VISIBLE);
+                           Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                           realm.beginTransaction();
+                           user.setSubs(false);
+                           realm.commitTransaction();
+                       }
+                   }else {
+                       textmessage.setVisibility(View.VISIBLE);
+                       laktif.setVisibility(View.GONE);
+                       lsubs.setVisibility(View.VISIBLE);
+                       Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                       realm.beginTransaction();
+                       user.setSubs(false);
+                       realm.commitTransaction();
+                   }
+               }
+            }
+
+            @Override
+            public void onFailure(Call<CheckSubsResponse> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
@@ -171,12 +227,10 @@ public class PostkuPlusActivity extends AppCompatActivity {
                         JSONObject object = new JSONObject(response.body().string());
                         String statusCode = object.getString("status_code");
                         String message = object.getString("msg");
-                        user.setSubs(true);
                         if(statusCode.equalsIgnoreCase("200")){
                             dialogSuccess(message, true);
-                            laktif.setVisibility(View.VISIBLE);
-                            textmessage.setVisibility(View.GONE);
-                            tglAktif.setText(user.getSubsDate());
+                            check();
+
                         }else {
                            dialogSuccess(message, false);
                         }

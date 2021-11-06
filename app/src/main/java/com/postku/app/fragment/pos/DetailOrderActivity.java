@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.MainActivity;
@@ -29,7 +28,6 @@ import com.postku.app.adapter.ItemCartAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.helpers.OnCartItemClickListener;
-import com.postku.app.json.CreateCartRequest;
 import com.postku.app.json.CreateCartResponse;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.InsertItemResponse;
@@ -38,27 +36,23 @@ import com.postku.app.models.Cart;
 import com.postku.app.models.ItemCart;
 import com.postku.app.models.User;
 import com.postku.app.models.order.MenuItem;
-import com.postku.app.models.order.OrderCart;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.postku.app.helpers.Constants.DISKON_ITEM;
 import static com.postku.app.helpers.Constants.PAJAK;
+import static com.postku.app.helpers.Constants.SERVICE_CHARGE;
 import static com.postku.app.helpers.Constants.TAG;
 
 public class DetailOrderActivity extends AppCompatActivity implements OnCartItemClickListener, SelectAddFragment.UpdateText, SelectTable.UpdateText {
@@ -66,7 +60,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private User user;
     private SessionManager sessionManager;
     private TextView totalItems,subTotal, discount, customer, meja, tipeOrder, labelOrder,
-            pajak, grandTotal, deleteCart;
+            pajak, grandTotal, deleteCart, serviceFee, serviceQty;
     private RelativeLayout rlDiskon, rlCustomer, rlTable, rlTipe, rlLabel, rlPajak, rlService;
     private RecyclerView recyclerView;
     private Button simpan, bayar;
@@ -75,11 +69,12 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private TextView caption;
     private LinearLayout main;
     private ProgressBar progressBar;
-    double totalTagihan;
+    double totalTagihan, totalPrice, totalDiskon, totalPajak, totalServiceFee, totalFix;
     public int quantity=0;
     private String invoice="";
     private List<MenuItem> menuItemList = new ArrayList<>();
     private List<Integer> serviceFeeList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +106,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         backButton = findViewById(R.id.back_button);
         progressBar = findViewById(R.id.progressBar);
         main = findViewById(R.id.main);
+        serviceFee = findViewById(R.id.text_service_fee);
+        serviceQty = findViewById(R.id.text_qty_service);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -133,6 +130,13 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         }
         if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
             meja.setText(sessionManager.getMeja());
+        }
+
+        if(sessionManager.getSeviceList() != null){
+            serviceQty.setVisibility(View.VISIBLE);
+            serviceQty.setText(sessionManager.getSeviceList().size() + "");
+        }else {
+            serviceQty.setVisibility(View.GONE);
         }
 
 
@@ -307,6 +311,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         DHelper.pesan(context, response.body().getMessage());
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.putExtra(Constants.METHOD, Constants.RESET);
+                        startActivity(intent);
+                        sessionManager.deleteCart();
+                        finish();
                     }else {
                         DHelper.pesan(context, response.body().getMessage());
                     }
@@ -410,6 +419,20 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 alertDialog.dismiss();
             }
         });
+        final SelectAddFragment dialogFragment = new SelectAddFragment();
+        rldiskon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.ID, id);
+                bundle.putInt(Constants.INTENT_DATA, quantity);
+                bundle.putString(Constants.METHOD, Constants.DISKON_ITEM);
+                bundle.putString(Constants.NAMA, "Daftar Discount");
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fm, TAG);
+            }
+        });
 
 
     }
@@ -431,9 +454,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                         cart = response.body().getCart();
                         invoice = cart.getCode();
                         subTotal.setText(DHelper.formatRupiah(cart.getTotalPrice()));
-                        grandTotal.setText(DHelper.formatRupiah(cart.getGrandTotal()));
-                        totalTagihan = Math.round(cart.getGrandTotal());
-
+                        totalPrice = Math.round(cart.getTotalPrice());
+                        hitungGrandTotal();
                         if(response.body().getItemCartList().size() > 0){
                             adapter = new ItemCartAdapter(context, response.body().getItemCartList(), DetailOrderActivity.this::onItemClick, true);
                             recyclerView.setAdapter(adapter);
@@ -442,7 +464,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                             List<ItemCart> cartList = response.body().getItemCartList();
                             for(int i=0;i < cartList.size();i++){
                                 final MenuItem item = new MenuItem();
-                                item.setIdMenu(cartList.get(i).getId());
+                                item.setIdMenu(cartList.get(i).getMenu());
                                 item.setQty(cartList.get(i).getQty());
                                 item.setDisc(cartList.get(i).getDiscount());
                                 menuItemList.add(item);
@@ -572,11 +594,23 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     }
 
     @Override
-    public void updateResult(String metode, int id, String nama) {
+    public void updateResult(String metode, int id, String nama, int type, int value) {
         if(metode.equalsIgnoreCase(Constants.DISKON)){
-            sessionManager.setIdDiscount(id);
-            sessionManager.setDiscount(nama);
-            discount.setText(nama);
+            double noms = 0;
+            if(id > 0){
+                if(type == 1){
+                    noms =  value;
+                }else {
+                    noms = totalTagihan * value/100;
+                }
+                sessionManager.setIdDiscount(id);
+                sessionManager.setDiscount(String.valueOf(value));
+            }
+
+            noms = Math.round(noms);
+            totalDiskon = noms;
+            discount.setText(DHelper.formatRupiah(noms));
+
         }else if(metode.equalsIgnoreCase(Constants.CUSTOMER)){
             sessionManager.setIdPelanggan(id);
             sessionManager.setPelanggan(nama);
@@ -590,10 +624,33 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             sessionManager.setLabelOrder(nama);
             labelOrder.setText(nama);
         }else if(metode.equalsIgnoreCase(PAJAK)){
-            sessionManager.setIdPajak(id);
-            sessionManager.setPajak(nama);
-            pajak.setText(nama);
+            double noms = 0;
+            if(id > 0){
+                if(type == 1){
+                    noms =  value;
+                }else {
+                    noms = totalTagihan * value/100;
+                }
+                sessionManager.setIdPajak(id);
+                sessionManager.setPajak(String.valueOf(value));
+            }
+
+            noms = Math.round(noms);
+            totalPajak = noms;
+            pajak.setText(DHelper.formatRupiah(noms));
+        }else if(metode.equalsIgnoreCase(SERVICE_CHARGE)){
+            if(sessionManager.getSeviceList().size() > 0){
+                serviceQty.setVisibility(View.VISIBLE);
+                serviceQty.setText(sessionManager.getSeviceList().size() + "");
+            }else {
+                serviceQty.setVisibility(View.GONE);
+            }
+            totalServiceFee = value;
+            serviceFee.setText(DHelper.toformatRupiah(String.valueOf(value)));
+        }else if(metode.equalsIgnoreCase(DISKON_ITEM)){
+            detail(getIntent().getIntExtra(Constants.ID, 0));
         }
+        hitungGrandTotal();
     }
 
     @Override
@@ -622,5 +679,10 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
             }
         });
+    }
+
+    private void hitungGrandTotal(){
+        totalTagihan = totalPrice + totalPajak + totalServiceFee - totalDiskon;
+        grandTotal.setText(DHelper.formatRupiah(totalTagihan));
     }
 }

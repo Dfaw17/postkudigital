@@ -3,6 +3,7 @@ package com.postku.app.actvity.qris;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -49,6 +50,7 @@ public class HomeQrisActivity extends AppCompatActivity {
     private List<Integer> idclaim = new ArrayList<>();
     private int total;
     private TextView saldoQris;
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class HomeQrisActivity extends AppCompatActivity {
         lempty = findViewById(R.id.lempty);
         recyclerView = findViewById(R.id.rec_riwayat);
         saldoQris = findViewById(R.id.text_saldo);
+        swipe = findViewById(R.id.swipe);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -82,6 +85,14 @@ public class HomeQrisActivity extends AppCompatActivity {
         });
 
         getData();
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
+            }
+        });
 
     }
 

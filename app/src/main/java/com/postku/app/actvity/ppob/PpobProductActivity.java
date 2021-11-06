@@ -50,6 +50,12 @@ public class PpobProductActivity extends AppCompatActivity {
         lempty = findViewById(R.id.lempty);
 
         caption.setText("Jenis Produk");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         key = getIntent().getStringExtra(Constants.NAMA);
 
         recyclerView.setHasFixedSize(true);

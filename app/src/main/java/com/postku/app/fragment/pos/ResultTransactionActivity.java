@@ -74,7 +74,7 @@ public class ResultTransactionActivity extends AppCompatActivity {
         print = findViewById(R.id.button3);
         backToTransaction = findViewById(R.id.button4);
 
-        inv = getIntent().getStringExtra(Constants.NAMA);
+        inv = getIntent().getStringExtra(Constants.INVOICE);
         getResult(inv);
 
         if (Printooth.INSTANCE.hasPairedPrinter())

@@ -26,11 +26,11 @@ public class Wallet implements Serializable {
     @SerializedName("status_req_deposit")
     private int statusReqDepo;
 
-    public int getBalanceReq() {
+    public Integer getBalanceReq() {
         return balanceReq;
     }
 
-    public void setBalanceReq(int balanceReq) {
+    public void setBalanceReq(Integer balanceReq) {
         this.balanceReq = balanceReq;
     }
 

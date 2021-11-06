@@ -29,6 +29,8 @@ import com.postku.app.fragment.pegawai.ManageStaffActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.KonfirmTopupResponseJson;
+import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -76,8 +78,10 @@ public class KonfirmasiTopupActivity extends AppCompatActivity implements Select
         textUpload = findViewById(R.id.text_upload);
         progressBar = findViewById(R.id.progressBar7);
 
+        caption.setText("Konfirmasi Topup");
+
         id = getIntent().getIntExtra(Constants.ID, 0);
-        nominal = getIntent().getLongExtra(Constants.NOMINAL, 0);
+        nominal = getIntent().getIntExtra(Constants.NOMINAL, 0);
         textNominal.setText(DHelper.toformatRupiah(String.valueOf(nominal)));
 
         Log.e(TAG, getIntent().getLongExtra(Constants.NOMINAL, 0) + "");
@@ -182,6 +186,8 @@ public class KonfirmasiTopupActivity extends AppCompatActivity implements Select
             }
         });
     }
+
+
 
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {

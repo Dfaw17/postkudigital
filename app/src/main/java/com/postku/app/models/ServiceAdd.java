@@ -15,6 +15,14 @@ public class ServiceAdd implements Serializable {
     private String nama;
 
     @Expose
+    @SerializedName("type")
+    private int type;
+
+    @Expose
+    @SerializedName("nominal")
+    private int nominal;
+
+    @Expose
     @SerializedName("isChecked")
     private boolean isChecked;
 
@@ -40,5 +48,21 @@ public class ServiceAdd implements Serializable {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getNominal() {
+        return nominal;
+    }
+
+    public void setNominal(int nominal) {
+        this.nominal = nominal;
     }
 }

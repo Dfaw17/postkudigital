@@ -92,6 +92,11 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void delAddOn(String key){
+        editor.remove(key);
+        editor.commit();
+    }
+
     public boolean isCartActive(){
         return sharedPref.getBoolean(IS_CART_ACTIVE, false);
     }

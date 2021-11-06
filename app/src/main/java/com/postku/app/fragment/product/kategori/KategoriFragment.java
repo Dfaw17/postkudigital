@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.postku.app.R;
@@ -56,6 +57,7 @@ public class KategoriFragment extends Fragment {
     private User user;
     private SessionManager sessionManager;
     private KategoriAdapter adapter;
+    private SwipeRefreshLayout swipe;
     public KategoriFragment(){
 
     }
@@ -70,6 +72,7 @@ public class KategoriFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar2);
+        swipe = view.findViewById(R.id.swipe);
 
         search.setHint("Cari Kategori");
 
@@ -106,6 +109,14 @@ public class KategoriFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog(false, "", "");
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
             }
         });
 

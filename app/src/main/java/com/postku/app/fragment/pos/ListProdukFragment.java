@@ -102,7 +102,11 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
-
+        if(idCart > 0){
+            lbasket.setEnabled(true);
+        }else {
+            lbasket.setEnabled(false);
+        }
 
         lbasket.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +145,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
     public void onResume() {
         super.onResume();
         getData(idCat);
-        checkCart();
+//        checkCart();
 //
 //        loadOrder();
     }
@@ -230,6 +234,8 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
                         if(response.body().getCartList().size() > 0){
                             Log.e(TAG, "------------sini");
                             boxCart.setVisibility(View.VISIBLE);
+                            imgTable.setVisibility(View.VISIBLE);
+                            lbasket.setEnabled(true);
                             Cart cart = response.body().getCartList().get(0);
                             idCart = cart.getId();
                             sessionManager.createCart(String.valueOf(idCart));
@@ -237,7 +243,8 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
                             double grandTotal = Math.round(cart.getGrandTotal());
                             total.setText("Total= Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
                         }else {
-                            boxCart.setVisibility(View.GONE);
+                            boxCart.setVisibility(View.VISIBLE);
+                            imgTable.setVisibility(View.GONE);
                         }
                     }
                 }

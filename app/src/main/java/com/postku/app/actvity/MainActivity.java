@@ -92,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
         navigationView.addHeaderView(headerView);
         RelativeLayout rlsubs = headerView.findViewById(R.id.rlupgrade);
         RelativeLayout rlprofile = headerView.findViewById(R.id.rlprofile);
+        CircleImageView cvprofile = headerView.findViewById(R.id.img_profile);
+
+        Glide.with(context)
+                .load(user.getProfilePic())
+                .placeholder(R.drawable.image_placeholder)
+                .into(cvprofile);
 
         lfooter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem mSetting = menu.findItem(R.id.setting);
         MenuItem mDiskon = menu.findItem(R.id.diskon);
         MenuItem mCustomer = menu.findItem(R.id.customer);
+        MenuItem mMenu = menu.findItem(R.id.menu);
         if(user.isSubs()){
             if(user.isOwner()){
                 mReport.setVisible(true);
@@ -120,15 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 mSetting.setVisible(true);
                 mDiskon.setVisible(true);
                 mCustomer.setVisible(true);
+                mMenu.setVisible(true);
             }else {
                 mReport.setVisible(false);
                 mToko.setVisible(false);
                 mStaff.setVisible(false);
-                mAbsensi.setVisible(false);
+                mAbsensi.setVisible(true);
                 mTable.setVisible(false);
                 mSetting.setVisible(true);
                 mDiskon.setVisible(false);
                 mCustomer.setVisible(false);
+                mMenu.setVisible(false);
             }
 
         }else {
@@ -141,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 mSetting.setVisible(false);
                 mDiskon.setVisible(false);
                 mCustomer.setVisible(false);
+                mMenu.setVisible(true);
             }else {
                 mReport.setVisible(false);
                 mToko.setVisible(false);
@@ -150,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 mSetting.setVisible(false);
                 mDiskon.setVisible(false);
                 mCustomer.setVisible(false);
+                mMenu.setVisible(false);
             }
         }
 

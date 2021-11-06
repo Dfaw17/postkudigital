@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@id/text_total"
+        android:layout_toStartOf="@id/lprice"
         android:orientation="vertical">
 
         <TextView
@@ -34,19 +34,33 @@
             android:textColor="@color/colorBlack" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_total"
+    <LinearLayout
+        android:id="@+id/lprice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="15dp"
         android:layout_toStartOf="@id/lbutton"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Rp22.000"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Rp22.000"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_diskon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Rp0"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/lbutton"

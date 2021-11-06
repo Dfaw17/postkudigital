@@ -32,8 +32,9 @@ public class Constants {
     public static String KECAMATAN = "kecamatan";
     public static String KELURAHAN = "kelurahan";
     public static String BANK = "bank";
-    public static String DISKON = "diskon";
-    public static String CUSTOMER = "customer";
+    public static String DISKON = "discount";
+    public static String DISKON_ITEM = "diskonitem";
+    public static String CUSTOMER = "pelanggan";
     public static String TIPE_ORDER = "tipeorder";
     public static String LABEL_ORDER = "labelorder";
     public static String LAP_MENU = "Laporan Menu";
@@ -45,7 +46,7 @@ public class Constants {
     public static String LAP_TIPE_ORDER = "Laporan Tipe Order";
     public static String LAP_LABEL_ORDER = "Laporan Label Order";
     public static String PAJAK = "pajak";
-    public static String SERVICE_CHARGE = "servicecharge";
+    public static String SERVICE_CHARGE = "servicefee";
     public static int CAMERTA_REQUEST = 122;
     public static int GALERY_REQUEST = 123;
     public static int PERMISSION_CAMERA_CODE = 786;

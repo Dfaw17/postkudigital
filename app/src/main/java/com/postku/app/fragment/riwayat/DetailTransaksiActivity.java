@@ -157,6 +157,30 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
                         bayar = response.body().getTransaction().getBayar();
                         kembalian = response.body().getTransaction().getKembalian();
 
+                        if(response.body().getCustomer() != null){
+                            customer.setText(response.body().getCustomer().getNama());
+                        }else{
+                            customer.setText("-");
+                        }
+
+                        if(response.body().getMeja() != null){
+                            meja.setText(response.body().getMeja().getNama());
+                        }else {
+                            meja.setText("-");
+                        }
+
+                        if(response.body().getLabelOrder() != null){
+                            labelOrder.setText(response.body().getLabelOrder().getNama());
+                        }else {
+                            labelOrder.setText("-");
+                        }
+
+                        if(response.body().getTipeOrder() != null){
+                            tipeOrder.setText(response.body().getTipeOrder().getNama());
+                        }else {
+                            tipeOrder.setText("-");
+                        }
+
 
                     }
                 }

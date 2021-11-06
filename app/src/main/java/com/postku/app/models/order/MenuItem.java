@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 public class MenuItem implements Serializable {
     @PrimaryKey
     @Expose
-    @SerializedName("id_cart_item")
+    @SerializedName("idmenu")
     private int idMenu;
 
     @Expose

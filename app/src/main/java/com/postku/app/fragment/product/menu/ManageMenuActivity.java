@@ -110,7 +110,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             id = getIntent().getIntExtra(Constants.ID, 0);
             hapus.setVisibility(View.VISIBLE);
             detail(String.valueOf(id));
-            getData();
+
         }
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -258,7 +258,12 @@ public class ManageMenuActivity extends AppCompatActivity {
                         selectKategori.setText(menus.getKategori());
                         Bitmap bitmap = imageView.getDrawingCache();
                         imageFileMenu = DHelper.createTempFile(context, bitmap);
-                        aSwitch.setChecked(menus.isActive());
+                        if(response.body().getStock() != null){
+                            aSwitch.setChecked(true);
+                        }else {
+                            aSwitch.setChecked(false);
+                        }
+                        getData();
                     }
                 }
             }
@@ -366,6 +371,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatus() == 200);{
                         Log.e(TAG, response.body().getMessage());
+                        finish();
                     }
                 }
             }

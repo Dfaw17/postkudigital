@@ -3,6 +3,7 @@ package com.postku.app.json;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.postku.app.models.Menus;
+import com.postku.app.models.Stock;
 
 import java.util.List;
 
@@ -16,8 +17,20 @@ public class DetailMenuResponse {
     private int statusCode;
 
     @Expose
+    @SerializedName("check_stock")
+    private Stock stock;
+
+    @Expose
     @SerializedName("data")
     private Menus menus;
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
 
     public String getMsg() {
         return msg;

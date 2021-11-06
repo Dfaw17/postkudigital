@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.postku.app.R;
 import com.postku.app.adapter.MejaAdapter;
@@ -57,6 +58,7 @@ public class PromoFragment extends Fragment {
     private SessionManager sessionManager;
     private PromoAdapter adapter;
     private int typeSelected = 1;
+    private SwipeRefreshLayout swipe;
     public PromoFragment(){
 
     }
@@ -70,6 +72,7 @@ public class PromoFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar2);
+        swipe = view.findViewById(R.id.swipe);
 
         search.setHint("Cari Discount");
 
@@ -106,6 +109,14 @@ public class PromoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog(false, "", "", "", 0);
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
             }
         });
 

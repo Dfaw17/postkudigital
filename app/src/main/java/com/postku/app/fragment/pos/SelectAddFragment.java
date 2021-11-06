@@ -29,6 +29,7 @@ import com.postku.app.fragment.customer.CustomerFragment;
 import com.postku.app.fragment.diskon.fee.ServiceFeeFragment;
 import com.postku.app.fragment.diskon.promo.PromoFragment;
 import com.postku.app.fragment.diskon.tax.TaxFragment;
+import com.postku.app.helpers.AddOnClickListener;
 import com.postku.app.helpers.ClickInterface;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
@@ -38,6 +39,8 @@ import com.postku.app.json.GetServiceAddResponse;
 import com.postku.app.json.GetServiceResponseJson;
 import com.postku.app.json.GetTaxResponseJson;
 import com.postku.app.json.GetTipeOrderResponse;
+import com.postku.app.json.InsertItemResponse;
+import com.postku.app.json.UpdCartItemRequest;
 import com.postku.app.models.ServiceAdd;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -60,7 +63,7 @@ public class SelectAddFragment extends DialogFragment {
     private SessionManager sessionManager;
     private SelectAdapter adapter;
     private RecyclerView recyclerView;
-    private ClickInterface clickInterface;
+    private AddOnClickListener clickInterface;
     private ImageView backButton;
     private TextView caption;
     private Button btnDelete, btnSelect;
@@ -104,7 +107,9 @@ public class SelectAddFragment extends DialogFragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.DISKON)){
+        if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.DISKON)) {
+            dataDiskon();
+        }else if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.DISKON_ITEM)){
             dataDiskon();
         }else if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.CUSTOMER)) {
             dataCustomer();
@@ -125,16 +130,38 @@ public class SelectAddFragment extends DialogFragment {
                     if(adapter != null){
                         List<Integer> serviceFee = adapter.getSelectedItems();
                         sessionManager.saveServiceFee(serviceFee, "servicefee");
+                        UpdateText updateText = (UpdateText) getActivity();
+                        updateText.updateResult(getArguments().getString(Constants.METHOD),
+                                adapter.getSelectedItem(), adapter.getSelectedName(), adapter.getSelectedType(), adapter.getTotalServiceFee());
                         dismiss();
                     }
                 }else {
                     if(adapter != null){
-                        UpdateText updateText = (UpdateText) getActivity();
-                        updateText.updateResult(getArguments().getString(Constants.METHOD),
-                                adapter.getSelectedItem(), adapter.getSelectedName());
-                        dismiss();
+                        if(getArguments().getString(Constants.METHOD).equalsIgnoreCase(Constants.DISKON_ITEM)){
+                            int idcartitem = getArguments().getInt(Constants.ID, 0);
+                            int qtyitem = getArguments().getInt(Constants.INTENT_DATA, 0);
+                            updCartItwm(idcartitem, qtyitem, adapter.getSelectedItem());
+                            dismiss();
+                        }else {
+                            UpdateText updateText = (UpdateText) getActivity();
+                            updateText.updateResult(getArguments().getString(Constants.METHOD),
+                                    adapter.getSelectedItem(), adapter.getSelectedName(), adapter.getSelectedType(), adapter.getSelectedValue());
+                            dismiss();
+                        }
+
                     }
                 }
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManager.delAddOn(getArguments().getString(Constants.METHOD));
+                UpdateText updateText = (UpdateText) getActivity();
+                updateText.updateResult(getArguments().getString(Constants.METHOD),
+                        0, adapter.getSelectedName(), adapter.getSelectedType(), adapter.getSelectedValue());
+                dismiss();
             }
         });
 
@@ -161,6 +188,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getPromoList().get(i).getId());
                                 serviceAdd.setNama(response.body().getPromoList().get(i).getNama());
+                                serviceAdd.setType(response.body().getPromoList().get(i).getType());
+                                serviceAdd.setNominal(response.body().getPromoList().get(i).getNominal());
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
@@ -200,6 +229,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getCustomerList().get(i).getId());
                                 serviceAdd.setNama(response.body().getCustomerList().get(i).getNama());
+                                serviceAdd.setType(0);
+                                serviceAdd.setNominal(0);
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
@@ -240,6 +271,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getDataList().get(i).getId());
                                 serviceAdd.setNama(response.body().getDataList().get(i).getNama());
+                                serviceAdd.setType(0);
+                                serviceAdd.setNominal(0);
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
@@ -280,6 +313,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getDataList().get(i).getId());
                                 serviceAdd.setNama(response.body().getDataList().get(i).getNama());
+                                serviceAdd.setType(0);
+                                serviceAdd.setNominal(0);
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
@@ -306,6 +341,7 @@ public class SelectAddFragment extends DialogFragment {
     }
 
     private void dataPajak(){
+        dataList.clear();
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.getPajak(sessionManager.getIdToko()).enqueue(new Callback<GetTaxResponseJson>() {
             @Override
@@ -318,6 +354,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getPajakList().get(i).getId());
                                 serviceAdd.setNama(response.body().getPajakList().get(i).getNama());
+                                serviceAdd.setType(response.body().getPajakList().get(i).getType());
+                                serviceAdd.setNominal(response.body().getPajakList().get(i).getNominal());
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
@@ -360,6 +398,8 @@ public class SelectAddFragment extends DialogFragment {
                                 final ServiceAdd serviceAdd = new ServiceAdd();
                                 serviceAdd.setId(response.body().getServiceFees().get(i).getId());
                                 serviceAdd.setNama(response.body().getServiceFees().get(i).getNama());
+                                serviceAdd.setType(0);
+                                serviceAdd.setNominal(response.body().getServiceFees().get(i).getNominal());
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select_service,
@@ -385,7 +425,30 @@ public class SelectAddFragment extends DialogFragment {
         });
     }
 
+    private void updCartItwm(int mId, int mQty, int mDiskon){
+        UpdCartItemRequest request = new UpdCartItemRequest();
+        request.setIdcartitem(mId);
+        request.setDiscount(mDiskon);
+        request.setQty(mQty);
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.updCartItem(request).enqueue(new Callback<InsertItemResponse>() {
+            @Override
+            public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InsertItemResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     public interface UpdateText{
-        void updateResult(String metode, int id, String nama);
+        void updateResult(String metode, int id, String nama, int value, int nominal);
     }
 }

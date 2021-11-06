@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -62,6 +63,7 @@ public class AbsensiFragment extends Fragment {
     private LinearLayout lempty;
     private ProgressBar progressBar;
     private AbsensiAdapter adapter;
+    private SwipeRefreshLayout swipe;
     public AbsensiFragment() {
         // Required empty public constructor
     }
@@ -78,6 +80,7 @@ public class AbsensiFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         progressBar = view.findViewById(R.id.progressBar);
         lempty = view.findViewById(R.id.lempty);
+        swipe = view.findViewById(R.id.swipe);
 
         calendar = Calendar.getInstance();
         date1 = formater.format(calendar.getTime());
@@ -123,6 +126,14 @@ public class AbsensiFragment extends Fragment {
                         adapter.getFilter().filter(s.toString());
                     }
                 }
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(false,  date1, date2);
+                swipe.setRefreshing(false);
             }
         });
 

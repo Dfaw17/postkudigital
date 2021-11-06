@@ -73,7 +73,7 @@ public class QrisActivity extends AppCompatActivity {
 
         caption.setText("QRIS");
         idCart = getIntent().getIntExtra(Constants.ID, 0);
-        reffCode = getIntent().getStringExtra(Constants.NAMA);
+        reffCode = getIntent().getStringExtra(Constants.INVOICE);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +93,7 @@ public class QrisActivity extends AppCompatActivity {
                     if(response.body().getStatusCode() == 200){
                         invoice.setText(response.body().getData().getExternalId());
                         amount.setText(DHelper.formatRupiah(response.body().getData().getAmount()));
-                        nominal = String.valueOf(response.body().getData().getAmount());
+                        nominal = String.valueOf(Math.round(response.body().getData().getAmount()));
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
                         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");

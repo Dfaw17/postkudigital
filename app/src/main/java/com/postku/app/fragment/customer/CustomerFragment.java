@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,6 +56,7 @@ public class CustomerFragment extends Fragment {
     private User user;
     private SessionManager sessionManager;
     private CustomerAdapter adapter;
+    private SwipeRefreshLayout swipe;
     public CustomerFragment() {
         // Required empty public constructor
     }
@@ -70,6 +72,7 @@ public class CustomerFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar);
+        swipe = view.findViewById(R.id.swipe);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -104,6 +107,14 @@ public class CustomerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog(false, "", "", "", "");
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
             }
         });
 
@@ -175,6 +186,7 @@ public class CustomerFragment extends Fragment {
             namaMeja.setText(nama);
             keterangan.setText(phone);
             emailtext.setText(email);
+            delete.setText("Hapus Pelanggan");
             delete.setVisibility(View.VISIBLE);
         }else {
             title.setText("Tambah Pelanggan");

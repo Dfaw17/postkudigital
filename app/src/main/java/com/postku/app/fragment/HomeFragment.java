@@ -239,6 +239,12 @@ public class HomeFragment extends Fragment {
 
                         }
 
+                        if(response.body().isStatusRekening()){
+                            marquetext.setVisibility(View.GONE);
+                        }else {
+                            marquetext.setVisibility(View.VISIBLE);
+                        }
+
                     }else{
                         DHelper.pesan(context, response.body().getMsg());
                     }

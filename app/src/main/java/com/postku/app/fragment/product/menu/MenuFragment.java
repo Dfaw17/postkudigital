@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,6 +44,7 @@ public class MenuFragment extends Fragment {
     private ProgressBar progressBar;
     private User user;
     private SessionManager sessionManager;
+    private SwipeRefreshLayout swipe;
     public MenuFragment() {
         // Required empty public constructor
     }
@@ -59,6 +61,7 @@ public class MenuFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rec_history);
         lempty = view.findViewById(R.id.lempty);
         progressBar = view.findViewById(R.id.progressBar2);
+        swipe = view.findViewById(R.id.swipe);
 
         search.setHint("Cari Menu");
 
@@ -102,6 +105,14 @@ public class MenuFragment extends Fragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra(Constants.METHOD, Constants.ADD);
                 startActivity(intent);
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+                swipe.setRefreshing(false);
             }
         });
 

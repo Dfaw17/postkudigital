@@ -26,6 +26,7 @@ import com.postku.app.json.GetCheckAbsenResponse;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
+import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;

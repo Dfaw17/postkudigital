@@ -77,6 +77,12 @@ public class RankingActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         calendar = Calendar.getInstance();
@@ -331,6 +337,250 @@ public class RankingActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }else {
+                        topRanking.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+        }else if(method.equalsIgnoreCase(Constants.LAP_MEJA)){
+            service.reporttable(data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if(response.isSuccessful()){
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            String msg = object.getString("msg");
+                            String status = object.getString("status_code");
+
+                            if(status.equalsIgnoreCase("200")){
+                                JSONArray jsonArray = object.getJSONArray("data");
+                                if(jsonArray.length() > 0){
+                                    for(int i=0;i < jsonArray.length();i++){
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(jsonObject.getString("table__nama"));
+                                        ranking.setQty(jsonObject.getInt("jumlah_trx"));
+                                        rankingList.add(ranking);
+                                    }
+                                    topRanking.setVisibility(View.VISIBLE);
+                                    nama.setText(rankingList.get(0).getNama());
+                                    qty.setText(rankingList.get(0).getQty() + "");
+
+                                    List<Ranking> secondList = new ArrayList<>();
+                                    for(int x=1;x < rankingList.size();x++){
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(rankingList.get(x).getNama());
+                                        ranking.setQty(rankingList.get(x).getQty());
+                                        secondList.add(ranking);
+                                    }
+                                    if(secondList.size() > 0){
+                                        adapter = new RankingAdapter(context, rankingList);
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    }else {
+                                        recyclerView.setVisibility(View.GONE);
+                                    }
+                                }else {
+                                    topRanking.setVisibility(View.GONE);
+                                }
+                            }else {
+                                topRanking.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        topRanking.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+        }else if(method.equalsIgnoreCase(Constants.LAP_PELANGGAN)) {
+            service.reportpelanggan(data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            String msg = object.getString("msg");
+                            String status = object.getString("status_code");
+
+                            if (status.equalsIgnoreCase("200")) {
+                                JSONArray jsonArray = object.getJSONArray("data");
+                                if (jsonArray.length() > 0) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(jsonObject.getString("pelanggan__nama"));
+                                        ranking.setQty(jsonObject.getInt("jumlah_trx"));
+                                        rankingList.add(ranking);
+                                    }
+                                    topRanking.setVisibility(View.VISIBLE);
+                                    nama.setText(rankingList.get(0).getNama());
+                                    qty.setText(rankingList.get(0).getQty() + "");
+
+                                    List<Ranking> secondList = new ArrayList<>();
+                                    for (int x = 1; x < rankingList.size(); x++) {
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(rankingList.get(x).getNama());
+                                        ranking.setQty(rankingList.get(x).getQty());
+                                        secondList.add(ranking);
+                                    }
+                                    if (secondList.size() > 0) {
+                                        adapter = new RankingAdapter(context, rankingList);
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        recyclerView.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    topRanking.setVisibility(View.GONE);
+                                }
+                            } else {
+                                topRanking.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        topRanking.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+        }else if(method.equalsIgnoreCase(Constants.LAP_TIPE_ORDER)) {
+            service.reporttipe(data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            String msg = object.getString("msg");
+                            String status = object.getString("status_code");
+
+                            if (status.equalsIgnoreCase("200")) {
+                                JSONArray jsonArray = object.getJSONArray("data");
+                                if (jsonArray.length() > 0) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(jsonObject.getString("tipe_order__nama"));
+                                        ranking.setQty(jsonObject.getInt("jumlah_trx"));
+                                        rankingList.add(ranking);
+                                    }
+                                    topRanking.setVisibility(View.VISIBLE);
+                                    nama.setText(rankingList.get(0).getNama());
+                                    qty.setText(rankingList.get(0).getQty() + "");
+
+                                    List<Ranking> secondList = new ArrayList<>();
+                                    for (int x = 1; x < rankingList.size(); x++) {
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(rankingList.get(x).getNama());
+                                        ranking.setQty(rankingList.get(x).getQty());
+                                        secondList.add(ranking);
+                                    }
+                                    if (secondList.size() > 0) {
+                                        adapter = new RankingAdapter(context, rankingList);
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        recyclerView.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    topRanking.setVisibility(View.GONE);
+                                }
+                            } else {
+                                topRanking.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        topRanking.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+        }else if(method.equalsIgnoreCase(Constants.LAP_LABEL_ORDER)) {
+            service.reportlabel(data).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            String msg = object.getString("msg");
+                            String status = object.getString("status_code");
+
+                            if (status.equalsIgnoreCase("200")) {
+                                JSONArray jsonArray = object.getJSONArray("data");
+                                if (jsonArray.length() > 0) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(jsonObject.getString("label_order__nama"));
+                                        ranking.setQty(jsonObject.getInt("jumlah_trx"));
+                                        rankingList.add(ranking);
+                                    }
+                                    topRanking.setVisibility(View.VISIBLE);
+                                    nama.setText(rankingList.get(0).getNama());
+                                    qty.setText(rankingList.get(0).getQty() + "");
+
+                                    List<Ranking> secondList = new ArrayList<>();
+                                    for (int x = 1; x < rankingList.size(); x++) {
+                                        Ranking ranking = new Ranking();
+                                        ranking.setNama(rankingList.get(x).getNama());
+                                        ranking.setQty(rankingList.get(x).getQty());
+                                        secondList.add(ranking);
+                                    }
+                                    if (secondList.size() > 0) {
+                                        adapter = new RankingAdapter(context, rankingList);
+                                        recyclerView.setAdapter(adapter);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        recyclerView.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    topRanking.setVisibility(View.GONE);
+                                }
+                            } else {
+                                topRanking.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         topRanking.setVisibility(View.GONE);
                     }
                 }

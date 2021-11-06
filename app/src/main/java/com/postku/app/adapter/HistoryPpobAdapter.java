@@ -50,13 +50,23 @@ public class HistoryPpobAdapter extends RecyclerView.Adapter<HistoryPpobAdapter.
         holder.tanggal.setText(DHelper.strTodatetime(ppob.getCreatedAt()));
         holder.nominal.setText("Rp" + DHelper.toformatRupiah(String.valueOf(ppob.getPricePostku())));
 
-
+        if(ppob.getStatus().equalsIgnoreCase("Pending")){
+            holder.viewx.setBackground(context.getResources().getDrawable(R.drawable.custom_curve_blue));
+        }else if (ppob.getStatus().equalsIgnoreCase("Sukses")){
+            holder.viewx.setBackground(context.getResources().getDrawable(R.drawable.custom_curve_rigth_color));
+        }else {
+            if(ppob.isRefunded()){
+                holder.viewx.setBackground(context.getResources().getDrawable(R.drawable.custom_curve_right));
+            }else {
+                holder.viewx.setBackground(context.getResources().getDrawable(R.drawable.custom_curve_red));
+            }
+        }
 
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ResultTransaksiActivity.class);
-                intent.putExtra(Constants.NAMA, ppob.getReffId());
+                intent.putExtra(Constants.ID, ppob.getReffId());
                 context.startActivity(intent);
             }
         });

@@ -204,22 +204,23 @@ public class DetailStockActivity extends AppCompatActivity {
     private void trxStock(int id, String qty, int type, String note){
         HashMap<String, RequestBody> map = new HashMap<>();
         map.put("stock", createPartFromString(String.valueOf(id)));
-        map.put("adjusment_stock", createPartFromString(qty));
-        map.put("type_adjusment", createPartFromString(String.valueOf(type)));
+        map.put("adjustment_stock", createPartFromString(qty));
+        map.put("type_adjustment", createPartFromString(String.valueOf(type)));
         map.put("note", createPartFromString(note));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.activeStock(map).enqueue(new Callback<ActiveStockResponse>() {
+        service.stocktrx(map).enqueue(new Callback<StockTrxResponse>() {
             @Override
-            public void onResponse(Call<ActiveStockResponse> call, Response<ActiveStockResponse> response) {
+            public void onResponse(Call<StockTrxResponse> call, Response<StockTrxResponse> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getStatus() == 200);{
+                    if(response.body().getStatusCode() == 200);{
                         Log.e(TAG, response.body().getMessage());
+                        getData(id);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<ActiveStockResponse> call, Throwable t) {
+            public void onFailure(Call<StockTrxResponse> call, Throwable t) {
 
             }
         });

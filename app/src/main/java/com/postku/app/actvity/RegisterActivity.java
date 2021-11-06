@@ -118,6 +118,14 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
         imgToko = findViewById(R.id.img_toko);
         submit = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar3);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 //        setup select kategori
         listCategory = getResources().getStringArray(R.array.shop_category);
         ArrayAdapter<String> catAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, listCategory);

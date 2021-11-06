@@ -95,6 +95,7 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
         tagihan = getIntent().getDoubleExtra(Constants.ADD, 0);
+
         totalTagihan.setText(DHelper.formatRupiah(tagihan));
 
         payMethod.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -103,17 +104,25 @@ public class PaymentActivity extends AppCompatActivity {
                 switch (checkedId){
                     case R.id.rbTunai:
                         metode = 1;
+                        disabledKeyNum(false);
                         break;
                     case R.id.rbQris:
-                        metode = 2;
-                        inputNumber = String.format("%.0f",tagihan);
-                        Log.e("NOMINAL", inputNumber);
-//                        payQris(getIntent().getStringExtra(Constants.NAMA), inputNumber
-//                                .replaceAll(",","").replaceAll("\\.",""));
+                        if(tagihan < 1500){
+                            rbTunai.setChecked(true);
+                            DHelper.pesan(context, "Untuk menggunakan Qris total pembayaran harus lebih dari Rp1.500");
+                        }else {
+                            metode = 2;
+                            disabledKeyNum(true);
+                            inputNumber = String.format("%.0f",tagihan);
+                            Log.e("NOMINAL", inputNumber);
+                            totalBayar.setText(DHelper.toformatRupiah(inputNumber));
+                        }
                         break;
                 }
             }
         });
+
+
 
         rbTunai.setChecked(true);
 
@@ -251,13 +260,41 @@ public class PaymentActivity extends AppCompatActivity {
                 if(metode == 1){
                     pay(getIntent().getIntExtra(Constants.ID, 0), metode, inputNumber.replaceAll(",","").replaceAll("\\.",""));
                 }else{
-                    payQris(getIntent().getStringExtra(Constants.NAMA), inputNumber);
+                    payQris(getIntent().getStringExtra(Constants.INVOICE), inputNumber);
                 }
 
             }
         });
 
 
+    }
+
+    private void disabledKeyNum(boolean isDisbaled){
+        if(isDisbaled){
+            nol.setEnabled(false);
+            one.setEnabled(false);
+            two.setEnabled(false);
+            three.setEnabled(false);
+            four.setEnabled(false);
+            five.setEnabled(false);
+            six.setEnabled(false);
+            seven.setEnabled(false);
+            eight.setEnabled(false);
+            nine.setEnabled(false);
+            clear.setEnabled(false);
+        }else{
+            nol.setEnabled(true);
+            one.setEnabled(true);
+            two.setEnabled(true);
+            three.setEnabled(true);
+            four.setEnabled(true);
+            five.setEnabled(true);
+            six.setEnabled(true);
+            seven.setEnabled(true);
+            eight.setEnabled(true);
+            nine.setEnabled(true);
+            clear.setEnabled(true);
+        }
     }
 
     private void pay(int idCart,int metode, String nominal){
@@ -278,7 +315,7 @@ public class PaymentActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra(Constants.ID, response.body().getTransaction().getId());
-                        intent.putExtra(Constants.NAMA, response.body().getTransaction().getReffCode());
+                        intent.putExtra(Constants.INVOICE, response.body().getTransaction().getReffCode());
                         startActivity(intent);
                         finish();
                     }else {
@@ -313,12 +350,14 @@ public class PaymentActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(Constants.ID, getIntent().getIntExtra(Constants.ID,0));
-                        intent.putExtra(Constants.NAMA, invoice);
+                        intent.putExtra(Constants.INVOICE, invoice);
                         startActivity(intent);
                         finish();
                     }else {
                         DHelper.pesan(context, response.body().getMessage());
                     }
+                }else{
+
                 }
             }
 

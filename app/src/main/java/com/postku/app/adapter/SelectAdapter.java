@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.postku.app.R;
+import com.postku.app.helpers.AddOnClickListener;
 import com.postku.app.helpers.ClickInterface;
 import com.postku.app.models.Meja;
 import com.postku.app.models.ServiceAdd;
@@ -28,10 +29,10 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
     private Context mContext;
     private int rowLayout;
     private boolean isMulti;
-    private ClickInterface clickInterface;
+    private AddOnClickListener clickInterface;
     private int lastSelectedPosition = -1;
 
-    public SelectAdapter(Context context, List<ServiceAdd> dataList, int rowLayout, ClickInterface clickInterface, boolean isMulti) {
+    public SelectAdapter(Context context, List<ServiceAdd> dataList, int rowLayout, AddOnClickListener clickInterface, boolean isMulti) {
         this.dataList = dataList;
         this.mContext = context;
         this.rowLayout = rowLayout;
@@ -133,6 +134,16 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
         return items;
     }
 
+    public int getTotalServiceFee(){
+        int total = 0;
+        for (int i = 0; i < dataList.size(); ++i) {
+            if(dataList.get(i).isChecked()){
+                total += dataList.get(i).getNominal();
+            }
+        }
+        return total;
+    }
+
     public String getSelectedName(){
         if (lastSelectedPosition >= 0) {
             ServiceAdd serviceAdd = dataList.get(lastSelectedPosition);
@@ -141,4 +152,23 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
         }
         return "";
     }
+
+    public int getSelectedType(){
+        if (lastSelectedPosition >= 0) {
+            ServiceAdd serviceAdd = dataList.get(lastSelectedPosition);
+//            Toast.makeText(context, "Selected Item : " + arrayList.get(selectedPosition), Toast.LENGTH_SHORT).show();
+            return serviceAdd.getType();
+        }
+        return 0;
+    }
+
+    public int getSelectedValue(){
+        if (lastSelectedPosition >= 0) {
+            ServiceAdd serviceAdd = dataList.get(lastSelectedPosition);
+//            Toast.makeText(context, "Selected Item : " + arrayList.get(selectedPosition), Toast.LENGTH_SHORT).show();
+            return serviceAdd.getNominal();
+        }
+        return 0;
+    }
+
 }

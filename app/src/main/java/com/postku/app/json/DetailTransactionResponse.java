@@ -3,7 +3,13 @@ package com.postku.app.json;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.postku.app.models.Cart;
+import com.postku.app.models.Customer;
 import com.postku.app.models.ItemCart;
+import com.postku.app.models.LabelOrder;
+import com.postku.app.models.Meja;
+import com.postku.app.models.Pajak;
+import com.postku.app.models.ServiceFee;
+import com.postku.app.models.TipeOrder;
 import com.postku.app.models.Toko;
 import com.postku.app.models.Transaction;
 import com.postku.app.models.User;
@@ -38,6 +44,78 @@ public class DetailTransactionResponse {
     @Expose
     @SerializedName("data_toko")
     private Toko toko;
+
+    @Expose
+    @SerializedName("data_pajak")
+    private Pajak pajak;
+
+    @Expose
+    @SerializedName("data_service_fee")
+    private List<ServiceFee> serviceFeeList;
+
+    @Expose
+    @SerializedName("data_tipe_order")
+    private TipeOrder tipeOrder;
+
+    @Expose
+    @SerializedName("data_label_order")
+    private LabelOrder labelOrder;
+
+    @Expose
+    @SerializedName("data_table")
+    private Meja meja;
+
+    @Expose
+    @SerializedName("data_pelanggan")
+    private Customer customer;
+
+    public Pajak getPajak() {
+        return pajak;
+    }
+
+    public void setPajak(Pajak pajak) {
+        this.pajak = pajak;
+    }
+
+    public List<ServiceFee> getServiceFeeList() {
+        return serviceFeeList;
+    }
+
+    public void setServiceFeeList(List<ServiceFee> serviceFeeList) {
+        this.serviceFeeList = serviceFeeList;
+    }
+
+    public TipeOrder getTipeOrder() {
+        return tipeOrder;
+    }
+
+    public void setTipeOrder(TipeOrder tipeOrder) {
+        this.tipeOrder = tipeOrder;
+    }
+
+    public LabelOrder getLabelOrder() {
+        return labelOrder;
+    }
+
+    public void setLabelOrder(LabelOrder labelOrder) {
+        this.labelOrder = labelOrder;
+    }
+
+    public Meja getMeja() {
+        return meja;
+    }
+
+    public void setMeja(Meja meja) {
+        this.meja = meja;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public String getMessage() {
         return message;

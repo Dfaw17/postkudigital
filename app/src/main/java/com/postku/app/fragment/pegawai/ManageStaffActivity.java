@@ -22,11 +22,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.RegisterActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.CustomerPostResponseJson;
 import com.postku.app.json.RegisterResponseJson;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
@@ -34,6 +36,9 @@ import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.NetworkUtils;
 import com.postku.app.utils.SessionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +60,7 @@ public class ManageStaffActivity extends AppCompatActivity {
     private User user;
     private ImageView backButton, imgStaff;
     private Button submit;
-    private TextView caption;
+    private TextView caption, delete;
     private EditText username, email, password, nama, phone, alamat;
     private int id= 0;
     private ProgressBar progressBar;
@@ -84,7 +89,15 @@ public class ManageStaffActivity extends AppCompatActivity {
         }else {
             caption.setText("Edit Pegawai");
             id = getIntent().getIntExtra(Constants.ID, 0);
+            detailAccount(String.valueOf(id));
         }
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         imgStaff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +121,8 @@ public class ManageStaffActivity extends AppCompatActivity {
                     username.setError(context.getString(R.string.error_empty));
                     username.requestFocus();
                     return;
-                }else if(password.getText().toString().isEmpty()){
+                }else if(password.getText().toString().isEmpty() &&
+                        getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
                     password.setError(context.getString(R.string.error_empty));
                     password.requestFocus();
                     return;
@@ -128,7 +142,8 @@ public class ManageStaffActivity extends AppCompatActivity {
                     alamat.setError(context.getString(R.string.error_empty));
                     alamat.requestFocus();
                     return;
-                }else if(imageFileOwner == null){
+                }else if(imageFileOwner == null &&
+                        getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
                     DHelper.pesan(context, "Harap upload foto pegawai");
                     return;
                 }
@@ -146,6 +161,13 @@ public class ManageStaffActivity extends AppCompatActivity {
                 }else{
                     DHelper.pesan(context, context.getString(R.string.error_connection));
                 }
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteStaff(String.valueOf(id));
             }
         });
     }
@@ -223,9 +245,14 @@ public class ManageStaffActivity extends AppCompatActivity {
         map.put("id_toko", createPartFromString(sessionManager.getIdToko()));
         map.put("nama", createPartFromString(nama.getText().toString().trim()));
         map.put("phone", createPartFromString(phone.getText().toString().trim()));
+        map.put("email", createPartFromString(email.getText().toString().trim()));
         map.put("address", createPartFromString(alamat.getText().toString().trim()));
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
+        MultipartBody.Part body = null;
+        if(imageFileOwner != null){
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
+            body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
+        }
+
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.updatepegawai(body, map).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -247,6 +274,65 @@ public class ManageStaffActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void detailAccount(String idUser){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailAccount(idUser).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int code = Integer.parseInt(object.getString("status_code"));
+                        if(code == 200){
+                            JSONObject json = object.getJSONObject("data");
+                            Glide.with(context)
+                                    .load(json.getString("profile_pic"))
+                                    .placeholder(R.drawable.image_placeholder)
+                                    .into(imgStaff);
+
+                            username.setText(json.getString("username"));
+                            nama.setText(json.getString("nama"));
+                            phone.setText(json.getString("phone"));
+                            email.setText(json.getString("email"));
+                            alamat.setText(json.getString("address"));
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
+    }
+
+    private void deleteStaff(String id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_user", createPartFromString(id));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deletePegawai(map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    DHelper.pesan(context, "success");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @NonNull
