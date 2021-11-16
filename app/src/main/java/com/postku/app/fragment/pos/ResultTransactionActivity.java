@@ -95,6 +95,8 @@ public class ResultTransactionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra(Constants.METHOD, Constants.RESET);
                 startActivity(intent);
                 sessionManager.deleteCart();
@@ -341,4 +343,15 @@ public class ResultTransactionActivity extends AppCompatActivity {
         return al;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Constants.METHOD, Constants.RESET);
+        startActivity(intent);
+        sessionManager.deleteCart();
+        finish();
+    }
 }

@@ -74,6 +74,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private String invoice="";
     private List<MenuItem> menuItemList = new ArrayList<>();
     private List<Integer> serviceFeeList = new ArrayList<>();
+    private LinearLayout laddons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         main = findViewById(R.id.main);
         serviceFee = findViewById(R.id.text_service_fee);
         serviceQty = findViewById(R.id.text_qty_service);
+        laddons = findViewById(R.id.laddon);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -139,6 +141,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             serviceQty.setVisibility(View.GONE);
         }
 
+        if(user.isSubs()){
+            laddons.setVisibility(View.VISIBLE);
+        }else {
+            laddons.setVisibility(View.GONE);
+        }
 
         caption.setText("Detail Order");
 

@@ -157,10 +157,12 @@ public class TopUpSaldoActivity extends AppCompatActivity {
                             intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
                             intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
                             startActivity(intent);
+                            finish();
 
                         }else if(wallet.getStatusReqDepo() == 2){
                             Intent intent = new Intent(context, TopupPendingActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                     }else {
                         DHelper.pesan(context, response.body().getMessage());

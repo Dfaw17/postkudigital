@@ -18,9 +18,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.ArtikelActivity;
 import com.postku.app.actvity.MainActivity;
+import com.postku.app.actvity.plus.PostkuPlusActivity;
 import com.postku.app.actvity.profil.ProfileActivity;
 import com.postku.app.actvity.qris.HomeQrisActivity;
 import com.postku.app.actvity.wallet.ActivatedWalletActivity;
@@ -72,6 +74,8 @@ public class HomeFragment extends Fragment {
     private int id;
     private User user;
     private SwipeRefreshLayout swipe;
+    private LinearLayout lsubs;
+    private Button upgrade;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = getActivity();
         sessionManager = new SessionManager(context);
+        user = BaseApp.getInstance(context).getLoginUser();
         lslider = view.findViewById(R.id.lbanner);
         pager = view.findViewById(R.id.pager);
         circleIndicator = view.findViewById(R.id.circle_indicator);
@@ -104,6 +109,8 @@ public class HomeFragment extends Fragment {
         lsaldo = view.findViewById(R.id.lsaldo);
         lqris = view.findViewById(R.id.lqris);
         swipe = view.findViewById(R.id.swipe);
+        lsubs = view.findViewById(R.id.lsubs);
+        upgrade = view.findViewById(R.id.button);
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -155,6 +162,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, HomeQrisActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        if(user.isSubs()){
+            lsubs.setVisibility(View.GONE);
+        }else {
+            lsubs.setVisibility(View.VISIBLE);
+        }
+
+        upgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PostkuPlusActivity.class);
                 startActivity(intent);
             }
         });

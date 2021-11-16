@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
+import com.postku.app.actvity.SplashActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.CheckSubsResponse;
@@ -110,6 +112,14 @@ public class PostkuPlusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showPopUp();
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                check();
+                swipe.setRefreshing(false);
             }
         });
     }
@@ -229,7 +239,11 @@ public class PostkuPlusActivity extends AppCompatActivity {
                         String message = object.getString("msg");
                         if(statusCode.equalsIgnoreCase("200")){
                             dialogSuccess(message, true);
-                            check();
+                            Intent intent = new Intent(context, SplashActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            System.exit(0);
 
                         }else {
                            dialogSuccess(message, false);

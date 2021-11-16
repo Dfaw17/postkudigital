@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -53,6 +54,7 @@ public class DetailStockActivity extends AppCompatActivity {
     private int id;
     String[] listCategory;
     int typeAdjust = 0;
+    private SwipeRefreshLayout swipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class DetailStockActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         recyclerView = findViewById(R.id.rec_history);
         ladd = findViewById(R.id.ladd);
+        swipe = findViewById(R.id.swipe);
 
         caption.setText("Detail Stock");
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +89,14 @@ public class DetailStockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDialogAdd();
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData(id);
+                swipe.setRefreshing(false);
             }
         });
 

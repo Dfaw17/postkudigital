@@ -83,6 +83,7 @@ public class ManageStaffActivity extends AppCompatActivity {
         phone = findViewById(R.id.edt_phone);
         alamat = findViewById(R.id.edt_alamat);
         progressBar = findViewById(R.id.progressBar);
+        delete = findViewById(R.id.delete2);
 
         if(getIntent().getStringExtra(Constants.METHOD).equalsIgnoreCase(Constants.ADD)){
             caption.setText("Tambah Pegawai");

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.postku.app.R;
+import com.postku.app.actvity.MainActivity;
 import com.postku.app.actvity.SelectOutletActivity;
 import com.postku.app.adapter.HistoryTransAdapter;
 import com.postku.app.helpers.DHelper;
@@ -186,6 +187,11 @@ public class HomeQrisActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() ==201){
                         dialogSuccess(response.body().getMessage(), true);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
                     }else {
                         dialogSuccess(response.body().getMessage(), false);
                     }

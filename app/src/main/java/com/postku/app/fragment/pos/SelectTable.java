@@ -88,18 +88,11 @@ public class SelectTable extends DialogFragment {
                         DHelper.pesan(context, "Meja sudah dibooking");
                         return;
                     }else {
-                        if(callFrom.equalsIgnoreCase("1")){
-                            UpdateText updateText = (UpdateText) getParentFragment();
-                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
-                            sessionManager.setMeja(String.valueOf(adapter.getSelectedItem()));
-                            dismiss();
-                        }else {
-                            UpdateText updateText = (UpdateText) getActivity();
-                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
-                            sessionManager.setIdMeja(adapter.getSelectedItem());
-                            sessionManager.setMeja(adapter.getName());
-                            dismiss();
-                        }
+                        UpdateText updateText = (UpdateText) getParentFragment();
+                        updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                        sessionManager.setIdMeja(adapter.getSelectedItem());
+                        sessionManager.setMeja(adapter.getName());
+                        dismiss();
 
                     }
                 }
