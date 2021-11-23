@@ -11,11 +11,11 @@ public class Kelurahan implements Serializable {
     private String id;
 
     @Expose
-    @SerializedName("id_kecamatan")
+    @SerializedName("district_id")
     private String idKecamatan;
 
     @Expose
-    @SerializedName("nama")
+    @SerializedName("name")
     private String nama;
 
     public String getId() {

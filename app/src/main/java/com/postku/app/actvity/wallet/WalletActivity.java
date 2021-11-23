@@ -1,6 +1,8 @@
 package com.postku.app.actvity.wallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,9 +19,12 @@ import com.postku.app.R;
 import com.postku.app.actvity.ppob.PpobKategoriActivity;
 import com.postku.app.actvity.ppob.RiwayatPpobActivity;
 import com.postku.app.actvity.qris.HomeQrisActivity;
+import com.postku.app.adapter.CategoryPpobAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.PpobCategoryResponse;
 import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.KategoriPpob;
 import com.postku.app.models.User;
 import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
@@ -26,19 +32,28 @@ import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.postku.app.helpers.Constants.TAG;
+
 public class WalletActivity extends AppCompatActivity {
     private Context context;
     private SessionManager sessionManager;
-    private LinearLayout topup, qris, ppob, pulsa, games, emoney, ewallet, pulsadata, voucher, pln, lainnya;
+    private LinearLayout topup, qris, ppob, pulsa, games, emoney, ewallet, pulsadata, voucher, pln, lainnya, lmenu;
     private RelativeLayout rlriwayatpostku, rlriwayattopup, rlriwayatppob;
     private TextView textSaldo;
     private int walletid;
     private User user;
     private SwipeRefreshLayout swipe;
+    private ProgressBar progressBar;
+    private CategoryPpobAdapter adapter;
+    private RecyclerView recyclerView;
+    private List<KategoriPpob> kategoriPpobList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +77,15 @@ public class WalletActivity extends AppCompatActivity {
         rlriwayattopup = findViewById(R.id.rl_history_topup);
         rlriwayatppob = findViewById(R.id.rl_history_ppob);
         swipe = findViewById(R.id.swipe);
+        progressBar = findViewById(R.id.progressBar);
+        recyclerView = findViewById(R.id.rec_ppob);
+        lmenu = findViewById(R.id.lmenu);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
 
         walletid = getIntent().getIntExtra(Constants.ID, 0);
+
 
         sessionManager.setIdWallet(String.valueOf(walletid));
         textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(getIntent().getIntExtra(Constants.NOMINAL,0))));
@@ -80,8 +102,7 @@ public class WalletActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(user.isOwner()){
-                    Intent intent = new Intent(context, TopUpSaldoActivity.class);
-                    startActivity(intent);
+                   checkStatusDeposit();
                 }else {
                     DHelper.pesan(context, "Maaf, kamu tidak punya wewenang akses menu ini");
                 }
@@ -143,6 +164,9 @@ public class WalletActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getPpobKategori();
+
     }
 
 
@@ -173,7 +197,96 @@ public class WalletActivity extends AppCompatActivity {
         });
     }
 
+    private void checkStatusDeposit(){
+        progressBar.setVisibility(View.VISIBLE);
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailWallet(sessionManager.getIdToko()).enqueue(new Callback<WalletResponseJson>() {
+            @Override
+            public void onResponse(Call<WalletResponseJson> call, Response<WalletResponseJson> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        Wallet wallet = response.body().getWallet();
 
+                        if(wallet.getStatusReqDepo() == 1) {
+                            Intent intent = new Intent(context, KonfirmasiTopupActivity.class);
+                            intent.putExtra(Constants.ID, wallet.getId());
+                            intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
+                            intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
+                            startActivity(intent);
+
+
+                        }else if(wallet.getStatusReqDepo() == 2){
+                            Intent intent = new Intent(context, TopupPendingActivity.class);
+                            startActivity(intent);
+
+                        }else {
+                            Intent intent = new Intent(context, TopUpSaldoActivity.class);
+                            intent.putExtra(Constants.ID, wallet.getId());
+                            startActivity(intent);
+                        }
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }else {
+                    DHelper.pesan(context, context.getString(R.string.error_connection));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletResponseJson> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getPpobKategori() {
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.kategoriPpob().enqueue(new Callback<PpobCategoryResponse>() {
+            @Override
+            public void onResponse(Call<PpobCategoryResponse> call, Response<PpobCategoryResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        if(response.body().getKategoriPpobList().isEmpty()){
+                            lmenu.setVisibility(View.GONE);
+                        }else {
+                            for (int x=0;x < response.body().getKategoriPpobList().size();x++){
+                                KategoriPpob kategoriPpob = new KategoriPpob();
+                                kategoriPpob.setId(response.body().getKategoriPpobList().get(x).getId());
+                                kategoriPpob.setCatName(response.body().getKategoriPpobList().get(x).getCatName());
+                                kategoriPpob.setCatImage(response.body().getKategoriPpobList().get(x).getCatImage());
+                                kategoriPpob.setCatKey(response.body().getKategoriPpobList().get(x).getCatKey());
+                                kategoriPpobList.add(kategoriPpob);
+                            }
+
+                            if(response.body().getKategoriPpobList().size() > 7){
+                                KategoriPpob kategoriPpob = new KategoriPpob();
+                                kategoriPpob.setId(0);
+                                kategoriPpob.setCatKey("lainnya");
+                                kategoriPpob.setCatImage("");
+                                kategoriPpob.setCatName("Lainnya");
+                                kategoriPpobList.add(kategoriPpob);
+                            }
+
+                            adapter = new CategoryPpobAdapter(context, kategoriPpobList, R.layout.item_ppob_grid);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }else {
+                    DHelper.pesan(context, context.getString(R.string.error_connection));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PpobCategoryResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {

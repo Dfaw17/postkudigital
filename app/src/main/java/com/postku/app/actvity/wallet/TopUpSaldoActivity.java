@@ -37,7 +37,7 @@ public class TopUpSaldoActivity extends AppCompatActivity {
     private boolean isSelected;
     private ImageView backButton;
     private TextView caption;
-    private LinearLayout ltopup, lpending, lnominal;
+    private LinearLayout ltopup, lpending, lnominal, lbottom;
     private ProgressBar progressBar;
     private int id, nominal;
     @Override
@@ -54,8 +54,11 @@ public class TopUpSaldoActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         caption = findViewById(R.id.text_caption);
         ltopup = findViewById(R.id.ltopup);
+        lbottom = findViewById(R.id.bottom);
         progressBar = findViewById(R.id.progressBar6);
         caption.setText("Topup Saldo");
+
+        id = getIntent().getIntExtra(Constants.ID, 0);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +70,6 @@ public class TopUpSaldoActivity extends AppCompatActivity {
         text20.setSelected(false);
         text50.setSelected(false);
         text100.setSelected(false);
-
-        checkStatusDeposit();
 
         text20.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +144,12 @@ public class TopUpSaldoActivity extends AppCompatActivity {
     }
 
     private void checkStatusDeposit(){
+        progressBar.setVisibility(View.VISIBLE);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.detailWallet(sessionManager.getIdToko()).enqueue(new Callback<WalletResponseJson>() {
             @Override
             public void onResponse(Call<WalletResponseJson> call, Response<WalletResponseJson> response) {
+                progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         Wallet wallet = response.body().getWallet();
@@ -157,12 +160,12 @@ public class TopUpSaldoActivity extends AppCompatActivity {
                             intent.putExtra(Constants.NOMINAL, wallet.getBalanceReq());
                             intent.putExtra(Constants.METHOD, wallet.getStatusReqDepo());
                             startActivity(intent);
-                            finish();
+
 
                         }else if(wallet.getStatusReqDepo() == 2){
                             Intent intent = new Intent(context, TopupPendingActivity.class);
                             startActivity(intent);
-                            finish();
+
                         }
                     }else {
                         DHelper.pesan(context, response.body().getMessage());

@@ -3,6 +3,7 @@ package com.postku.app.services.api;
 import androidx.transition.Slide;
 
 import com.postku.app.json.ActiveStockResponse;
+import com.postku.app.json.CalbackPpobResponse;
 import com.postku.app.json.CallbackQrisResponse;
 import com.postku.app.json.CheckSubsResponse;
 import com.postku.app.json.ClaimRequestJson;
@@ -187,6 +188,9 @@ public interface UserService {
     @POST("stock")
     Call<ActiveStockResponse> activeStock(@PartMap Map<String, RequestBody> text);
 
+    @DELETE("stock")
+    Call<KonfirmTopupResponseJson> deleteStock(@Query("menu") String id);
+
     @GET("stock")
     Call<StockResponseJson> stockList(@Query("id_toko") String id);
 
@@ -220,6 +224,10 @@ public interface UserService {
 
     @DELETE("cartitem")
     Call<InsertItemResponse> deleteItem(@Query("id_cart_item") String id);
+
+    @Multipart
+    @DELETE("cartitem/discount")
+    Call<InsertItemResponse> deleteDiskonItem(@PartMap Map<String, RequestBody> text);
 
     @Multipart
     @PATCH("cartitem")
@@ -375,6 +383,9 @@ public interface UserService {
     @Multipart
     @POST("ppob_digi")
     Call<TransppobResponseJson> startTrans(@PartMap Map<String, RequestBody> text);
+
+    @GET("ppob_digi/callback")
+    Call<CalbackPpobResponse> callback(@Query("ref_id") String refId);
 
 
     @GET("transaction/ppob")

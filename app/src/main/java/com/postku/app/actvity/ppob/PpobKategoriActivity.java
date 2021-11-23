@@ -68,7 +68,7 @@ public class PpobKategoriActivity extends AppCompatActivity {
                         if(response.body().getKategoriPpobList().isEmpty()){
                             lempty.setVisibility(View.VISIBLE);
                         }else {
-                            adapter = new CategoryPpobAdapter(context, response.body().getKategoriPpobList());
+                            adapter = new CategoryPpobAdapter(context, response.body().getKategoriPpobList(), R.layout.item_category_ppob);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setVisibility(View.VISIBLE);
                         }

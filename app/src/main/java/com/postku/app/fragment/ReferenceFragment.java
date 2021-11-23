@@ -159,15 +159,13 @@ public class ReferenceFragment extends DialogFragment {
         referenceList.clear();
         progressBar.setVisibility(View.VISIBLE);
         ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.provinsi().enqueue(new Callback<GetProvinsiResponse>() {
+        service.provinsi().enqueue(new Callback<List<Provinsi>>() {
             @Override
-            public void onResponse(Call<GetProvinsiResponse> call, Response<GetProvinsiResponse> response) {
+            public void onResponse(Call<List<Provinsi>> call, Response<List<Provinsi>> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
-                    if(response.body().getProvinsiList().isEmpty()){
-                        Log.e(TAG, "data provinsi not found");
-                    }else {
-                        List<Provinsi> provinsiList = response.body().getProvinsiList();
+                    if(response.body().size() > 0){
+                        List<Provinsi> provinsiList = response.body();
                         for(int i =0; i < provinsiList.size();i++){
                             Reference reference = new Reference();
                             reference.setId(String.valueOf(provinsiList.get(i).getId()));
@@ -180,24 +178,25 @@ public class ReferenceFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GetProvinsiResponse> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<List<Provinsi>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
             }
         });
+
+
     }
 
     private void getKotaKabupaten(String id){
         referenceList.clear();
         progressBar.setVisibility(View.VISIBLE);
         ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.kota(id).enqueue(new Callback<GetKotaResponse>() {
+        service.kota(id).enqueue(new Callback<List<Kota>>() {
             @Override
-            public void onResponse(Call<GetKotaResponse> call, Response<GetKotaResponse> response) {
+            public void onResponse(Call<List<Kota>> call, Response<List<Kota>> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
-                    if(response.body().getKotaList().size() > 0){
-                        List<Kota> kotaKabList = response.body().getKotaList();
+                    if(response.body().size() > 0){
+                        List<Kota> kotaKabList = response.body();
                         for(int i =0; i < kotaKabList.size();i++){
                             Reference reference = new Reference();
                             reference.setId(String.valueOf(kotaKabList.get(i).getId()));
@@ -210,8 +209,7 @@ public class ReferenceFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GetKotaResponse> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<List<Kota>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -221,13 +219,13 @@ public class ReferenceFragment extends DialogFragment {
         referenceList.clear();
         progressBar.setVisibility(View.VISIBLE);
         ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.kecamatan(id).enqueue(new Callback<GetKecamatanResponse>() {
+        service.kecamatan(id).enqueue(new Callback<List<Kecamatan>>() {
             @Override
-            public void onResponse(Call<GetKecamatanResponse> call, Response<GetKecamatanResponse> response) {
+            public void onResponse(Call<List<Kecamatan>> call, Response<List<Kecamatan>> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
-                    if(response.body().getKecamatanList().size() > 0){
-                        List<Kecamatan> kecamatanList = response.body().getKecamatanList();
+                    if(response.body().size() > 0){
+                        List<Kecamatan> kecamatanList = response.body();
                         for(int i =0; i < kecamatanList.size();i++){
                             Reference reference = new Reference();
                             reference.setId(String.valueOf(kecamatanList.get(i).getId()));
@@ -240,10 +238,8 @@ public class ReferenceFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GetKecamatanResponse> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<List<Kecamatan>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-
             }
         });
     }
@@ -252,13 +248,13 @@ public class ReferenceFragment extends DialogFragment {
         referenceList.clear();
         progressBar.setVisibility(View.VISIBLE);
         ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.desa(id).enqueue(new Callback<GetDesaResponse>() {
+        service.desa(id).enqueue(new Callback<List<Kelurahan>>() {
             @Override
-            public void onResponse(Call<GetDesaResponse> call, Response<GetDesaResponse> response) {
+            public void onResponse(Call<List<Kelurahan>> call, Response<List<Kelurahan>> response) {
                 progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
-                    if(response.body().getKelurahanList().size() > 0){
-                        List<Kelurahan> desaList = response.body().getKelurahanList();
+                    if(response.body().size() > 0){
+                        List<Kelurahan> desaList = response.body();
                         for(int i =0; i < desaList.size();i++){
                             Reference reference = new Reference();
                             reference.setId(desaList.get(i).getId());
@@ -271,10 +267,8 @@ public class ReferenceFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<GetDesaResponse> call, Throwable t) {
-                t.printStackTrace();
+            public void onFailure(Call<List<Kelurahan>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.e(TAG, t.getMessage());
             }
         });
     }

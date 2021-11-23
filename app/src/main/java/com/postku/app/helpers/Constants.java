@@ -2,7 +2,7 @@ package com.postku.app.helpers;
 
 public class Constants {
     private static final String BASE_URL = "http://13.213.192.212:8000/";
-    public static final String URL_LOCATION = "https://dev.farizdotid.com/api/daerahindonesia/";
+    public static final String URL_LOCATION = "https://locationfawwaz.github.io/static/api/";
     public static final String CONNECTION = BASE_URL + "api/";
     public static final String IMAGESUSER = BASE_URL + "images/user/";
     public static final String TAG = "Postku-app";

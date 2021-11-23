@@ -11,11 +11,11 @@ public class Kecamatan implements Serializable {
     private int id;
 
     @Expose
-    @SerializedName("id_kota")
+    @SerializedName("regency_id")
     private String idKota;
 
     @Expose
-    @SerializedName("nama")
+    @SerializedName("name")
     private String nama;
 
     public int getId() {

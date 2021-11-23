@@ -287,106 +287,104 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
     }
     private void getProvinsi(){
         ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.provinsi().enqueue(new Callback<GetProvinsiResponse>() {
+        service.provinsi().enqueue(new Callback<List<Provinsi>>() {
             @Override
-            public void onResponse(Call<GetProvinsiResponse> call, Response<GetProvinsiResponse> response) {
+            public void onResponse(Call<List<Provinsi>> call, Response<List<Provinsi>> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getProvinsiList().isEmpty()){
-                        Log.e(TAG, "data provinsi not found");
-                    }else {
-
-                        provinsiList = response.body().getProvinsiList();
+                    if(response.body().size() > 0){
+                        provinsiList = response.body();
                         for(int i =0; i < provinsiList.size();i++){
                             listProvinsi.add(provinsiList.get(i).getNama());
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.item_dropdown, listProvinsi);
                         selectProvinsi.setAdapter(adapter);
                     }
+
                 }
             }
 
             @Override
-            public void onFailure(Call<GetProvinsiResponse> call, Throwable t) {
+            public void onFailure(Call<List<Provinsi>> call, Throwable t) {
 
             }
         });
     }
 
-    private void getKotaKabupaten(String id){
-//        adapterKota.clear();
-        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.kota(id).enqueue(new Callback<GetKotaResponse>() {
-            @Override
-            public void onResponse(Call<GetKotaResponse> call, Response<GetKotaResponse> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getKotaList().size() > 0){
-                        kotaKabList = response.body().getKotaList();
-                        for(int i =0; i < kotaKabList.size();i++){
-                            listKab.add(kotaKabList.get(i).getNama());
-                        }
-                        adapterKota = new ArrayAdapter<String>(context, R.layout.item_dropdown, listKab);
-                        selectKota.setAdapter(adapterKota);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetKotaResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getKecamatan(String id){
-//        adapterKecamatan.clear();
-        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.kecamatan(id).enqueue(new Callback<GetKecamatanResponse>() {
-            @Override
-            public void onResponse(Call<GetKecamatanResponse> call, Response<GetKecamatanResponse> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getKecamatanList().size() > 0){
-                        kecamatanList = response.body().getKecamatanList();
-                        for(int i =0; i < kecamatanList.size();i++){
-                            listKecamatan.add(kecamatanList.get(i).getNama());
-                        }
-                        adapterKecamatan = new ArrayAdapter<String>(context, R.layout.item_dropdown, listKecamatan);
-                        selectKecamata.setAdapter(adapterKecamatan);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetKecamatanResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getKelurahan(String id){
-//        adapterKelurahan.clear();
-        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
-        service.desa(id).enqueue(new Callback<GetDesaResponse>() {
-            @Override
-            public void onResponse(Call<GetDesaResponse> call, Response<GetDesaResponse> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getKelurahanList().size() > 0){
-                        desaList = response.body().getKelurahanList();
-                        for(int i =0; i < desaList.size();i++){
-                            listDesa.add(desaList.get(i).getNama());
-                        }
-                        adapterKelurahan = new ArrayAdapter<String>(context, R.layout.item_dropdown, listDesa);
-                        selectDesa.setThreshold(2);
-                        selectDesa.setAdapter(adapterKelurahan);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetDesaResponse> call, Throwable t) {
-
-            }
-        });
-    }
+//    private void getKotaKabupaten(String id){
+////        adapterKota.clear();
+//        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
+//        service.kota(id).enqueue(new Callback<GetKotaResponse>() {
+//            @Override
+//            public void onResponse(Call<GetKotaResponse> call, Response<GetKotaResponse> response) {
+//                if(response.isSuccessful()){
+//                    if(response.body().getKotaList().size() > 0){
+//                        kotaKabList = response.body().getKotaList();
+//                        for(int i =0; i < kotaKabList.size();i++){
+//                            listKab.add(kotaKabList.get(i).getNama());
+//                        }
+//                        adapterKota = new ArrayAdapter<String>(context, R.layout.item_dropdown, listKab);
+//                        selectKota.setAdapter(adapterKota);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetKotaResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
+//
+//    private void getKecamatan(String id){
+////        adapterKecamatan.clear();
+//        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
+//        service.kecamatan(id).enqueue(new Callback<GetKecamatanResponse>() {
+//            @Override
+//            public void onResponse(Call<GetKecamatanResponse> call, Response<GetKecamatanResponse> response) {
+//                if(response.isSuccessful()){
+//                    if(response.body().getKecamatanList().size() > 0){
+//                        kecamatanList = response.body().getKecamatanList();
+//                        for(int i =0; i < kecamatanList.size();i++){
+//                            listKecamatan.add(kecamatanList.get(i).getNama());
+//                        }
+//                        adapterKecamatan = new ArrayAdapter<String>(context, R.layout.item_dropdown, listKecamatan);
+//                        selectKecamata.setAdapter(adapterKecamatan);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetKecamatanResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
+//
+//    private void getKelurahan(String id){
+////        adapterKelurahan.clear();
+//        ReferenceService service = ApiLocationService.createService(ReferenceService.class);
+//        service.desa(id).enqueue(new Callback<GetDesaResponse>() {
+//            @Override
+//            public void onResponse(Call<GetDesaResponse> call, Response<GetDesaResponse> response) {
+//                if(response.isSuccessful()){
+//                    if(response.body().getKelurahanList().size() > 0){
+//                        desaList = response.body().getKelurahanList();
+//                        for(int i =0; i < desaList.size();i++){
+//                            listDesa.add(desaList.get(i).getNama());
+//                        }
+//                        adapterKelurahan = new ArrayAdapter<String>(context, R.layout.item_dropdown, listDesa);
+//                        selectDesa.setThreshold(2);
+//                        selectDesa.setAdapter(adapterKelurahan);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetDesaResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     private void dialogImagePicker(int sourceFrom){
         String[]items = {"Kamera", "Galery"};

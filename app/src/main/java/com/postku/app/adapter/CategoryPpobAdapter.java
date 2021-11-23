@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.postku.app.R;
+import com.postku.app.actvity.ppob.PpobKategoriActivity;
 import com.postku.app.actvity.ppob.PpobProductActivity;
 import com.postku.app.helpers.Constants;
 import com.postku.app.models.Channel;
@@ -29,16 +30,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CategoryPpobAdapter extends RecyclerView.Adapter<CategoryPpobAdapter.VH> {
     private Context context;
     private List<KategoriPpob> kategoriPpobList;
-
-    public CategoryPpobAdapter(Context context, List<KategoriPpob> kategoriPpobList){
+    private int rowLayout;
+    public CategoryPpobAdapter(Context context, List<KategoriPpob> kategoriPpobList, int rowLayout){
         this.context = context;
         this.kategoriPpobList = kategoriPpobList;
+        this.rowLayout = rowLayout;
     }
 
     @NotNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_ppob, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
         return new VH(view);
     }
 
@@ -58,6 +60,10 @@ public class CategoryPpobAdapter extends RecyclerView.Adapter<CategoryPpobAdapte
                 context.startActivity(intent);
             }
         });
+
+        if(ppob.getId() == 0){
+            holder.bind(ppob);
+        }
     }
 
     @Override
@@ -74,6 +80,23 @@ public class CategoryPpobAdapter extends RecyclerView.Adapter<CategoryPpobAdapte
             item = itemView.findViewById(R.id.item);
             nama = itemView.findViewById(R.id.text_nama);
             logo = itemView.findViewById(R.id.img_logo);
+        }
+
+        public void bind(final KategoriPpob menu){
+            if(menu.getId() == 0){
+                Glide.with(context)
+                        .load(menu.getCatImage())
+                        .placeholder(R.drawable.img_menu)
+                        .into(logo);
+
+                item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, PpobKategoriActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }

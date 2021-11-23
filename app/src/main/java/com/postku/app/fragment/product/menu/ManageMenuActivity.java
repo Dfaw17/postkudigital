@@ -37,6 +37,7 @@ import com.postku.app.helpers.DHelper;
 import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.DetailMenuResponse;
 import com.postku.app.json.GetKategoriResponseJson;
+import com.postku.app.json.KonfirmTopupResponseJson;
 import com.postku.app.json.PostMenuResponse;
 import com.postku.app.models.Kategori;
 import com.postku.app.models.Menus;
@@ -79,7 +80,7 @@ public class ManageMenuActivity extends AppCompatActivity {
     ArrayList<String> stringArrayList = new ArrayList<>();
     List<Kategori> kategoriList = new ArrayList<>();
     File imageFileMenu;
-
+    private int idkategori = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,7 @@ public class ManageMenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Kategori k = kategoriList.get(position);
-
+                idkategori = k.getId();
             }
         });
 
@@ -304,10 +305,9 @@ public class ManageMenuActivity extends AppCompatActivity {
                         DHelper.pesan(context, response.body().getMessage());
                         if(aSwitch.isChecked()){
                             activeStock(String.valueOf(response.body().getMenus().getId()));
-                            finish();
-                        }else{
-                            finish();
+
                         }
+                        finish();
 
                     }
                 }
@@ -330,7 +330,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori", createPartFromString(selectKategori.getText().toString()));
+        map.put("kategori_id", createPartFromString(String.valueOf(idkategori)));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
@@ -348,8 +348,10 @@ public class ManageMenuActivity extends AppCompatActivity {
                     if(aSwitch.isChecked()){
                         activeStock(id);
                     }else{
-                        finish();
+                        deleteStock(id);
                     }
+
+                    finish();
 
                 }
             }
@@ -371,13 +373,32 @@ public class ManageMenuActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatus() == 200);{
                         Log.e(TAG, response.body().getMessage());
-                        finish();
+
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ActiveStockResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteStock(String id){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteStock(id).enqueue(new Callback<KonfirmTopupResponseJson>() {
+            @Override
+            public void onResponse(Call<KonfirmTopupResponseJson> call, Response<KonfirmTopupResponseJson> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        Log.e(TAG, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KonfirmTopupResponseJson> call, Throwable t) {
 
             }
         });

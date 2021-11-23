@@ -145,6 +145,9 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
     public void onResume() {
         super.onResume();
         getData(idCat);
+        if(sessionManager.isCartActive()){
+            checkCartExist(Integer.parseInt(sessionManager.getActiveCart()));
+        }
 //        checkCart();
 //
 //        loadOrder();
@@ -223,6 +226,31 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         addItem(id);
     }
 
+    private void checkCartExist(int id){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailCart(String.valueOf(id)).enqueue(new Callback<DetailCartResponse>() {
+            @Override
+            public void onResponse(Call<DetailCartResponse> call, Response<DetailCartResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        boxCart.setVisibility(View.VISIBLE);
+                        imgTable.setVisibility(View.VISIBLE);
+                        lbasket.setEnabled(true);
+                        Cart cart = response.body().getCart();
+                        idCart = cart.getId();
+                        qty.setText(cart.getTotalItem() + " item");
+                        double grandTotal = Math.round(cart.getGrandTotal());
+                        total.setText("Total= Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailCartResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void checkCart(){
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);

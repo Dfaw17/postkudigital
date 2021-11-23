@@ -144,10 +144,10 @@ public class ResultTransactionActivity extends AppCompatActivity {
         Resources resources = getResources();
         al.add(new RawPrintable.Builder(new byte[]{27, 100, 4}).build()); // feed lines example in raw mode
 
-        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_logo_print);
-        al.add(new ImagePrintable.Builder(image)
-                .setNewLinesAfter(1)
-                .build());
+//        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_logo_print);
+//        al.add(new ImagePrintable.Builder(image)
+//                .setNewLinesAfter(1)
+//                .build());
 
         al.add( (new TextPrintable.Builder())
                 .setText(sessionManager.getNamaToko())

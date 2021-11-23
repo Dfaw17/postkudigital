@@ -21,7 +21,7 @@ public class ClaimSaldo implements Serializable {
     private String name;
 
     @Expose
-    @SerializedName("status_settlement")
+    @SerializedName("status_settelement")
     private boolean statusSettlement;
 
     @Expose

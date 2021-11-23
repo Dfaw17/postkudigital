@@ -188,11 +188,21 @@
                     android:elevation="1dp"
                     android:orientation="vertical">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rec_ppob"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="10dp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:id="@+id/lpulsa"
@@ -317,9 +327,9 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="E-Wallet"
+                                android:text="E - Wallets"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -327,7 +337,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:id="@+id/ldata"
@@ -584,4 +595,12 @@
 
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

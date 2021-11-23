@@ -17,6 +17,7 @@ import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
+import com.postku.app.json.CalbackPpobResponse;
 import com.postku.app.json.GetDetailTransPpobResponse;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
@@ -88,7 +89,7 @@ public class ResultTransaksiActivity extends AppCompatActivity {
                 if(isRefund){
                     refund(reffId, String.valueOf(wallet));
                 }else {
-                    detail(reffId);
+                    callback(reffId);
                 }
             }
         });
@@ -195,6 +196,29 @@ public class ResultTransaksiActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void callback(String inv){
+        progressBar.setVisibility(View.VISIBLE);
+        lcontent.setVisibility(View.GONE);
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.callback(inv).enqueue(new Callback<CalbackPpobResponse>() {
+            @Override
+            public void onResponse(Call<CalbackPpobResponse> call, Response<CalbackPpobResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        lcontent.setVisibility(View.VISIBLE);
+                        detail(inv);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CalbackPpobResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     @NonNull

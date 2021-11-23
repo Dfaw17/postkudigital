@@ -101,12 +101,19 @@ public class DetailClaimActivity extends AppCompatActivity {
                         reffCode.setText(response.body().getData().getName());
                         total.setText(DHelper.toformatRupiah(String.valueOf(response.body().getData().getTotal())));
                         imgUrl = response.body().getData().getImage();
+
                         if(response.body().getData().getTransactionList().isEmpty()){
                             recyclerView.setVisibility(View.GONE);
                         }else {
                             recyclerView.setVisibility(View.VISIBLE);
                             adapter = new HistoryTransAdapter(context, response.body().getData().getTransactionList());
                             recyclerView.setAdapter(adapter);
+                        }
+
+                        if(response.body().getData().isStatusSettlement()){
+                            status.setText("Selesai");
+                        }else {
+                            status.setText("Checking admin");
                         }
                     }
                 }

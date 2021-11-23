@@ -7,8 +7,6 @@ import com.postku.app.models.location.Provinsi;
 import java.util.List;
 
 public class GetProvinsiResponse {
-    @Expose
-    @SerializedName("provinsi")
     private List<Provinsi> provinsiList;
 
     public List<Provinsi> getProvinsiList() {

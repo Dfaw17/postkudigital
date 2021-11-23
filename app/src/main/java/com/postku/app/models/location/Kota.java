@@ -11,11 +11,11 @@ public class Kota implements Serializable {
     private int id;
 
     @Expose
-    @SerializedName("id_provinsi")
+    @SerializedName("province_id")
     private String idProvinsi;
 
     @Expose
-    @SerializedName("nama")
+    @SerializedName("name")
     private String nama;
 
     public int getId() {

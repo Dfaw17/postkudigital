@@ -422,7 +422,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMenuItem(id);
+                deleteDiskonMenuItem(id);
                 alertDialog.dismiss();
             }
         });
@@ -518,6 +518,28 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private void deleteMenuItem(int id){
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
         service.deleteItem(String.valueOf(id)).enqueue(new Callback<InsertItemResponse>() {
+            @Override
+            public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        DHelper.pesan(context, response.body().getMessage());
+                        detail(getIntent().getIntExtra(Constants.ID, 0));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InsertItemResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteDiskonMenuItem(int id){
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("id_cart_item", createPartFromString(String.valueOf(id)));
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.deleteDiskonItem(map).enqueue(new Callback<InsertItemResponse>() {
             @Override
             public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                 if(response.isSuccessful()){

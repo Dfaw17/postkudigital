@@ -11,7 +11,7 @@ public class Provinsi implements Serializable {
     private int id;
 
     @Expose
-    @SerializedName("nama")
+    @SerializedName("name")
     private String nama;
 
     public int getId() {

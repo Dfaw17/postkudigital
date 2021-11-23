@@ -5,21 +5,28 @@ import com.postku.app.json.GetKategoriResponseJson;
 import com.postku.app.json.GetKecamatanResponse;
 import com.postku.app.json.GetKotaResponse;
 import com.postku.app.json.GetProvinsiResponse;
+import com.postku.app.models.location.Kecamatan;
+import com.postku.app.models.location.Kelurahan;
+import com.postku.app.models.location.Kota;
+import com.postku.app.models.location.Provinsi;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ReferenceService {
-    @GET("provinsi")
-    Call<GetProvinsiResponse> provinsi();
+    @GET("provinces.json")
+    Call<List<Provinsi>> provinsi();
 
-    @GET("kota")
-    Call<GetKotaResponse> kota(@Query("id_provinsi") String id);
+    @GET("regencies/{id}.json")
+    Call<List<Kota>> kota(@Path("id") String id);
 
-    @GET("kecamatan")
-    Call<GetKecamatanResponse> kecamatan(@Query("id_kota") String id);
+    @GET("districts/{id}.json")
+    Call<List<Kecamatan>> kecamatan(@Path("id") String id);
 
-    @GET("kelurahan")
-    Call<GetDesaResponse> desa(@Query("id_kecamatan") String id);
+    @GET("villages/{id}.json")
+    Call<List<Kelurahan>> desa(@Path("id") String id);
 }
