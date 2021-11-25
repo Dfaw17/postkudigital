@@ -96,7 +96,7 @@
                 android:id="@+id/img_meja"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentEnd="false"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@id/img_save"
                 android:clickable="true"
@@ -112,7 +112,8 @@
                 android:layout_marginEnd="10dp"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
-                android:src="@drawable/ic_book" />
+                android:src="@drawable/ic_book"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <LinearLayout

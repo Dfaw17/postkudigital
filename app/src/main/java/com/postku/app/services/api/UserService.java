@@ -65,6 +65,7 @@ import com.postku.app.json.TransppobResponseJson;
 import com.postku.app.json.UpdCartItemRequest;
 import com.postku.app.json.UpdateCartRequest;
 import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.GetContactUsResponse;
 
 import java.util.Map;
 
@@ -478,5 +479,8 @@ public interface UserService {
 
     @PATCH("v2/cart")
     Call<CreateCartResponse> updateCart(@Body UpdateCartRequest param);
+
+    @GET("contact_us")
+    Call<GetContactUsResponse> contact();
 
 }

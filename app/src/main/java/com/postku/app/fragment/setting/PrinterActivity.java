@@ -223,7 +223,7 @@ public class PrinterActivity extends AppCompatActivity {
 
         int lenPpn = 32 - 7;
         al.add( (new TextPrintable.Builder())
-                .setText("PPN 10%" + String.format("%" + lenPpn + "s", "Rp1.700"))
+                .setText("Pajak" + String.format("%" + lenPpn + "s", "Rp1.700"))
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
                 .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
                 .setFontSize(FONT_SMALL)

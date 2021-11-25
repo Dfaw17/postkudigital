@@ -305,7 +305,6 @@ public class ManageMenuActivity extends AppCompatActivity {
                         DHelper.pesan(context, response.body().getMessage());
                         if(aSwitch.isChecked()){
                             activeStock(String.valueOf(response.body().getMenus().getId()));
-
                         }
                         finish();
 

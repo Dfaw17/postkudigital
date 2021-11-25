@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -239,12 +240,6 @@ public class PostkuPlusActivity extends AppCompatActivity {
                         String message = object.getString("msg");
                         if(statusCode.equalsIgnoreCase("200")){
                             dialogSuccess(message, true);
-                            Intent intent = new Intent(context, SplashActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            System.exit(0);
-
                         }else {
                            dialogSuccess(message, false);
                         }
@@ -282,6 +277,24 @@ public class PostkuPlusActivity extends AppCompatActivity {
         if(isSuccess){
             textView.setText("Success");
             img.setImageDrawable(context.getDrawable(R.drawable.img_success));
+            Realm realm = BaseApp.getInstance(context).getRealmInstance();
+            realm.beginTransaction();
+            user.setSubs(true);
+            realm.commitTransaction();
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    System.exit(0);
+                }
+            }, 2000L);
+
+
         }else {
             textView.setText("Gagal");
             img.setImageDrawable(context.getDrawable(R.drawable.img_failed));

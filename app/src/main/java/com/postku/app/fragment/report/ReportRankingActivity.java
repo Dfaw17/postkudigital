@@ -90,7 +90,7 @@ public class ReportRankingActivity extends AppCompatActivity {
         lapDiskon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, RankingActivity.class);
+                Intent intent = new Intent(context, ReportDiskonActivity.class);
                 intent.putExtra(Constants.METHOD, Constants.LAP_DISCOUNT);
                 startActivity(intent);
             }

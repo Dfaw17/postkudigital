@@ -28,6 +28,7 @@ import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.models.ItemCart;
+import com.postku.app.models.ServiceFee;
 import com.postku.app.models.Transaction;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -57,6 +58,7 @@ public class ResultTransactionActivity extends AppCompatActivity {
     private double bayar;
     private double kembalian;
     private List<ItemCart> itemCartList = new ArrayList<>();
+    private List<ServiceFee> serviceFeeList = new ArrayList<>();
     private String inv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,7 @@ public class ResultTransactionActivity extends AppCompatActivity {
                             payment.setText("QRIS");
                         }
                         total.setText(DHelper.formatRupiah(response.body().getTransaction().getGrandTotal()));
+                        serviceFeeList = response.body().getServiceFeeList();
                         itemCartList = response.body().getItemCarts();
                         pajak = Math.round(response.body().getCart().getTotalPajak());
                         discount = Math.round(response.body().getCart().getTotalDisc());
@@ -262,9 +265,9 @@ public class ResultTransactionActivity extends AppCompatActivity {
                 .setNewLinesAfter(1)
                 .build());
 
-        int lenPpn = 32 - 7;
+        int lenPpn = 32 - 5;
         al.add( (new TextPrintable.Builder())
-                .setText("PPN 10%" + String.format("%" + lenPpn + "s", "Rp" + DHelper.toformatRupiah(String.valueOf(pajak))))
+                .setText("Pajak" + String.format("%" + lenPpn + "s", "Rp" + DHelper.toformatRupiah(String.valueOf(pajak))))
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
                 .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
                 .setFontSize(FONT_SMALL)
@@ -281,6 +284,24 @@ public class ResultTransactionActivity extends AppCompatActivity {
                 .setLineSpacing(LINE_SPACING_1)
                 .setNewLinesAfter(1)
                 .build());
+
+        for(int x=0;x < serviceFeeList.size();x++){
+            String namaService = "";
+            String hargaService = "";
+            namaService = serviceFeeList.get(x).getNama();
+            hargaService = "Rp" + DHelper.toformatRupiah(String.valueOf(serviceFeeList.get(x).getNominal()));
+
+            int lenNama = 32 - namaService.length();
+            al.add( (new TextPrintable.Builder())
+                    .setText(namaService + String.format("%" + lenNama + "s", hargaService))
+                    .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
+                    .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
+                    .setFontSize(FONT_SMALL)
+                    .setLineSpacing(LINE_SPACING_1)
+                    .setNewLinesAfter(1)
+                    .build());
+
+        }
 
 
 

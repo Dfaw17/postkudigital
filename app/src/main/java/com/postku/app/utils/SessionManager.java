@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.postku.app.models.Kontak;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -39,6 +40,7 @@ public class SessionManager {
     private static final String ID_TIPE_ORDER = "idtipeorder";
     private static final String ID_LABEL_ORDER = "idlabelorder";
     private static final String ID_PAJAK = "idpajak";
+    private static final String CONTACTUS = "contactus";
 
 
     public SessionManager(Context context){
@@ -186,6 +188,20 @@ public class SessionManager {
         Gson gson = new Gson();
         String json = sharedPref.getString(SERVICE_FEE, null);
         Type type = new TypeToken<List<Integer>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void saveContact(List<Kontak> list, String s){
+        Gson gson = new Gson();
+        String data = gson.toJson(list);
+        editor.putString(CONTACTUS, data);
+        editor.apply();
+    }
+
+    public List<Kontak> getKontakList(){
+        Gson gson = new Gson();
+        String json = sharedPref.getString(CONTACTUS, null);
+        Type type = new TypeToken<List<Kontak>>() {}.getType();
         return gson.fromJson(json, type);
     }
 

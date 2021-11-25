@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,12 +54,16 @@ import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetKritikResponse;
 import com.postku.app.json.WalletResponseJson;
+import com.postku.app.models.Kontak;
 import com.postku.app.models.User;
 import com.postku.app.models.Wallet;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView avatar;
     String[] listCategory;
     private LinearLayout lfooter;
+    private List<Kontak> kontakList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem mDiskon = menu.findItem(R.id.diskon);
         MenuItem mCustomer = menu.findItem(R.id.customer);
         MenuItem mMenu = menu.findItem(R.id.menu);
+
         if(user.isSubs()){
             if(user.isOwner()){
                 mReport.setVisible(true);
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else {
             if(user.isOwner()){
-                mReport.setVisible(true);
+                mReport.setVisible(false);
                 mToko.setVisible(false);
                 mStaff.setVisible(false);
                 mAbsensi.setVisible(false);
@@ -282,6 +289,10 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(new HomeFragment());
         }
 
+        if(sessionManager.getKontakList().size() > 0){
+            kontakList = sessionManager.getKontakList();
+        }
+
     }
 
     public void loadFragment(Fragment fragment) {
@@ -291,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showContactUs(){
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dialog_contactus, null);
@@ -306,14 +318,20 @@ public class MainActivity extends AppCompatActivity {
         wasap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+                String url= kontakList.get(1).getUrl();
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 
         instagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+                String url= kontakList.get(0).getUrl();
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 

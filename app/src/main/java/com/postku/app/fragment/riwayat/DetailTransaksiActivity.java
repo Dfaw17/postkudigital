@@ -33,6 +33,7 @@ import com.postku.app.helpers.DHelper;
 import com.postku.app.helpers.OnCartItemClickListener;
 import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.models.ItemCart;
+import com.postku.app.models.ServiceFee;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -69,6 +70,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
     private double bayar;
     private double kembalian;
     private List<ItemCart> itemCartList = new ArrayList<>();
+    private List<ServiceFee> serviceFeeList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +153,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
                             recyclerView.setAdapter(adapter);
                         }
                         itemCartList = response.body().getItemCarts();
+                        serviceFeeList = response.body().getServiceFeeList();
                         pajak = Math.round(response.body().getCart().getTotalPajak());
                         discount = Math.round(response.body().getCart().getTotalDisc());
                         serviceFee = Math.round(response.body().getCart().getTotalServiceFee());
@@ -313,14 +316,32 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
 
         }
 
+        for(int x=0;x < serviceFeeList.size();x++){
+            String namaService = "";
+            String hargaService = "";
+            namaService = serviceFeeList.get(x).getNama();
+            hargaService = "Rp" + DHelper.toformatRupiah(String.valueOf(serviceFeeList.get(x).getNominal()));
+
+            int lenNama = 32 - namaService.length();
+            al.add( (new TextPrintable.Builder())
+                    .setText(namaService + String.format("%" + lenNama + "s", hargaService))
+                    .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
+                    .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
+                    .setFontSize(FONT_SMALL)
+                    .setLineSpacing(LINE_SPACING_1)
+                    .setNewLinesAfter(1)
+                    .build());
+
+        }
+
         al.add( (new TextPrintable.Builder())
                 .setText("--------------------------------")
                 .setNewLinesAfter(1)
                 .build());
 
-        int lenPpn = 32 - 7;
+        int lenPpn = 32 - 5;
         al.add( (new TextPrintable.Builder())
-                .setText("PPN 10%" + String.format("%" + lenPpn + "s", "Rp" + DHelper.toformatRupiah(String.valueOf(pajak))))
+                .setText("Pajak" + String.format("%" + lenPpn + "s", "Rp" + DHelper.toformatRupiah(String.valueOf(pajak))))
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
                 .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
                 .setFontSize(FONT_SMALL)

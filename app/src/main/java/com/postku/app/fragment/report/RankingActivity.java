@@ -250,14 +250,16 @@ public class RankingActivity extends AppCompatActivity {
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for(int x=1;x < rankingList.size();x++){
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for(int x=0;x < rankingList.size();x++){
+                                        if(x > 0){
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if(secondList.size() > 0){
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     }else {
@@ -307,18 +309,27 @@ public class RankingActivity extends AppCompatActivity {
                                         rankingList.add(ranking);
                                     }
                                     topRanking.setVisibility(View.VISIBLE);
-                                    nama.setText(rankingList.get(0).getNama());
+                                    String namacat="";
+                                    if(rankingList.get(0).getNama() == null){
+                                        namacat = "Menu Tanpa Kategori";
+                                    }else {
+                                        namacat = rankingList.get(0).getNama();
+                                    }
+
+                                    nama.setText(namacat);
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for(int x=1;x < rankingList.size();x++){
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for(int x=0;x < rankingList.size();x++){
+                                       if(x > 0){
+                                           Ranking ranking = new Ranking();
+                                           ranking.setNama(rankingList.get(x).getNama());
+                                           ranking.setQty(rankingList.get(x).getQty());
+                                           secondList.add(ranking);
+                                       }
                                     }
                                     if(secondList.size() > 0){
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     }else {
@@ -372,14 +383,16 @@ public class RankingActivity extends AppCompatActivity {
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for(int x=1;x < rankingList.size();x++){
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for(int x=0;x < rankingList.size();x++){
+                                       if(x > 0) {
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if(secondList.size() > 0){
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     }else {
@@ -433,14 +446,16 @@ public class RankingActivity extends AppCompatActivity {
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for (int x = 1; x < rankingList.size(); x++) {
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for (int x = 0; x < rankingList.size(); x++) {
+                                        if(x > 0){
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if (secondList.size() > 0) {
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     } else {
@@ -494,14 +509,16 @@ public class RankingActivity extends AppCompatActivity {
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for (int x = 1; x < rankingList.size(); x++) {
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for (int x = 0; x < rankingList.size(); x++) {
+                                        if(x > 0){
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if (secondList.size() > 0) {
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     } else {
@@ -555,14 +572,16 @@ public class RankingActivity extends AppCompatActivity {
                                     qty.setText(rankingList.get(0).getQty() + "");
 
                                     List<Ranking> secondList = new ArrayList<>();
-                                    for (int x = 1; x < rankingList.size(); x++) {
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                    for (int x = 0; x < rankingList.size(); x++) {
+                                        if(x > 0){
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if (secondList.size() > 0) {
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     } else {

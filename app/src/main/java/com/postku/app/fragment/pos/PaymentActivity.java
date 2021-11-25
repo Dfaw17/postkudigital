@@ -272,6 +272,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void disabledKeyNum(boolean isDisbaled){
         if(isDisbaled){
+            lpas.setVisibility(View.GONE);
             nol.setEnabled(false);
             one.setEnabled(false);
             two.setEnabled(false);
@@ -284,6 +285,7 @@ public class PaymentActivity extends AppCompatActivity {
             nine.setEnabled(false);
             clear.setEnabled(false);
         }else{
+            lpas.setVisibility(View.VISIBLE);
             nol.setEnabled(true);
             one.setEnabled(true);
             two.setEnabled(true);
