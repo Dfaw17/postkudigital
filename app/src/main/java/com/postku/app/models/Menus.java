@@ -44,7 +44,7 @@ public class Menus implements Serializable {
 
     @Expose
     @SerializedName("kategori")
-    private String kategori;
+    private Kategori kategori;
 
     public int getId() {
         return id;
@@ -118,11 +118,11 @@ public class Menus implements Serializable {
         this.toko = toko;
     }
 
-    public String getKategori() {
+    public Kategori getKategori() {
         return kategori;
     }
 
-    public void setKategori(String kategori) {
+    public void setKategori(Kategori kategori) {
         this.kategori = kategori;
     }
 }

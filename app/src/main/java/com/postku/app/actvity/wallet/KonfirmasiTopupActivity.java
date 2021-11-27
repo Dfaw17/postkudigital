@@ -158,11 +158,11 @@ public class KonfirmasiTopupActivity extends AppCompatActivity implements Select
         progressBar.setVisibility(View.VISIBLE);
         HashMap<String, RequestBody> map = new HashMap<>();
         map.put("wallet", createPartFromString(String.valueOf(id)));
-        map.put("channel", createPartFromString(idChannel));
+        map.put("chanel", createPartFromString(idChannel));
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), imageFileOwner);
         MultipartBody.Part body = MultipartBody.Part.createFormData("pic", imageFileOwner.getName(), reqFile);
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.konfirmTopup(map).enqueue(new Callback<KonfirmTopupResponseJson>() {
+        service.konfirmTopup(body, map).enqueue(new Callback<KonfirmTopupResponseJson>() {
             @Override
             public void onResponse(Call<KonfirmTopupResponseJson> call, Response<KonfirmTopupResponseJson> response) {
                 progressBar.setVisibility(View.GONE);

@@ -18,6 +18,7 @@ import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate;
 import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions;
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker;
 import com.bumptech.glide.Glide;
+import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.adapter.HistoryTransAdapter;
 import com.postku.app.helpers.DHelper;
@@ -53,6 +54,7 @@ public class ReportFragment extends Fragment {
     textDiskon, textCanceled, textTotalItems, textHpp, textLabaRugi;
     private String date1, date2, dateStart, dateEnd;
     private Calendar calendar;
+    private User user;
     public ReportFragment() {
         // Required empty public constructor
     }
@@ -63,6 +65,7 @@ public class ReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         context = getActivity();
         sessionManager = new SessionManager(context);
+        user = BaseApp.getInstance(context).getLoginUser();
         calendar = Calendar.getInstance();
 
         rlranking = view.findViewById(R.id.rlranking);
@@ -93,6 +96,12 @@ public class ReportFragment extends Fragment {
         textDateCompleted.setText(dateStart + " - " + dateEnd);
         
         getData(true, date1, date2);
+
+        if(user.isSubs()){
+            rlranking.setVisibility(View.VISIBLE);
+        }else {
+            rlranking.setVisibility(View.GONE);
+        }
 
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override

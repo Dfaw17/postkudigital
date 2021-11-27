@@ -87,6 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ldiskon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp"
@@ -131,8 +132,8 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            app:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_deleted" />
+            app:srcCompat="@drawable/ic_deleted"
+            app:tint="@color/colorPrimary" />
     </LinearLayout>
 
     <Button

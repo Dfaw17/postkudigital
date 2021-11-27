@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else {
             if(user.isOwner()){
-                mReport.setVisible(false);
+                mReport.setVisible(true);
                 mToko.setVisible(false);
                 mStaff.setVisible(false);
                 mAbsensi.setVisible(false);

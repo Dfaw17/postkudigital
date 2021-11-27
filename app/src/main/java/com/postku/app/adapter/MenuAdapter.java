@@ -55,7 +55,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
         holder.nama.setText(menus.getNama());
         holder.harga.setText("Rp" + DHelper.toformatRupiah(String.valueOf(menus.getHarga())));
         if(menus.getKategori() != null){
-            holder.kategori.setText(menus.getKategori());
+            holder.kategori.setText(menus.getKategori().getLabel());
         }else {
             holder.kategori.setText("-");
         }
@@ -65,7 +65,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
             public void onClick(View v) {
                 Intent intent = new Intent(context, ManageMenuActivity.class);
                 intent.putExtra(Constants.ID, menus.getId());
-                intent.putExtra(Constants.ID_KATEGORI, menus.getKategori());
+                intent.putExtra(Constants.ID_KATEGORI, menus.getKategori().getId());
                 intent.putExtra(Constants.METHOD, Constants.EDIT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

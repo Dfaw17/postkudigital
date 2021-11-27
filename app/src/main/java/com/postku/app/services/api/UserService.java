@@ -362,7 +362,8 @@ public interface UserService {
 
     @Multipart
     @POST("wallet/konfirmasi")
-    Call<KonfirmTopupResponseJson> konfirmTopup(@PartMap Map<String, RequestBody> text);
+    Call<KonfirmTopupResponseJson> konfirmTopup(@Part MultipartBody.Part image,
+                                                @PartMap Map<String, RequestBody> text);
 
     @GET("wallet/trx")
     Call<GetHistoryWalletResponse> historyWallet(@Query("wallet_id") String id);

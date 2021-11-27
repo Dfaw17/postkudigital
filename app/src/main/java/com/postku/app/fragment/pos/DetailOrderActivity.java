@@ -160,7 +160,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onClick(View v) {
                 UpdateCartRequest request = new UpdateCartRequest();
-                Log.e(TAG, sessionManager.getIdDiscount() + "---------");
+                Log.e(TAG, sessionManager.getDiscount() + "---------");
                 if(sessionManager.getIdDiscount() > 0){
                     request.setDiscount(sessionManager.getIdDiscount());
                 }else {
@@ -385,10 +385,17 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         final Button simpan = dialogView.findViewById(R.id.btn_submit);
         final RelativeLayout rldiskon = dialogView.findViewById(R.id.rldiscount);
         final ImageView imgDelete = dialogView.findViewById(R.id.img_delete);
+        final LinearLayout ldiskon = dialogView.findViewById(R.id.ldiskon);
 
         builder.setCancelable(true);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+        if(user.isSubs()){
+            ldiskon.setVisibility(View.VISIBLE);
+        }else {
+            ldiskon.setVisibility(View.GONE);
+        }
 
         textProduk.setText(nama);
         textPrice.setText(DHelper.toformatRupiah(String.valueOf(harga)));
@@ -624,6 +631,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
     @Override
     public void updateResult(String metode, int id, String nama, int type, int value) {
+        Log.e("RESSS", "metod: " + metode + " id: " + id + " nama: " + nama + " type:" + type + " value:" + value);
         if(metode.equalsIgnoreCase(Constants.DISKON)){
             double noms = 0;
             if(id > 0){

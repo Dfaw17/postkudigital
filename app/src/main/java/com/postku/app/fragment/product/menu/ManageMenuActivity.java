@@ -256,7 +256,8 @@ public class ManageMenuActivity extends AppCompatActivity {
                                 .load(menus.getImage())
                                 .placeholder(R.drawable.image_placeholder)
                                 .into(imageView);
-                        selectKategori.setText(menus.getKategori());
+                        selectKategori.setText(menus.getKategori().getLabel());
+                        idkategori = menus.getKategori().getId();
                         Bitmap bitmap = imageView.getDrawingCache();
                         imageFileMenu = DHelper.createTempFile(context, bitmap);
                         if(response.body().getStock() != null){

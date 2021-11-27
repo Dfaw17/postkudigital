@@ -199,7 +199,7 @@ public class QrisActivity extends AppCompatActivity {
                         Intent intent = new Intent(context, ResultTransactionActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra(Constants.ID, response.body().getTransaction().getReffCode());
+                        intent.putExtra(Constants.INVOICE, response.body().getTransaction().getReffCode());
                         startActivity(intent);
                         finish();
                     }else {

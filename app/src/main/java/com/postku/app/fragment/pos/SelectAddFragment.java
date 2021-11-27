@@ -158,6 +158,7 @@ public class SelectAddFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 sessionManager.delAddOn(getArguments().getString(Constants.METHOD));
+                sessionManager.delAddOn("ID_" + getArguments().getString(Constants.METHOD));
                 UpdateText updateText = (UpdateText) getActivity();
                 updateText.updateResult(getArguments().getString(Constants.METHOD),
                         0, adapter.getSelectedName(), adapter.getSelectedType(), adapter.getSelectedValue());
