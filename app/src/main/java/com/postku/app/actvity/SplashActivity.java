@@ -47,7 +47,11 @@ public class SplashActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }else {
-                                getKontak();
+                                Intent intent = new Intent(context, SelectOutletActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
                             }
                         }else {
                             Intent intent = new Intent(context, BeginActivity.class);
@@ -71,30 +75,6 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void getKontak(){
-        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.contact().enqueue(new Callback<GetContactUsResponse>() {
-            @Override
-            public void onResponse(Call<GetContactUsResponse> call, Response<GetContactUsResponse> response) {
-                if(response.isSuccessful()){
-                    if(response.body().getStatusCode() == 200){
-                        if(response.body().getKontakList().size() > 0){
-                            sessionManager.saveContact(response.body().getKontakList(), "contactus");
-                            Intent intent = new Intent(context, SelectOutletActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<GetContactUsResponse> call, Throwable t) {
-
-            }
-        });
-    }
 
 }

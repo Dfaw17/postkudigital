@@ -18,6 +18,7 @@ import com.postku.app.adapter.OutletAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.GetOutletResponseJson;
+import com.postku.app.models.GetContactUsResponse;
 import com.postku.app.models.User;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -55,6 +56,7 @@ public class SelectOutletActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         getToko();
+        getKontak();
         selectOutlet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +83,28 @@ public class SelectOutletActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private void getKontak(){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.contact().enqueue(new Callback<GetContactUsResponse>() {
+            @Override
+            public void onResponse(Call<GetContactUsResponse> call, Response<GetContactUsResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatusCode() == 200){
+                        if(response.body().getKontakList().size() > 0){
+                            sessionManager.saveContact(response.body().getKontakList(), "contactus");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetContactUsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getToko(){
