@@ -10,7 +10,7 @@ public class WalletResponseJson {
     private String message;
 
     @Expose
-    @SerializedName("status")
+    @SerializedName("status_code")
     private int statusCode;
 
     @Expose
