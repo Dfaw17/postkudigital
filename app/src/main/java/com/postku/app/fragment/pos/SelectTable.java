@@ -52,6 +52,7 @@ public class SelectTable extends DialogFragment {
     private Button select;
     private List<Meja> mejaList = new ArrayList<>();
     private String callFrom;
+    private TextView delete;
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class SelectTable extends DialogFragment {
         backButton = view.findViewById(R.id.back_button);
         caption = view.findViewById(R.id.text_caption);
         select = view.findViewById(R.id.button6);
+        delete = view.findViewById(R.id.text_delete);
 
         caption.setText("Daftar meja");
         callFrom = getArguments().getString(Constants.METHOD);
@@ -88,14 +90,32 @@ public class SelectTable extends DialogFragment {
                         DHelper.pesan(context, "Meja sudah dibooking");
                         return;
                     }else {
-                        UpdateText updateText = (UpdateText) getParentFragment();
-                        updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
-                        sessionManager.setIdMeja(adapter.getSelectedItem());
-                        sessionManager.setMeja(adapter.getName());
-                        dismiss();
+                        if(callFrom.equalsIgnoreCase("1")){
+                            UpdateText updateText = (UpdateText) getParentFragment();
+                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                            sessionManager.setIdMeja(adapter.getSelectedItem());
+                            sessionManager.setMeja(adapter.getName());
+                            dismiss();
+                        }else{
+                            UpdateText updateText = (UpdateText) getActivity();
+                            updateText.updateResult(String.valueOf(adapter.getSelectedItem()), adapter.getName());
+                            sessionManager.setIdMeja(adapter.getSelectedItem());
+                            sessionManager.setMeja(adapter.getName());
+                            dismiss();
+                        }
+
 
                     }
                 }
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManager.setIdMeja(0);
+                sessionManager.setMeja("");
+                dismiss();
             }
         });
 

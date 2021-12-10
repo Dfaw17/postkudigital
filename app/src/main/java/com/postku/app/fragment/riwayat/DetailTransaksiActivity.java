@@ -417,7 +417,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
                 .setNewLinesAfter(1)
                 .build());
 
-        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_logo_print);
+        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_footer_print);
         al.add(new ImagePrintable.Builder(image)
                 .setNewLinesAfter(1)
                 .build());

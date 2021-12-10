@@ -286,7 +286,7 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori", createPartFromString(selectKategori.getText().toString()));
+        map.put("kategori", createPartFromString(String.valueOf(idkategori)));
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));

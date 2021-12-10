@@ -220,45 +220,88 @@ public class EditProfileActivity extends AppCompatActivity {
             body = MultipartBody.Part.createFormData("profile_pic", imageFileOwner.getName(), reqFile);
         }
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                progressBar.setVisibility(View.GONE);
-                if(response.isSuccessful()){
-                    DHelper.pesan(context, "Success");
-                    try {
-                        JSONObject object = new JSONObject(response.body().string());
-                        if(object.getString("status_code").equalsIgnoreCase("200")){
-                            JSONObject jsonObject = object.getJSONObject("data");
-                            Realm realm = BaseApp.getInstance(context).getRealmInstance();
-                            realm.beginTransaction();
-                            user.setEmail(jsonObject.getString("email"));
-                            user.setNama(jsonObject.getString("nama"));
-                            user.setPhone(jsonObject.getString("phone"));
-                            user.setAddress(jsonObject.getString("address"));
-                            user.setProfilePic(jsonObject.getString("profile_pic"));
-                            realm.commitTransaction();
+        if(user.isOwner()){
+            service.updateOwner(body, map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if(response.isSuccessful()){
+                        DHelper.pesan(context, "Success");
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            if(object.getString("status_code").equalsIgnoreCase("200")){
+                                JSONObject jsonObject = object.getJSONObject("data");
+                                Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                                realm.beginTransaction();
+                                user.setEmail(jsonObject.getString("email"));
+                                user.setNama(jsonObject.getString("nama"));
+                                user.setPhone(jsonObject.getString("phone"));
+                                user.setAddress(jsonObject.getString("address"));
+                                user.setProfilePic(jsonObject.getString("profile_pic"));
+                                realm.commitTransaction();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        finish();
+                    }else {
+                        Log.e(TAG, response.errorBody().toString());
+                        DHelper.pesan(context, response.errorBody().toString());
                     }
-
-                    finish();
-                }else {
-                    Log.e(TAG, response.errorBody().toString());
-                    DHelper.pesan(context, response.errorBody().toString());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    t.printStackTrace();
+                }
+            });
+        }else{
+            service.updatepegawai(body, map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if(response.isSuccessful()){
+                        DHelper.pesan(context, "Success");
+                        try {
+                            JSONObject object = new JSONObject(response.body().string());
+                            if(object.getString("status_code").equalsIgnoreCase("200")){
+                                JSONObject jsonObject = object.getJSONObject("data");
+                                Realm realm = BaseApp.getInstance(context).getRealmInstance();
+                                realm.beginTransaction();
+                                user.setEmail(jsonObject.getString("email"));
+                                user.setNama(jsonObject.getString("nama"));
+                                user.setPhone(jsonObject.getString("phone"));
+                                user.setAddress(jsonObject.getString("address"));
+                                user.setProfilePic(jsonObject.getString("profile_pic"));
+                                realm.commitTransaction();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        finish();
+                    }else {
+                        Log.e(TAG, response.errorBody().toString());
+                        DHelper.pesan(context, response.errorBody().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    t.printStackTrace();
+                }
+            });
+        }
+
 
     }
 

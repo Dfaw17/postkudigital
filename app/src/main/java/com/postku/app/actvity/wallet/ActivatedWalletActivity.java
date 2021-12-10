@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.postku.app.R;
+import com.postku.app.actvity.MainActivity;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.WalletResponseJson;
 import com.postku.app.services.ServiceGenerator;
@@ -66,8 +67,9 @@ public class ActivatedWalletActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200) {
                         DHelper.pesan(context, response.body().getMessage());
-                        Intent intent = new Intent(context, WalletActivity.class);
+                        Intent intent = new Intent(context, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }else {
                         DHelper.pesan(context, response.body().getMessage());
                     }

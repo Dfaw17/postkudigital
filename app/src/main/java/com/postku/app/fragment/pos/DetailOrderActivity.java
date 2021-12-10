@@ -160,7 +160,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             @Override
             public void onClick(View v) {
                 UpdateCartRequest request = new UpdateCartRequest();
-                Log.e(TAG, sessionManager.getDiscount() + "---------");
+                Log.e(TAG, sessionManager.getIdDiscount() + "---------");
                 if(sessionManager.getIdDiscount() > 0){
                     request.setDiscount(sessionManager.getIdDiscount());
                 }else {
@@ -634,7 +634,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         Log.e("RESSS", "metod: " + metode + " id: " + id + " nama: " + nama + " type:" + type + " value:" + value);
         if(metode.equalsIgnoreCase(Constants.DISKON)){
             double noms = 0;
-            if(id > 0){
+
                 if(type == 1){
                     noms =  value;
                 }else {
@@ -642,7 +642,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 }
                 sessionManager.setIdDiscount(id);
                 sessionManager.setDiscount(String.valueOf(value));
-            }
+
 
             noms = Math.round(noms);
             totalDiskon = noms;
@@ -662,7 +662,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             labelOrder.setText(nama);
         }else if(metode.equalsIgnoreCase(PAJAK)){
             double noms = 0;
-            if(id > 0){
+
                 if(type == 1){
                     noms =  value;
                 }else {
@@ -670,7 +670,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 }
                 sessionManager.setIdPajak(id);
                 sessionManager.setPajak(String.valueOf(value));
-            }
+
 
             noms = Math.round(noms);
             totalPajak = noms;
