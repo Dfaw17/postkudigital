@@ -256,8 +256,11 @@ public class ManageMenuActivity extends AppCompatActivity {
                                 .load(menus.getImage())
                                 .placeholder(R.drawable.image_placeholder)
                                 .into(imageView);
-                        selectKategori.setText(menus.getKategori().getLabel());
-                        idkategori = menus.getKategori().getId();
+                        if(menus.getKategori() != null){
+                            selectKategori.setText(menus.getKategori().getLabel());
+                            idkategori = menus.getKategori().getId();
+                        }
+
                         Bitmap bitmap = imageView.getDrawingCache();
                         imageFileMenu = DHelper.createTempFile(context, bitmap);
                         if(response.body().getStock() != null){
@@ -286,7 +289,10 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori", createPartFromString(String.valueOf(idkategori)));
+        if(idkategori > 0){
+            map.put("kategori", createPartFromString(String.valueOf(idkategori)));
+        }
+        
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
@@ -330,7 +336,10 @@ public class ManageMenuActivity extends AppCompatActivity {
                 .replaceAll(",","")
                 .replaceAll("\\.","")));
         map.put("desc", createPartFromString(edtDeskripsi.getText().toString()));
-        map.put("kategori_id", createPartFromString(String.valueOf(idkategori)));
+        if(idkategori > 0){
+            map.put("kategori_id", createPartFromString(String.valueOf(idkategori)));
+        }
+
         map.put("harga_modal", createPartFromString(edtModal.getText().toString()
                 .replaceAll(",","")
                 .replaceAll("\\.","")));

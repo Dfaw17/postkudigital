@@ -62,6 +62,7 @@ import com.postku.app.json.TaxPostResponseJson;
 import com.postku.app.json.TopupResponseJson;
 import com.postku.app.json.TransactionResponse;
 import com.postku.app.json.TransppobResponseJson;
+import com.postku.app.json.TrxStockResponse;
 import com.postku.app.json.UpdCartItemRequest;
 import com.postku.app.json.UpdateCartRequest;
 import com.postku.app.json.WalletResponseJson;
@@ -200,7 +201,7 @@ public interface UserService {
 
     @Multipart
     @POST("stock/trx")
-    Call<StockTrxResponse> stocktrx(@PartMap Map<String, RequestBody> text);
+    Call<TrxStockResponse> stocktrx(@PartMap Map<String, RequestBody> text);
 //    cart
     @GET("cart")
     Call<GetCartResponse> getCart(@Query("id_toko") String id);
@@ -226,9 +227,8 @@ public interface UserService {
     @DELETE("cartitem")
     Call<InsertItemResponse> deleteItem(@Query("id_cart_item") String id);
 
-    @Multipart
-    @DELETE("cartitem/discount")
-    Call<InsertItemResponse> deleteDiskonItem(@PartMap Map<String, RequestBody> text);
+    @DELETE("cart_item/discount")
+    Call<InsertItemResponse> deleteDiskonItem(@Query("id_cart_items") String id);
 
     @Multipart
     @PATCH("cartitem")

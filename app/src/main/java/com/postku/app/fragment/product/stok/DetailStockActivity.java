@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.postku.app.R;
 import com.postku.app.adapter.HistoryStockAdapter;
@@ -28,6 +29,7 @@ import com.postku.app.helpers.DHelper;
 import com.postku.app.json.ActiveStockResponse;
 import com.postku.app.json.StockResponseJson;
 import com.postku.app.json.StockTrxResponse;
+import com.postku.app.json.TrxStockResponse;
 import com.postku.app.models.HistoryStock;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
@@ -219,20 +221,23 @@ public class DetailStockActivity extends AppCompatActivity {
         map.put("type_adjustment", createPartFromString(String.valueOf(type)));
         map.put("note", createPartFromString(note));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.stocktrx(map).enqueue(new Callback<StockTrxResponse>() {
+        service.stocktrx(map).enqueue(new Callback<TrxStockResponse>() {
             @Override
-            public void onResponse(Call<StockTrxResponse> call, Response<StockTrxResponse> response) {
+            public void onResponse(Call<TrxStockResponse> call, Response<TrxStockResponse> response) {
                 if(response.isSuccessful()){
-                    if(response.body().getStatusCode() == 200);{
-                        Log.e(TAG, response.body().getMessage());
+                    if(response.body().getStatusCode() == 200){
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         getData(id);
+                    }else{
+                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<StockTrxResponse> call, Throwable t) {
-
+            public void onFailure(Call<TrxStockResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
         });
     }

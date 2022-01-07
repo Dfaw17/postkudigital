@@ -31,7 +31,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
     private Context context;
     private List<Menus> menusList;
     private List<Menus> filteredList;
-
+    int idcat = 0;
     public MenuAdapter(Context context, List<Menus> menusList){
         this.context = context;
         this.menusList = menusList;
@@ -48,6 +48,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         final Menus menus = filteredList.get(position);
+
         Glide.with(context)
                 .load(menus.getImage())
                 .placeholder(R.drawable.image_placeholder)
@@ -55,8 +56,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
         holder.nama.setText(menus.getNama());
         holder.harga.setText("Rp" + DHelper.toformatRupiah(String.valueOf(menus.getHarga())));
         if(menus.getKategori() != null){
+            idcat = menus.getKategori().getId();
             holder.kategori.setText(menus.getKategori().getLabel());
         }else {
+            idcat = 0;
             holder.kategori.setText("-");
         }
 
@@ -65,7 +68,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.VH> implements
             public void onClick(View v) {
                 Intent intent = new Intent(context, ManageMenuActivity.class);
                 intent.putExtra(Constants.ID, menus.getId());
-                intent.putExtra(Constants.ID_KATEGORI, menus.getKategori().getId());
+                intent.putExtra(Constants.ID_KATEGORI, idcat);
                 intent.putExtra(Constants.METHOD, Constants.EDIT);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

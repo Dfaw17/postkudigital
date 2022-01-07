@@ -543,10 +543,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     }
 
     private void deleteDiskonMenuItem(int id){
-        HashMap<String, RequestBody> map = new HashMap<>();
-        map.put("id_cart_item", createPartFromString(String.valueOf(id)));
         UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
-        service.deleteDiskonItem(map).enqueue(new Callback<InsertItemResponse>() {
+        service.deleteDiskonItem(String.valueOf(id)).enqueue(new Callback<InsertItemResponse>() {
             @Override
             public void onResponse(Call<InsertItemResponse> call, Response<InsertItemResponse> response) {
                 if(response.isSuccessful()){
@@ -559,7 +557,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
             @Override
             public void onFailure(Call<InsertItemResponse> call, Throwable t) {
-
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
         });
     }
@@ -676,9 +675,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             totalPajak = noms;
             pajak.setText(DHelper.formatRupiah(noms));
         }else if(metode.equalsIgnoreCase(SERVICE_CHARGE)){
-            if(sessionManager.getSeviceList().size() > 0){
-                serviceQty.setVisibility(View.VISIBLE);
-                serviceQty.setText(sessionManager.getSeviceList().size() + "");
+            if(sessionManager.getSeviceList() != null){
+                if(sessionManager.getSeviceList().size() > 0){
+                    serviceQty.setVisibility(View.VISIBLE);
+                    serviceQty.setText(sessionManager.getSeviceList().size() + "");
+                }
             }else {
                 serviceQty.setVisibility(View.GONE);
             }

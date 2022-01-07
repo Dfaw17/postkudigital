@@ -24,6 +24,7 @@ import com.postku.app.models.Ranking;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.DateRangePickerFragement;
+import com.postku.app.utils.Log;
 import com.postku.app.utils.SessionManager;
 
 import org.json.JSONArray;
@@ -310,7 +311,7 @@ public class RankingActivity extends AppCompatActivity {
                                     }
                                     topRanking.setVisibility(View.VISIBLE);
                                     String namacat="";
-                                    if(rankingList.get(0).getNama() == null){
+                                    if(rankingList.get(0).getNama().equalsIgnoreCase("null")){
                                         namacat = "Menu Tanpa Kategori";
                                     }else {
                                         namacat = rankingList.get(0).getNama();
@@ -321,9 +322,15 @@ public class RankingActivity extends AppCompatActivity {
 
                                     List<Ranking> secondList = new ArrayList<>();
                                     for(int x=0;x < rankingList.size();x++){
+                                        Log.e("KAT", rankingList.get(x).getNama());
+                                        if(rankingList.get(x).getNama().equalsIgnoreCase("null")){
+                                            namacat = "Menu Tanpa Kategori";
+                                        }else {
+                                            namacat = rankingList.get(x).getNama();
+                                        }
                                        if(x > 0){
                                            Ranking ranking = new Ranking();
-                                           ranking.setNama(rankingList.get(x).getNama());
+                                           ranking.setNama(namacat);
                                            ranking.setQty(rankingList.get(x).getQty());
                                            secondList.add(ranking);
                                        }
