@@ -113,6 +113,8 @@ public class SelectTable extends DialogFragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UpdateText updateText = (UpdateText) getActivity();
+                updateText.updateResult("0", "");
                 sessionManager.setIdMeja(0);
                 sessionManager.setMeja("");
                 dismiss();

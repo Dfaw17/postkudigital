@@ -23,8 +23,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".fragment.report.ReportDiskonActivity"
+        <activity android:name=".actvity.WebViewActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".fragment.report.ReportDiskonActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment.absensi.DetailAbsenActivity"
             android:theme="@style/AppTheme.NoActionBar" />

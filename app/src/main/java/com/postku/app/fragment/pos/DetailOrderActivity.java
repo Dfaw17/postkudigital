@@ -693,6 +693,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
     @Override
     public void updateResult(String id, String nama) {
+        Log.e(TAG, "id:===" + id +" nama===" + nama);
         meja.setText(nama);
     }
 

@@ -1,8 +1,11 @@
 package com.postku.app.helpers;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -179,6 +182,32 @@ public class DHelper {
     }
 
 
+    public static String calculateFileSize(Uri filepath)
+    {
+        //String filepathstr=filepath.toString();
+        File file = new File(filepath.getPath());
 
+        // Get length of file in bytes
+        long fileSizeInBytes = file.length();
+        // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+        long fileSizeInKB = fileSizeInBytes / 1024;
+        // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+        long fileSizeInMB = fileSizeInKB / 1024;
+
+        String calString= Float.toString(fileSizeInMB);
+        return calString;
+    }
+
+    public static float getImageSize(Context context, Uri uri) {
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        if (cursor != null) {
+            int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+            cursor.moveToFirst();
+            float imageSize = cursor.getLong(sizeIndex);
+            cursor.close();
+            return imageSize; // returns size in bytes
+        }
+        return 0;
+    }
 
 }

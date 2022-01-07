@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.DhcpInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -367,7 +368,8 @@ public class ManageMenuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PostMenuResponse> call, Throwable t) {
-
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
         });
     }
@@ -450,19 +452,28 @@ public class ManageMenuActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
                 imageFileMenu = DHelper.createTempFile(context, bitmap);
             }else if(requestCode == Constants.GALERY_PROFILE_REQUEST){
-
                 if(data != null){
-                    Log.e(TAG, "sini 2");
                     Uri contentUri = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
-                        imageView.destroyDrawingCache();
-                        imageView.setImageBitmap(bitmap);
-                        imageFileMenu = DHelper.createTempFile(context, bitmap);
+                    float sizeori = DHelper.getImageSize(context, contentUri);
+                    float sizemb = sizeori/(1024f * 1024f);
+                    Log.e(TAG, "size" + sizemb);
+                    if(sizemb < 5){
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                            Glide.with(context)
+                                    .load(contentUri)
+                                    .dontAnimate()
+                                    .placeholder(R.drawable.image_placeholder)
+                                    .into(imageView);
+                            imageFileMenu = DHelper.createTempFile(context, bitmap);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        DHelper.pesan(context, "Ukuran gambar maksimal 5mb");
                     }
+
                 }
             }
         }

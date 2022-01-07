@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private Context context;
-    private TextView register, caption;
+    private TextView register, caption, resetPassword;
     private EditText edtUsername, edtPassword;
     private Button btnLogin;
     private ImageView imgBack;
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         caption = findViewById(R.id.text_caption);
         imgBack = findViewById(R.id.back_button);
         progressBar = findViewById(R.id.progressBar);
+        resetPassword = findViewById(R.id.text_reset);
 //        initialize app bar title
         caption.setText(context.getString(R.string.label_btn_login));
 //        action back button
@@ -95,6 +97,16 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     DHelper.pesan(context, context.getString(R.string.error_connection));
                 }
+            }
+        });
+
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, WebViewActivity.class);
+                i.putExtra("url", "https://dashboard.postku.site/reset_password/");
+                i.setData(Uri.parse("https://dashboard.postku.site/reset_password/"));
+                startActivity(i);
             }
         });
 
