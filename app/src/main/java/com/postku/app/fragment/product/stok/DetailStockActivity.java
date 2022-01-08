@@ -27,10 +27,12 @@ import com.postku.app.adapter.StockAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
 import com.postku.app.json.ActiveStockResponse;
+import com.postku.app.json.DetailStockResponse;
 import com.postku.app.json.StockResponseJson;
 import com.postku.app.json.StockTrxResponse;
 import com.postku.app.json.TrxStockResponse;
 import com.postku.app.models.HistoryStock;
+import com.postku.app.models.Stock;
 import com.postku.app.services.ServiceGenerator;
 import com.postku.app.services.api.UserService;
 import com.postku.app.utils.Log;
@@ -133,6 +135,30 @@ public class DetailStockActivity extends AppCompatActivity {
         });
     }
 
+    private void detailstok(String id){
+        UserService service = ServiceGenerator.createService(UserService.class, sessionManager.getToken(), null, null, null);
+        service.detailStock(id).enqueue(new Callback<DetailStockResponse>() {
+            @Override
+            public void onResponse(Call<DetailStockResponse> call, Response<DetailStockResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body().getStatus() == 200){
+                        Stock stock = response.body().getStock();
+                        nama.setText(stock.getNama());
+                        currentStock.setText(stock.getCurrentStock() + "");
+                    }else {
+                        DHelper.pesan(context, response.body().getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailStockResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
     public void showDialogAdd(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -228,6 +254,7 @@ public class DetailStockActivity extends AppCompatActivity {
                     if(response.body().getStatusCode() == 200){
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         getData(id);
+                        detailstok(String.valueOf(id));
                     }else{
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }

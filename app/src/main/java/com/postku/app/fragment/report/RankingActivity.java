@@ -44,6 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.postku.app.helpers.Constants.TAG;
+
 public class RankingActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatDate = new SimpleDateFormat("dd MMMM yyyy");
@@ -189,13 +191,15 @@ public class RankingActivity extends AppCompatActivity {
 
                                     List<Ranking> secondList = new ArrayList<>();
                                     for(int x=0;x < rankingList.size();x++){
-                                        Ranking ranking = new Ranking();
-                                        ranking.setNama(rankingList.get(x).getNama());
-                                        ranking.setQty(rankingList.get(x).getQty());
-                                        secondList.add(ranking);
+                                        if(x > 0){
+                                            Ranking ranking = new Ranking();
+                                            ranking.setNama(rankingList.get(x).getNama());
+                                            ranking.setQty(rankingList.get(x).getQty());
+                                            secondList.add(ranking);
+                                        }
                                     }
                                     if(secondList.size() > 0){
-                                        adapter = new RankingAdapter(context, rankingList);
+                                        adapter = new RankingAdapter(context, secondList);
                                         recyclerView.setAdapter(adapter);
                                         recyclerView.setVisibility(View.VISIBLE);
                                     }else {
@@ -322,13 +326,15 @@ public class RankingActivity extends AppCompatActivity {
 
                                     List<Ranking> secondList = new ArrayList<>();
                                     for(int x=0;x < rankingList.size();x++){
-                                        Log.e("KAT", rankingList.get(x).getNama());
+
                                         if(rankingList.get(x).getNama().equalsIgnoreCase("null")){
                                             namacat = "Menu Tanpa Kategori";
                                         }else {
                                             namacat = rankingList.get(x).getNama();
                                         }
+
                                        if(x > 0){
+
                                            Ranking ranking = new Ranking();
                                            ranking.setNama(namacat);
                                            ranking.setQty(rankingList.get(x).getQty());

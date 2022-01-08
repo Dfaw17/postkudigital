@@ -15,6 +15,7 @@ import com.postku.app.json.CreateTokoResponse;
 import com.postku.app.json.CustomerPostResponseJson;
 import com.postku.app.json.DetailCartResponse;
 import com.postku.app.json.DetailMenuResponse;
+import com.postku.app.json.DetailStockResponse;
 import com.postku.app.json.DetailTransactionResponse;
 import com.postku.app.json.GetAbsensiResponse;
 import com.postku.app.json.GetArtikelResponse;
@@ -198,6 +199,9 @@ public interface UserService {
 
     @GET("stock/trx")
     Call<StockTrxResponse> historyStock(@Query("id_menu") String id);
+
+    @GET("stock/detail/{id}")
+    Call<DetailStockResponse> detailStock(@Path("id") String id);
 
     @Multipart
     @POST("stock/trx")
