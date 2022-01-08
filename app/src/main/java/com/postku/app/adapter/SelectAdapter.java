@@ -16,13 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.postku.app.R;
 import com.postku.app.helpers.AddOnClickListener;
 import com.postku.app.helpers.ClickInterface;
+import com.postku.app.helpers.Constants;
 import com.postku.app.models.Meja;
 import com.postku.app.models.ServiceAdd;
+import com.postku.app.utils.Log;
+import com.postku.app.utils.SessionManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.postku.app.helpers.Constants.TAG;
 
 public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
     private List<ServiceAdd> dataList;
@@ -31,13 +36,17 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
     private boolean isMulti;
     private AddOnClickListener clickInterface;
     private int lastSelectedPosition = -1;
+    private String metode="";
+    private SessionManager sessionManager;
+    private boolean isActive = true;
 
-    public SelectAdapter(Context context, List<ServiceAdd> dataList, int rowLayout, AddOnClickListener clickInterface, boolean isMulti) {
+    public SelectAdapter(Context context, List<ServiceAdd> dataList, int rowLayout, AddOnClickListener clickInterface, boolean isMulti, String metode) {
         this.dataList = dataList;
         this.mContext = context;
         this.rowLayout = rowLayout;
         this.isMulti = isMulti;
         this.clickInterface = clickInterface;
+        this.metode = metode;
     }
 
     @NotNull
@@ -49,9 +58,24 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
 
     @Override
     public void onBindViewHolder(@NonNull  VH holder, int position) {
+        sessionManager = new SessionManager(mContext);
+
         final ServiceAdd service = dataList.get(position);
         holder.text.setText(service.getNama());
         if(isMulti){
+            if(metode.equalsIgnoreCase(Constants.SERVICE_CHARGE)){
+                if(sessionManager.getSeviceList() != null && sessionManager.getSeviceList().size() >0){
+                    for(Integer row : sessionManager.getSeviceList()){
+                        Log.e(TAG, "row---" + row + " id---" + service.getId());
+                        if(row == service.getId()){
+                            service.setChecked(true);
+                            holder.checkBox.setChecked(true);
+                        }
+                    }
+
+                }
+            }
+
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -63,23 +87,38 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
                 }
             });
         }else {
+
             holder.check.setChecked(lastSelectedPosition == position);
             holder.check.setTag(position);
             holder.select.setTag(position);
-
             holder.select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    removeActive();
                     itemCheckChange(v);
                 }
             });
 
-            if(holder.check.isChecked()){
+            if(service.isChecked()){
                 holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left));
             }else {
-                holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left_grey));
+                if(holder.check.isChecked()){
+                    holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left));
+                }else {
+                    holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left_grey));
+                }
             }
+
         }
+
+    }
+
+    private void removeActive(){
+        for(int i = 0;i < dataList.size();i++){
+            ServiceAdd serviceAdd = dataList.get(i);
+            serviceAdd.setChecked(false);
+        }
+        notifyDataSetChanged();
 
     }
 
@@ -89,6 +128,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
     }
 
     private void itemCheckChange(View view) {
+        Log.e(TAG, "lastpos:--" + lastSelectedPosition);
         lastSelectedPosition =(Integer)view.getTag();
         notifyDataSetChanged();
     }
@@ -104,6 +144,7 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
             check = itemView.findViewById(R.id.check);
             text = itemView.findViewById(R.id.text_nama);
             if(!isMulti){
+
                 select.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

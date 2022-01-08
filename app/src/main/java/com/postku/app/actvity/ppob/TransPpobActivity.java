@@ -201,6 +201,7 @@ public class TransPpobActivity extends AppCompatActivity {
         textHarga.setText(DHelper.toformatRupiah(String.valueOf(ppob.getPricePostku())));
         textBiaya.setText(DHelper.toformatRupiah(String.valueOf(biaya)));
         textTotal.setText(DHelper.toformatRupiah(String.valueOf(total)));
+        textSaldo.setText(DHelper.toformatRupiah(sessionManager.getSaldoWallet()));
 
         ubah.setOnClickListener(new View.OnClickListener() {
             @Override

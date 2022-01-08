@@ -25,6 +25,7 @@ public class SessionManager {
     private static final String ACTIVE_CART = "activeCart";
     private static final String IS_CART_ACTIVE = "isCartActive";
     private static final String ID_WALLET = "idWallet";
+    private static final String SALDO_WALLET = "saldoWallet";
 
     private static final String DISCOUNT = "discount";
     private static final String PELANGGAN = "pelanggan";
@@ -42,6 +43,9 @@ public class SessionManager {
     private static final String ID_PAJAK = "idpajak";
     private static final String CONTACTUS = "contactus";
 
+    private static final String TOTAL_DISCOUNT = "totalDiscount";
+    private static final String TOTAL_PAJAK = "totalPajak";
+    private static final String TOTAL_SERVICE_FEE = "totalServiceFee";
 
     public SessionManager(Context context){
         this.context = context;
@@ -175,6 +179,15 @@ public class SessionManager {
 
     public String getIdWallet(){
         return sharedPref.getString(ID_WALLET, "");
+    }
+
+    public void setSaldoWallet(String s){
+        editor.putString(SALDO_WALLET, s);
+        editor.commit();
+    }
+
+    public String getSaldoWallet(){
+        return sharedPref.getString(SALDO_WALLET, "");
     }
 
     public void saveServiceFee(List<Integer> list, String s){
@@ -311,5 +324,32 @@ public class SessionManager {
 
     public int getIdPajak(){
         return sharedPref.getInt(ID_PAJAK, 0);
+    }
+
+    public void setTotalDiscount(int s){
+        editor.putInt(TOTAL_DISCOUNT, s);
+        editor.commit();
+    }
+
+    public int getTotalDiscount(){
+        return sharedPref.getInt(TOTAL_DISCOUNT, 0);
+    }
+
+    public void setTotalPajak(int s){
+        editor.putInt(TOTAL_PAJAK, s);
+        editor.commit();
+    }
+
+    public int getTotalPajak(){
+        return sharedPref.getInt(TOTAL_PAJAK, 0);
+    }
+
+    public void setTotalServiceFee(int s){
+        editor.putInt(TOTAL_SERVICE_FEE, s);
+        editor.commit();
+    }
+
+    public int getTotalServiceFee(){
+        return sharedPref.getInt(TOTAL_SERVICE_FEE, 0);
     }
 }

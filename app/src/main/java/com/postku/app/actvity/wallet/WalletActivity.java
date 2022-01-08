@@ -88,6 +88,7 @@ public class WalletActivity extends AppCompatActivity {
 
 
         sessionManager.setIdWallet(String.valueOf(walletid));
+        sessionManager.setSaldoWallet(String.valueOf(getIntent().getIntExtra(Constants.NOMINAL,0)));
         textSaldo.setText("Rp" + DHelper.toformatRupiah(String.valueOf(getIntent().getIntExtra(Constants.NOMINAL,0))));
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

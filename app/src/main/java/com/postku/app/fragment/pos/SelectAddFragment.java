@@ -191,10 +191,16 @@ public class SelectAddFragment extends DialogFragment {
                                 serviceAdd.setNama(response.body().getPromoList().get(i).getNama());
                                 serviceAdd.setType(response.body().getPromoList().get(i).getType());
                                 serviceAdd.setNominal(response.body().getPromoList().get(i).getNominal());
+                                if(sessionManager.getDiscount() != null && sessionManager.getIdDiscount() > 0){
+                                    if(sessionManager.getIdDiscount() == response.body().getPromoList().get(i).getId()){
+                                        serviceAdd.setChecked(true);
+                                    }
+
+                                }
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
-                                    clickInterface, false);
+                                    clickInterface, false, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -232,10 +238,16 @@ public class SelectAddFragment extends DialogFragment {
                                 serviceAdd.setNama(response.body().getCustomerList().get(i).getNama());
                                 serviceAdd.setType(0);
                                 serviceAdd.setNominal(0);
+                                if(sessionManager.getPelanggan() != null && sessionManager.getIdPelanggan() > 0){
+                                    if(sessionManager.getIdPelanggan() == response.body().getCustomerList().get(i).getId()){
+                                        serviceAdd.setChecked(true);
+                                    }
+
+                                }
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
-                                    clickInterface, false);
+                                    clickInterface, false, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -274,10 +286,16 @@ public class SelectAddFragment extends DialogFragment {
                                 serviceAdd.setNama(response.body().getDataList().get(i).getNama());
                                 serviceAdd.setType(0);
                                 serviceAdd.setNominal(0);
+                                if(sessionManager.getTipeOrder() != null && sessionManager.getIdTipeOrder() > 0){
+                                    if(sessionManager.getIdTipeOrder() == response.body().getDataList().get(i).getId()){
+                                        serviceAdd.setChecked(true);
+                                    }
+
+                                }
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
-                                    clickInterface, false);
+                                    clickInterface, false, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -316,10 +334,16 @@ public class SelectAddFragment extends DialogFragment {
                                 serviceAdd.setNama(response.body().getDataList().get(i).getNama());
                                 serviceAdd.setType(0);
                                 serviceAdd.setNominal(0);
+                                if(sessionManager.getLabelOrder() != null && sessionManager.getIdLabelOrder() > 0){
+                                    if(sessionManager.getIdLabelOrder() == response.body().getDataList().get(i).getId()){
+                                        serviceAdd.setChecked(true);
+                                    }
+
+                                }
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
-                                    clickInterface, false);
+                                    clickInterface, false, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }
@@ -357,10 +381,16 @@ public class SelectAddFragment extends DialogFragment {
                                 serviceAdd.setNama(response.body().getPajakList().get(i).getNama());
                                 serviceAdd.setType(response.body().getPajakList().get(i).getType());
                                 serviceAdd.setNominal(response.body().getPajakList().get(i).getNominal());
+                                if(sessionManager.getPajak() != null && sessionManager.getIdPajak() > 0){
+                                    if(sessionManager.getIdPajak() == response.body().getPajakList().get(i).getId()){
+                                        serviceAdd.setChecked(true);
+                                    }
+
+                                }
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select,
-                                    clickInterface, false);
+                                    clickInterface, false, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }else {
@@ -404,7 +434,7 @@ public class SelectAddFragment extends DialogFragment {
                                 dataList.add(serviceAdd);
                             }
                             adapter = new SelectAdapter(context, dataList,R.layout.item_select_service,
-                                    clickInterface, true);
+                                    clickInterface, true, getArguments().getString(Constants.METHOD));
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(adapter);
                         }

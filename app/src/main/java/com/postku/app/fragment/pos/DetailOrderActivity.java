@@ -71,6 +71,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
     private ProgressBar progressBar;
     double totalTagihan, totalPrice, totalDiskon, totalPajak, totalServiceFee, totalFix;
     public int quantity=0;
+
     private String invoice="";
     private List<MenuItem> menuItemList = new ArrayList<>();
     private List<Integer> serviceFeeList = new ArrayList<>();
@@ -115,31 +116,6 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
-            discount.setText(sessionManager.getDiscount());
-        }
-        if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
-            customer.setText(sessionManager.getPelanggan());
-        }
-        if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
-            labelOrder.setText(sessionManager.getLabelOrder());
-        }
-        if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
-            tipeOrder.setText(sessionManager.getTipeOrder());
-        }
-        if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
-            pajak.setText(sessionManager.getPajak());
-        }
-        if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
-            meja.setText(sessionManager.getMeja());
-        }
-
-        if(sessionManager.getSeviceList() != null){
-            serviceQty.setVisibility(View.VISIBLE);
-            serviceQty.setText(sessionManager.getSeviceList().size() + "");
-        }else {
-            serviceQty.setVisibility(View.GONE);
-        }
 
         if(user.isSubs()){
             laddons.setVisibility(View.VISIBLE);
@@ -463,6 +439,40 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 if(response.isSuccessful()){
                     if(response.body().getStatusCode() == 200){
                         main.setVisibility(View.VISIBLE);
+
+                        if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
+                            discount.setText(sessionManager.getDiscount());
+                            totalDiskon = sessionManager.getTotalDiscount();
+                            discount.setText(DHelper.formatRupiah(totalDiskon));
+                        }
+                        if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
+                            customer.setText(sessionManager.getPelanggan());
+                        }
+                        if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
+                            labelOrder.setText(sessionManager.getLabelOrder());
+                        }
+                        if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
+                            tipeOrder.setText(sessionManager.getTipeOrder());
+                        }
+                        if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
+                            pajak.setText(sessionManager.getPajak());
+                            totalPajak = sessionManager.getTotalPajak();
+                            pajak.setText(DHelper.formatRupiah(totalPajak));
+                        }
+                        if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
+                            meja.setText(sessionManager.getMeja());
+                        }
+
+                        if(sessionManager.getSeviceList() != null){
+                            serviceQty.setVisibility(View.VISIBLE);
+                            serviceQty.setText(sessionManager.getSeviceList().size() + "");
+
+                            totalServiceFee = sessionManager.getTotalServiceFee();
+                            serviceFee.setText(DHelper.formatRupiah(totalServiceFee));
+                        }else {
+                            serviceQty.setVisibility(View.GONE);
+                        }
+
                         totalItems.setText(response.body().getJmlItem() + " Items");
                         Cart cart = new Cart();
                         cart = response.body().getCart();
@@ -641,6 +651,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 }
                 sessionManager.setIdDiscount(id);
                 sessionManager.setDiscount(String.valueOf(value));
+                sessionManager.setTotalDiscount((int) noms);
 
 
             noms = Math.round(noms);
@@ -669,6 +680,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 }
                 sessionManager.setIdPajak(id);
                 sessionManager.setPajak(String.valueOf(value));
+                sessionManager.setTotalPajak((int) noms);
 
 
             noms = Math.round(noms);
@@ -685,6 +697,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
             }
             totalServiceFee = value;
             serviceFee.setText(DHelper.toformatRupiah(String.valueOf(value)));
+            sessionManager.setTotalServiceFee((int) totalServiceFee);
         }else if(metode.equalsIgnoreCase(DISKON_ITEM)){
             detail(getIntent().getIntExtra(Constants.ID, 0));
         }

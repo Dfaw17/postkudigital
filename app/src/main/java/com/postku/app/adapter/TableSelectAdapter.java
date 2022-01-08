@@ -46,11 +46,7 @@ public class TableSelectAdapter extends RecyclerView.Adapter<TableSelectAdapter.
         holder.check.setChecked(lastSelectedPosition == position);
         holder.check.setTag(position);
         holder.item.setTag(position);
-        if(meja.isBooked()){
-            holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_red));
-        }else {
-            holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_green_soft));
-        }
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,10 +57,14 @@ public class TableSelectAdapter extends RecyclerView.Adapter<TableSelectAdapter.
             }
         });
 
-        if(holder.check.isChecked()){
-            holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_green));
+        if(meja.isBooked()){
+            holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_red));
         }else {
-            holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_green_soft));
+            if(holder.check.isChecked()){
+                holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_green));
+            }else {
+                holder.item.setBackground(context.getResources().getDrawable(R.drawable.bg_outline_green_soft));
+            }
         }
     }
 
