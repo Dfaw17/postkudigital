@@ -47,6 +47,10 @@ public class SessionManager {
     private static final String TOTAL_PAJAK = "totalPajak";
     private static final String TOTAL_SERVICE_FEE = "totalServiceFee";
 
+    private static final String TIPE_DISCOUNT = "tipeDiscount";
+    private static final String TIPE_PAJAK = "tipePajak";
+
+
     public SessionManager(Context context){
         this.context = context;
         sharedPref = context.getSharedPreferences("postkuSharedPref",
@@ -100,6 +104,27 @@ public class SessionManager {
 
     public void delAddOn(String key){
         editor.remove(key);
+        editor.commit();
+    }
+
+    public void delAllAddOn(){
+        editor.remove(ID_MEJA);
+        editor.remove(MEJA);
+        editor.remove(ID_LABEL_ORDER);
+        editor.remove(LABEL_ORDER);
+        editor.remove(ID_TIPE_ORDER);
+        editor.remove(TIPE_ORDER);
+        editor.remove(ID_PELANGGAN);
+        editor.remove(PELANGGAN);
+        editor.remove(ID_DISCOUNT);
+        editor.remove(DISCOUNT);
+        editor.remove(TOTAL_DISCOUNT);
+        editor.remove(ID_PAJAK);
+        editor.remove(PAJAK);
+        editor.remove(TOTAL_PAJAK);
+        editor.remove(TOTAL_SERVICE_FEE);
+        editor.remove(SERVICE_FEE);
+
         editor.commit();
     }
 

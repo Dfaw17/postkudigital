@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.postku.app.BaseApp;
 import com.postku.app.R;
 import com.postku.app.actvity.MainActivity;
+import com.postku.app.actvity.profil.ProfileActivity;
 import com.postku.app.adapter.ItemCartAdapter;
 import com.postku.app.helpers.Constants;
 import com.postku.app.helpers.DHelper;
@@ -128,7 +129,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -440,38 +441,38 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                     if(response.body().getStatusCode() == 200){
                         main.setVisibility(View.VISIBLE);
 
-                        if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
-                            discount.setText(sessionManager.getDiscount());
-                            totalDiskon = sessionManager.getTotalDiscount();
-                            discount.setText(DHelper.formatRupiah(totalDiskon));
-                        }
-                        if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
-                            customer.setText(sessionManager.getPelanggan());
-                        }
-                        if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
-                            labelOrder.setText(sessionManager.getLabelOrder());
-                        }
-                        if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
-                            tipeOrder.setText(sessionManager.getTipeOrder());
-                        }
-                        if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
-                            pajak.setText(sessionManager.getPajak());
-                            totalPajak = sessionManager.getTotalPajak();
-                            pajak.setText(DHelper.formatRupiah(totalPajak));
-                        }
-                        if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
-                            meja.setText(sessionManager.getMeja());
-                        }
-
-                        if(sessionManager.getSeviceList() != null){
-                            serviceQty.setVisibility(View.VISIBLE);
-                            serviceQty.setText(sessionManager.getSeviceList().size() + "");
-
-                            totalServiceFee = sessionManager.getTotalServiceFee();
-                            serviceFee.setText(DHelper.formatRupiah(totalServiceFee));
-                        }else {
-                            serviceQty.setVisibility(View.GONE);
-                        }
+//                        if(sessionManager.getDiscount() != null || !sessionManager.getDiscount().equalsIgnoreCase("")){
+//                            discount.setText(sessionManager.getDiscount());
+//                            totalDiskon = sessionManager.getTotalDiscount();
+//                            discount.setText(DHelper.formatRupiah(totalDiskon));
+//                        }
+//                        if(sessionManager.getPelanggan() != null || !sessionManager.getPelanggan().equalsIgnoreCase("")){
+//                            customer.setText(sessionManager.getPelanggan());
+//                        }
+//                        if(sessionManager.getLabelOrder() != null || !sessionManager.getLabelOrder().equalsIgnoreCase("")){
+//                            labelOrder.setText(sessionManager.getLabelOrder());
+//                        }
+//                        if(sessionManager.getTipeOrder() != null || !sessionManager.getTipeOrder().equalsIgnoreCase("")){
+//                            tipeOrder.setText(sessionManager.getTipeOrder());
+//                        }
+//                        if(sessionManager.getPajak() != null || !sessionManager.getPajak().equalsIgnoreCase("")){
+//                            pajak.setText(sessionManager.getPajak());
+//                            totalPajak = sessionManager.getTotalPajak();
+//                            pajak.setText(DHelper.formatRupiah(totalPajak));
+//                        }
+//                        if(sessionManager.getMeja() != null || !sessionManager.getMeja().equalsIgnoreCase("")){
+//                            meja.setText(sessionManager.getMeja());
+//                        }
+//
+//                        if(sessionManager.getSeviceList() != null){
+//                            serviceQty.setVisibility(View.VISIBLE);
+//                            serviceQty.setText(sessionManager.getSeviceList().size() + "");
+//
+//                            totalServiceFee = sessionManager.getTotalServiceFee();
+//                            serviceFee.setText(DHelper.formatRupiah(totalServiceFee));
+//                        }else {
+//                            serviceQty.setVisibility(View.GONE);
+//                        }
 
                         totalItems.setText(response.body().getJmlItem() + " Items");
                         Cart cart = new Cart();
@@ -607,8 +608,22 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        new AlertDialog.Builder(DetailOrderActivity.this)
+                .setTitle("Konfirmasi")
+                .setMessage("Addons yang sudah ditambahkan akan terhapus semua, lanjutkan?")
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        sessionManager.delAllAddOn();
+                        finish();
+                    }
+                }).create().show();
+
     }
 
 
@@ -737,4 +752,6 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
         totalTagihan = totalPrice + totalPajak + totalServiceFee - totalDiskon;
         grandTotal.setText(DHelper.formatRupiah(totalTagihan));
     }
+
+
 }
