@@ -123,8 +123,6 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
-
-
         rbTunai.setChecked(true);
 
         lpas.setOnClickListener(new View.OnClickListener() {

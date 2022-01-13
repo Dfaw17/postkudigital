@@ -239,7 +239,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
                         Cart cart = response.body().getCart();
                         idCart = cart.getId();
                         qty.setText(cart.getTotalItem() + " item");
-                        double grandTotal = Math.round(cart.getGrandTotal());
+                        double grandTotal = Math.round(cart.getTotalPrice());
                         total.setText("Total= Rp" + DHelper.toformatRupiah(String.valueOf(grandTotal)));
                     }
                 }

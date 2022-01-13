@@ -554,14 +554,21 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
             }else if(requestCode == Constants.GALERY_TOKO_REQUEST){
                 if(data != null){
                     Uri contentUri = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
-                        imgToko.setImageBitmap(bitmap);
-                        imageFileToko = DHelper.createTempFile(context, bitmap);
+                    float sizeori = DHelper.getImageSize(context, contentUri);
+                    float sizemb = sizeori/(1024f * 1024f);
+                    if(sizemb < 5){
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                            imgToko.setImageBitmap(bitmap);
+                            imageFileToko = DHelper.createTempFile(context, bitmap);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        DHelper.pesan(context, "Ukuran gambar maksimal 5mb");
                     }
+
                 }
             }
         }
