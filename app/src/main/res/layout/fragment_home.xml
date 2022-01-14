@@ -216,6 +216,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Total Transaksi"
                                 android:textSize="10sp" />
@@ -251,6 +252,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Pendapatan"
                                 android:textSize="10sp" />
@@ -293,6 +295,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Transaksi Tunai"
                                 android:textSize="10sp" />
@@ -327,6 +330,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Transaksi QRIS"
                                 android:textSize="10sp" />
@@ -369,6 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Menu Terjual"
                                 android:textSize="10sp" />
@@ -403,6 +408,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="5dp"
+                                android:textColor="@color/colorBlack"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Menu terlaris"
                                 android:textSize="10sp" />
