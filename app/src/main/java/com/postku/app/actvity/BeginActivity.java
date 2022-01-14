@@ -16,7 +16,7 @@ import com.postku.app.R;
 
 public class BeginActivity extends AppCompatActivity {
     private int[] images = {R.drawable.banner_1,
-            R.drawable.banner_1, R.drawable.banner_1};
+            R.drawable.banner_2, R.drawable.banner_3};
     private Button login, register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

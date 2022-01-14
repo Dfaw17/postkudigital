@@ -30,5 +30,5 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Nama Outlet"
         android:textColor="@color/colorGrey"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 </RelativeLayout>

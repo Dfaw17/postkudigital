@@ -83,7 +83,7 @@
                                 android:fontFamily="@font/poppins_medium"
                                 android:text="Rp"
                                 android:textColor="@color/colorGrey"
-                                android:textSize="10sp" />
+                                android:textSize="8sp" />
 
                             <TextView
                                 android:id="@+id/text_saldo"
@@ -91,6 +91,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:text="0"
                                 android:textColor="@color/colorBlack"
@@ -140,7 +141,7 @@
                                 android:fontFamily="@font/poppins_medium"
                                 android:text="Rp"
                                 android:textColor="@color/colorGrey"
-                                android:textSize="10sp" />
+                                android:textSize="8sp" />
 
                             <TextView
                                 android:id="@+id/text_qris"
@@ -148,6 +149,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:text="0"
                                 android:textColor="@color/colorBlack"
@@ -191,9 +193,9 @@
                         android:id="@+id/textView10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Ringkasan hari ini"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -216,7 +218,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Total Transaksi"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_total_transaksi"
@@ -231,7 +233,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="0"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -251,7 +253,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Pendapatan"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_pendapatan"
@@ -266,7 +268,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="Rp0"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -293,7 +295,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Transaksi Tunai"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_trx_tunai"
@@ -308,7 +310,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="Rp0"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -327,7 +329,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Transaksi QRIS"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_trx_qris"
@@ -342,7 +344,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="Rp0"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -369,7 +371,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Menu Terjual"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_menu_terjual"
@@ -384,7 +386,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="0"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -403,7 +405,7 @@
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="Menu terlaris"
-                                android:textSize="12sp" />
+                                android:textSize="10sp" />
 
                             <TextView
                                 android:id="@+id/text_menu_terlaris"
@@ -418,7 +420,7 @@
                                 android:gravity="center_horizontal"
                                 android:text="-"
                                 android:textColor="@color/colorBlack"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -444,11 +446,11 @@
 
                         <ImageView
                             android:id="@+id/imageView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
-                            android:src="@drawable/img_subs" />
+                            android:src="@drawable/img_subs_2" />
 
                         <TextView
                             android:id="@+id/textView15"
@@ -456,7 +458,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_regular"
                             android:text="Berlangganan Postku Plus"
                             android:textSize="12sp" />
 
@@ -466,7 +468,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="15dp"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Rp 1k/Hari"
                             android:textColor="@color/colorBlack"
                             android:textSize="16sp" />
@@ -500,9 +502,9 @@
                         android:id="@+id/textView17"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="@string/title_news_home"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_artikel"

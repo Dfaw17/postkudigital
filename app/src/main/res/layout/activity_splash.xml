@@ -11,5 +11,5 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/logo_app" />
+        android:src="@drawable/logo_app_3" />
 </RelativeLayout>

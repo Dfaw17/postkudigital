@@ -25,7 +25,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="15dp"
-                app:srcCompat="@drawable/img_wallet_activated" />
+                app:srcCompat="@drawable/img_wallet_activated_2" />
 
             <TextView
                 android:id="@+id/textView31"
@@ -36,13 +36,13 @@
                 android:gravity="center_horizontal"
                 android:text="Welcome To Postkupay"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp">
+                android:layout_margin="25dp">
 
                 <ImageView
                     android:id="@+id/icon1"
@@ -56,18 +56,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/icon1"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Apa itu Postkupay"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Apa itu Postkupay ?"
+                    android:textColor="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/text_deskripsi_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/icon1"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="Postkupay adalah dompet toko kamu di dalam aplikasi Postku. Postkupay dapat digunakan untuk bertransaksi di dalam aplikasi Postku."
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -75,7 +74,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp">
+                android:layout_margin="25dp">
 
                 <ImageView
                     android:id="@+id/icon2"
@@ -89,10 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/icon2"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Apa kegunaan Postkupay?"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Apa kegunaan Postkupay ?"
+                    android:textColor="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/text_deskripsi_2"
@@ -100,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/icon2"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="kamu dapat menggunakan Postkupay untuk berlangganan Postku Plus. Membeli pulsa, paket data, voucher pln. voucher game, dll."
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -108,7 +106,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp">
+                android:layout_margin="25dp">
 
                 <ImageView
                     android:id="@+id/icon3"
@@ -122,10 +120,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/icon3"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Bagaimana cara Topup Postkupay?"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Bagaimana cara Topup Postkupay ?"
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/text_deskripsi_3"
@@ -141,31 +138,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/text_deskripsi_3"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView42"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Request saldo wallet yang ingin ditopup"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="- Request saldo wallet yang ingin ditopup"
                         android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/textView40"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Lakukan transfer ke no rekening yang tertera"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="- Lakukan transfer ke no rekening yang tertera"
                         android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/textView41"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:text="Upload bukti transfer"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="- Upload bukti transfer"
                         android:textSize="12sp" />
                 </LinearLayout>
             </RelativeLayout>
