@@ -33,10 +33,10 @@
 
                     <ImageView
                         android:id="@+id/imageView26"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="220dp"
+                        android:layout_height="220dp"
                         android:layout_gravity="center_horizontal"
-                        app:srcCompat="@drawable/img_postkuplus" />
+                        app:srcCompat="@drawable/img_postkuplus_2" />
 
                     <TextView
                         android:id="@+id/textView19"
@@ -54,8 +54,11 @@
                         android:id="@+id/text_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginHorizontal="35dp"
+                        android:layout_marginVertical="10dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/poppins_regular"
                         android:gravity="center_horizontal"
                         android:text="Tak kenal maka tak sayang, yuk kenalan dengan POSTKU Plus, akses seluruh fitur aplikasi tanpa biaya tambahan, tanpa embel2 fitur tambahan, hanya dengan Rp 1k/day" />
 
@@ -121,19 +124,18 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:orientation="horizontal"
-                            android:padding="15dp">
+                            android:padding="5dp">
 
                             <ImageView
                                 android:id="@+id/imageView27"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/img_fitur_plus" />
-
+                                android:layout_width="280dp"
+                                android:layout_height="550dp"
+                                app:srcCompat="@drawable/img_fitur_plus_2" />
                             <ImageView
                                 android:id="@+id/imageView28"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/img_fitur_default" />
+                                android:layout_width="280dp"
+                                android:layout_height="550dp"
+                                app:srcCompat="@drawable/img_fitur_default_2" />
                         </LinearLayout>
 
 
@@ -154,9 +156,10 @@
                         android:id="@+id/textView49"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginHorizontal="20dp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="Berlangganan"
+                        android:layout_marginTop="20dp"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -165,8 +168,10 @@
                         android:id="@+id/textView43"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="12sp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Berlangganan Postku plus sekarang, hanya dengan  Rp. 1.000 per hari untuk menikmati semua fitur lengkap postku" />
 
                     <Button
