@@ -86,11 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="0 item"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/img_meja"
@@ -133,12 +132,11 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:clickable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:gravity="center_vertical"
                 android:text="Total = Rp0"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 

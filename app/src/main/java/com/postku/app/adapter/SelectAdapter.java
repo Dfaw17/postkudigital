@@ -100,12 +100,12 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.VH> {
             });
 
             if(service.isChecked()){
-                holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left));
+                holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left_grey));
             }else {
                 if(holder.check.isChecked()){
-                    holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left));
-                }else {
                     holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left_grey));
+                }else {
+                    holder.select.setBackground(mContext.getResources().getDrawable(R.drawable.bg_curve_left));
                 }
             }
 

@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/bg_rectangle_grey"
+                android:background="#125A5A5A"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -32,23 +32,22 @@
                     android:id="@+id/textView29"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="Total Tagihan"
                     android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/text_total_tagihan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_bold"
                     android:gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
                     android:text="Total Tagihan"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp"/>
             </LinearLayout>
 
             <RadioGroup
@@ -68,13 +67,13 @@
                     android:background="@drawable/custom_radiobutton"
                     android:button="@null"
                     android:checked="true"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Tunai"
                     android:textColor="@color/custom_color_radio_button"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <RadioButton
                     android:id="@+id/rbQris"
@@ -84,13 +83,13 @@
                     android:background="@drawable/custom_radiobutton"
                     android:button="@null"
                     android:checked="true"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Qris"
                     android:textColor="@color/custom_color_radio_button"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </RadioGroup>
 
@@ -128,7 +127,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="Uang Pas"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -150,26 +149,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textView34"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="Rp"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/text_bayar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="0"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -336,7 +334,7 @@
 
                     <RelativeLayout
                         android:id="@+id/btn_next"
-                        android:layout_width="wrap_content"
+                        android:layout_width="85dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2dp"
                         android:layout_marginEnd="2dp"
@@ -353,7 +351,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Lanjut"
                             android:textColor="@color/colorWhite"
-                            android:textSize="20sp" />
+                            android:textSize="15sp" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
