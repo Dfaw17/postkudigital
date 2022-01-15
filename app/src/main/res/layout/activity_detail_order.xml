@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/coloSecondary"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:layout_marginTop="15dp"
                 android:id="@+id/laddon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -330,7 +331,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="subtotal"
+                        android:text="Subtotal"
                         android:textSize="14sp" />
 
                     <TextView
@@ -364,7 +365,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="discount"
+                        android:text="Discount"
                         android:textSize="14sp" />
 
                     <TextView
@@ -398,7 +399,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="pelanggan"
+                        android:text="Pelanggan"
                         android:textSize="14sp" />
 
                     <TextView
@@ -432,7 +433,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="meja"
+                        android:text="Meja"
                         android:textSize="14sp" />
 
                     <TextView
@@ -466,7 +467,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="tipe order"
+                        android:text="Tipe Order"
                         android:textSize="14sp" />
 
                     <TextView
@@ -500,7 +501,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="label order"
+                        android:text="Label Order"
                         android:textSize="14sp" />
 
                     <TextView
@@ -535,7 +536,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="pajak"
+                        android:text="Pajak"
                         android:textSize="14sp" />
 
                     <TextView
@@ -570,7 +571,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="service fee"
+                        android:text="Service Fee"
                         android:textSize="14sp" />
 
                     <TextView

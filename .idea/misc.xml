@@ -8,6 +8,7 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_activated_wallet.xml" value="0.2" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_artikel.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_begin.xml" value="0.2" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_detail_order.xml" value="0.2" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_detail_web.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_login.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_main.xml" value="0.11398176291793313" />
@@ -18,10 +19,11 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_web_view.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/app_bar_custom.xml" value="0.536" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_menu.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_pos.xml" value="0.2" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_produk.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_toko.xml" value="0.234375" />
-        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_cart.xml" value="0.2" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_cart.xml" value="0.6" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_menu.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_news.xml" value="0.4" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_outlet.xml" value="0.2" />
