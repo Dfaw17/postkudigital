@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="10dp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Toko"
                     android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
@@ -151,10 +151,11 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_horizontal"
+                            android:textColor="@color/colorBlack"
                             android:text="Debit"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -178,10 +179,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:gravity="start"
                                     android:text="Penjualan Kotor"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_kotor"
@@ -192,7 +193,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -208,7 +209,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="start"
                                     android:text="Pajak"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_pajak"
@@ -220,7 +221,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -236,7 +237,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="start"
                                     android:text="Service Fee"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_service_fee"
@@ -248,7 +249,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -275,10 +276,11 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/colorBlack"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_horizontal"
                             android:text="Credit"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -305,7 +307,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="start"
                                     android:text="Discount"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_diskon"
@@ -316,7 +318,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -332,7 +334,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="start"
                                     android:text="Pembatalan"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_cancel"
@@ -344,7 +346,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -360,7 +362,7 @@
                                     android:fontFamily="@font/poppins_medium"
                                     android:gravity="start"
                                     android:text="HPP Items"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                                 <TextView
                                     android:id="@+id/text_hpp"
@@ -372,7 +374,7 @@
                                     android:gravity="end"
                                     android:text="Rp0"
                                     android:textColor="@color/colorBlack"
-                                    android:textSize="12sp" />
+                                    android:textSize="10sp" />
 
                             </TableRow>
 
@@ -402,7 +404,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="start"
                         android:text="Total item terjual"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_total_item"
@@ -413,6 +415,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/colorBlack"
                         android:gravity="end"
                         android:text="0"
                         android:textSize="14sp" />
@@ -438,7 +441,7 @@
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="start"
                         android:text="Total laba rugi"
-                        android:textSize="18sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_labarugi"
@@ -448,7 +451,8 @@
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/colorBlack"
                         android:gravity="end"
                         android:text="Rp0"
                         android:textSize="18sp" />

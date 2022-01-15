@@ -102,7 +102,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_toEndOf="@id/imageView35"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Laporan Menu"
+                    android:text="Menu Terlaris"
                     android:textColor="@color/colorPrimary" />
 
                 <ImageView
@@ -181,7 +181,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_toEndOf="@id/icon_kategori"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Laporan Kategori"
+                    android:text="Kategori Terfavorit"
                     android:textColor="@color/colorPrimary" />
 
                 <ImageView
@@ -220,7 +220,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_toEndOf="@id/icon_discount"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Laporan Discount"
+                    android:text="Discount Terefektif"
                     android:textColor="@color/colorPrimary" />
 
                 <ImageView
@@ -299,7 +299,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_toEndOf="@id/icon_customer"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Laporan Pelanggan"
+                    android:text="Pelanggan Loyal"
                     android:textColor="@color/colorPrimary" />
 
                 <ImageView

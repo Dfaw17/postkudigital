@@ -36,8 +36,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="10dp"
+                        android:textSize="18sp"
                         android:layout_toStartOf="@id/lcurrent"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Lunar Sweet" />
 
                     <LinearLayout
@@ -53,7 +54,7 @@
                             android:id="@+id/textView27"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Stock saat ini"
                             android:textSize="10sp" />
 
@@ -63,6 +64,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_rectangle_grey"
                             android:fontFamily="@font/poppins_medium"
+                            android:textColor="@color/colorBlack"
                             android:gravity="center_horizontal|center_vertical"
                             android:padding="15dp"
                             android:text="0"
@@ -87,10 +89,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Riwayat Stock"
                             android:textColor="@color/colorBlack"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:id="@+id/ladd"
@@ -118,7 +120,7 @@
                         android:id="@+id/rec_history"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:longClickable="false"
                         android:visibility="visible" />
                 </LinearLayout>

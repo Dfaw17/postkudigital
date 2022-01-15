@@ -51,7 +51,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Informasi Toko"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp" />
@@ -65,14 +65,14 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="nama"
                 android:inputType="text"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/edt_alamat_toko"
@@ -83,14 +83,14 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="alamat"
                 android:inputType="text"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <AutoCompleteTextView
                 android:id="@+id/kategori"
@@ -102,13 +102,13 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="kategori toko"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp"></AutoCompleteTextView>
+                android:textSize="12sp"></AutoCompleteTextView>
 
             <AutoCompleteTextView
                 android:id="@+id/provinsi"
@@ -120,13 +120,13 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="provinsi"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp">
+                android:textSize="12sp">
 
             </AutoCompleteTextView>
 
@@ -140,13 +140,13 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="kabupaten/kota"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp">
+                android:textSize="12sp">
 
             </AutoCompleteTextView>
 
@@ -160,13 +160,13 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="kecamatan"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp">
+                android:textSize="12sp">
 
             </AutoCompleteTextView>
 
@@ -180,13 +180,13 @@
                 android:background="@drawable/custom_edittext"
                 android:drawableEnd="@drawable/ic_drop_down"
                 android:focusable="false"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:hint="kelurahan"
                 android:paddingStart="20dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:textSize="16sp">
+                android:textSize="12sp">
 
             </AutoCompleteTextView>
 

@@ -41,18 +41,19 @@
             android:id="@+id/text_nama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Nama_Produk"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack"/>
 
         <TextView
             android:id="@+id/text_alamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_regular"
             android:maxLines="3"
+            android:layout_marginTop="10dp"
             android:text="Harga_Produk"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
