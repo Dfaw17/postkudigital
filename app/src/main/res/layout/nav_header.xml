@@ -36,24 +36,26 @@
                 android:id="@+id/text_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Hari Yuswantoro"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="14sp" />
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/text_jabatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Owner"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/text_toko"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryBold"
                 android:fontFamily="@font/poppins_medium"
+                android:textSize="12sp"
                 android:text="Postku Store" />
         </LinearLayout>
 

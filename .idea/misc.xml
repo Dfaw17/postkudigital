@@ -30,7 +30,7 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_pilih_channel.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_postku_plus.xml" value="0.20253164556962025" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_printer.xml" value="0.20512820512820512" />
-        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_profile.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_profile.xml" value="0.264" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_qris.xml" value="0.20253164556962025" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_ranking.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_register.xml" value="0.25" />
@@ -44,10 +44,12 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/bottom_sheet_ppob.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/bottom_sheet_subs.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_absensi.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_customer.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_image_viewer.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_list_produk.xml" value="0.20253164556962025" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_menu.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_pegawai.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_pos.xml" value="0.2" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_produk.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_reference.xml" value="0.20512820512820512" />
@@ -58,6 +60,7 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_toko.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/fragment_topup_sukses.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_cart.xml" value="0.6" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_customer.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_dropdown.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_menu.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_news.xml" value="0.4" />
@@ -71,7 +74,7 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_staff.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/layout_banner.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/nav_footer.xml" value="0.234375" />
-        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/nav_header.xml" value="0.11398176291793313" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/nav_header.xml" value="0.264" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/menu/nav_menu.xml" value="0.234375" />
         <entry key="app/src/main/res/drawable/button_outline_green.xml" value="0.25625" />
         <entry key="app/src/main/res/drawable/custom_button_fill.xml" value="0.2552083333333333" />
