@@ -82,11 +82,11 @@ public class HistoryTransAdapter extends RecyclerView.Adapter<HistoryTransAdapte
         if(trx.getPaymentType() == 1){
             holder.payment.setText("Tunai");
             holder.payment.setTextColor(context.getResources().getColor(R.color.colorGreen));
-            holder.payment.setBackground(context.getResources().getDrawable(R.drawable.button_outline_green));
+//            holder.payment.setBackground(context.getResources().getDrawable(R.drawable.button_outline_green));
         }else {
             holder.payment.setText("QRIS");
             holder.payment.setTextColor(context.getResources().getColor(R.color.colorAccent));
-            holder.payment.setBackground(context.getResources().getDrawable(R.drawable.custom_button_outline));
+//            holder.payment.setBackground(context.getResources().getDrawable(R.drawable.custom_button_outline));
         }
 
         holder.item.setOnClickListener(new View.OnClickListener() {

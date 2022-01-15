@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragment.riwayat.DetailTransaksiActivity">
 
-    <include layout="@layout/app_bar_custom"/>
+    <include layout="@layout/app_bar_custom" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -40,9 +40,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Nomor Transaksi"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_no_transaksi"
@@ -52,7 +52,8 @@
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="end"
                         android:text="-"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -65,9 +66,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Kasir"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_nama_kasir"
@@ -77,7 +78,8 @@
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="end"
                         android:text="-"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,9 +92,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Tanggal"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_tanggal"
@@ -102,7 +104,8 @@
                         android:fontFamily="@font/poppins_medium"
                         android:gravity="end"
                         android:text="-"
-                        android:textSize="14sp" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -140,17 +143,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="subtotal"
-                            android:textSize="14sp" />
+                            android:text="Subtotal"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_subtotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="end"
                             android:text="0"
+                            android:textColor="@color/colorBlack"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -174,15 +178,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="discount"
-                            android:textSize="14sp" />
+                            android:text="Discount"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_discount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="0"
                             android:textSize="14sp" />
@@ -208,15 +213,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="pelanggan"
-                            android:textSize="14sp" />
+                            android:text="Pelanggan"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_customer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="-"
                             android:textSize="14sp" />
@@ -242,15 +248,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="meja"
-                            android:textSize="14sp" />
+                            android:text="Meja"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_meja"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="-"
                             android:textSize="14sp" />
@@ -276,15 +283,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="tipe order"
-                            android:textSize="14sp" />
+                            android:text="Tipe Order"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_tipe_order"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="-"
                             android:textSize="14sp" />
@@ -310,15 +318,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="label order"
-                            android:textSize="14sp" />
+                            android:text="Label Order"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_label_order"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="-"
                             android:textSize="14sp" />
@@ -344,15 +353,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="tipe pembayaran"
-                            android:textSize="14sp" />
+                            android:text="Tipe Pembayaran"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/text_payment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/colorBlack"
                             android:gravity="end"
                             android:text="-"
                             android:textSize="14sp" />
@@ -369,12 +379,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Grand Total"
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/text_total"
@@ -382,11 +391,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="0"
                         android:textColor="@color/colorBlack"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:textSize="20dp"/>
 
 
                 </LinearLayout>
@@ -396,8 +404,8 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
-                    android:elevation="2dp"
-                    app:srcCompat="@drawable/logo_app" />
+                    android:elevation="10dp"
+                    app:srcCompat="@drawable/logo_app_2" />
 
                 <LinearLayout
                     android:id="@+id/litems"
@@ -418,11 +426,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_bold"
                         android:text="0 Item"
                         android:textColor="@color/colorBlack"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textSize="18sp"/>
 
                     <View
                         android:layout_width="200dp"
