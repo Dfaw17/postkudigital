@@ -33,17 +33,20 @@
 
                     <ImageView
                         android:id="@+id/imageView44"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_gravity="center"
                         android:layout_margin="20dp"
-                        app:srcCompat="@drawable/img_topup_pending" />
+                        app:srcCompat="@drawable/img_topup_pending_2" />
 
                     <TextView
                         android:id="@+id/textView56"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorBlack"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Request topup-mu sedang di check oleh admin nih, Proses ini memakan waktu beberapa menit ya UMKM-ers, Mohon menunggu sebentar ya." />
                 </LinearLayout>
 

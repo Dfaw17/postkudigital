@@ -41,7 +41,9 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_select_outlet.xml" value="0.176" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_select_table.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_splash.xml" value="0.264" />
-        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_wallet.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_top_up_saldo.xml" value="0.264" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_topup_pending.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_wallet.xml" value="0.264" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/activity_web_view.xml" value="0.234375" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/app_bar_custom.xml" value="0.536" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/bottom_sheet_ppob.xml" value="0.20512820512820512" />
@@ -77,6 +79,7 @@
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/image_carousel_item.xml" value="0.6" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_absensi.xml" value="0.4" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_cart.xml" value="0.6" />
+        <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_channel.xml" value="0.264" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_customer.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_dropdown.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/dfaww/AndroidStudioProjects/postku/app/src/main/res/layout/item_history.xml" value="0.4" />

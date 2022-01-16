@@ -62,7 +62,7 @@
                                 android:id="@+id/text_saldo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_medium"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:text="Rp0"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="24sp" />
@@ -99,10 +99,10 @@
 
                                 <ImageView
                                     android:id="@+id/img_topup"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
                                     android:layout_gravity="center_horizontal"
-                                    app:srcCompat="@drawable/icon_topup" />
+                                    app:srcCompat="@drawable/icon_topup_2" />
 
                                 <TextView
                                     android:id="@+id/text_topup"
@@ -110,7 +110,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginTop="10dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:text="Isi Saldo"
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="12sp" />
@@ -129,10 +129,10 @@
 
                                 <ImageView
                                     android:id="@+id/img_qris"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
                                     android:layout_gravity="center_horizontal"
-                                    app:srcCompat="@drawable/img_qris" />
+                                    app:srcCompat="@drawable/img_qris_2" />
 
                                 <TextView
                                     android:id="@+id/text_qris"
@@ -140,7 +140,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginTop="10dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:text="Saldo Qris"
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="12sp" />
@@ -159,10 +159,10 @@
 
                                 <ImageView
                                     android:id="@+id/img_ppob"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
                                     android:layout_gravity="center_horizontal"
-                                    app:srcCompat="@drawable/icon_ppob" />
+                                    app:srcCompat="@drawable/icon_ppob_2" />
 
                                 <TextView
                                     android:id="@+id/text_ppob"
@@ -170,7 +170,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
                                     android:layout_marginTop="10dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:text="PPOB"
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="12sp" />
@@ -499,7 +499,7 @@
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/imageView30"
                         android:layout_toEndOf="@id/imageView29"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Riwayat Postkupay" />
 
                     <ImageView
@@ -539,7 +539,7 @@
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/imageView32"
                         android:layout_toEndOf="@id/imageView31"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Riwayat Topup Saldo" />
 
                     <ImageView
@@ -579,7 +579,7 @@
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/imageView34"
                         android:layout_toEndOf="@id/imageView33"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Riwayat Transaksi PPOB" />
 
                     <ImageView

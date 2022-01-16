@@ -41,6 +41,7 @@
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium"
+            android:textSize="12sp"
             android:text="MANDIRI" />
 
         <TextView
@@ -52,6 +53,7 @@
             android:fontFamily="@font/poppins_medium"
             android:gravity="end"
             android:text="1234567890"
+            android:textSize="12sp"
             android:textColor="@color/colorBlack" />
     </LinearLayout>
 
@@ -66,8 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="HARI YUSWANTORO"
         android:textColor="@color/colorBlack"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 </LinearLayout>
