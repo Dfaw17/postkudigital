@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/imageView47"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/img_receipt" />
 
@@ -42,11 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Rp40.000"
                 android:textColor="@color/colorBlack"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"/>
 
         </LinearLayout>
 
@@ -64,16 +63,16 @@
                 android:id="@+id/text_invoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="PKU-20210721081233"
                 android:textColor="@color/colorBlack"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/text_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_regular"
                 android:gravity="center_vertical"
                 android:text="QRIS"
                 android:textSize="10sp" />

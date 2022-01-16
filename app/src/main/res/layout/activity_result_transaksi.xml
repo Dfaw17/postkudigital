@@ -309,6 +309,7 @@
                         android:paddingStart="20dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="20dp"
+                        android:layout_marginTop="30dp"
                         android:paddingBottom="10dp"
                         android:text="Check Status Transaksi"
                         android:textColor="@color/colorPrimary"

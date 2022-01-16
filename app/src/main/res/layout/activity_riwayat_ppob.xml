@@ -28,12 +28,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@color/colorWhite"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="15dp">
 
                     <EditText
                         android:id="@+id/edt_search"
-                        android:layout_width="330dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/custom_edittext_grey"
@@ -52,12 +52,12 @@
 
                     <RelativeLayout
                         android:id="@+id/rldate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
                         android:layout_toRightOf="@id/edt_search"
                         android:layout_weight="1"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/custom_curve"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground"
@@ -113,6 +113,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:textSize="12sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Total Transaksi Sukses" />
 
@@ -122,8 +123,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="end"
+                            android:textSize="12sp"
                             android:text="Rp0" />
                     </LinearLayout>
 
@@ -140,6 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:textSize="12sp"
                             android:fontFamily="@font/poppins_medium"
                             android:text="Jumlah Transaksi Sukses" />
 
@@ -151,6 +154,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="end"
+                            android:textSize="12sp"
                             android:text="0" />
                     </LinearLayout>
                 </LinearLayout>
@@ -169,6 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
+        android:layout_marginTop="120dp"
         android:visibility="gone">
 
         <ImageView

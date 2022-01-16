@@ -83,7 +83,7 @@
                                     android:id="@+id/textView57"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:gravity="center_horizontal"
                                     android:text="Saldo Qris"
                                     android:textColor="@color/colorWhite"
@@ -113,16 +113,16 @@
 
                                 <ImageView
                                     android:id="@+id/imageView46"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:srcCompat="@drawable/ic_claim" />
+                                    android:layout_width="75dp"
+                                    android:layout_height="30dp"
+                                    app:srcCompat="@drawable/ic_claim_2" />
 
                                 <TextView
                                     android:id="@+id/textView65"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:gravity="center_horizontal"
                                     android:text="Claim Saldo"
                                     android:textColor="@color/colorPrimary"
@@ -142,15 +142,15 @@
 
                                 <ImageView
                                     android:id="@+id/img_riwayat"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:srcCompat="@drawable/ic_history_claim" />
+                                    android:layout_width="75dp"
+                                    android:layout_height="30dp"
+                                    app:srcCompat="@drawable/ic_history_claim_2" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:fontFamily="@font/poppins_medium"
+                                    android:fontFamily="@font/poppins_regular"
                                     android:gravity="center_horizontal"
                                     android:text="Riwayat Claim"
                                     android:textColor="@color/colorPrimary"
@@ -175,10 +175,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:fontFamily="@font/poppins_semibold"
                         android:text="Transaksi Qris Pending"
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rec_riwayat"
@@ -200,8 +200,9 @@
 
         <ImageView
             android:id="@+id/imageView15"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="200dp"
             android:layout_gravity="center_horizontal"
             app:srcCompat="@drawable/img_empty" />
 
