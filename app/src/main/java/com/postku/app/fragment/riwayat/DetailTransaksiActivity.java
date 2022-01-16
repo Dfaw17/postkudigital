@@ -201,12 +201,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
     private ArrayList<Printable> getSomePrintables() {
         ArrayList<Printable> al = new ArrayList<>();
         Resources resources = getResources();
-        al.add(new RawPrintable.Builder(new byte[]{27, 100, 4}).build()); // feed lines example in raw mode
-
-//        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_logo_print);
-//        al.add(new ImagePrintable.Builder(image)
-//                .setNewLinesAfter(1)
-//                .build());
+//        al.add(new RawPrintable.Builder(new byte[]{27, 100, 4}).build()); // feed lines example in raw mode
 
         al.add( (new TextPrintable.Builder())
                 .setText(sessionManager.getNamaToko())
@@ -398,7 +393,7 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_LEFT())
                 .setCharacterCode(DefaultPrinter.Companion.getCHARCODE_PC850())
                 .setFontSize(FONT_SMALL)
-                .setLineSpacing(DefaultPrinter.Companion.getLINE_SPACING_30())
+                .setLineSpacing(DefaultPrinter.Companion.getLINE_SPACING_60())
                 .setNewLinesAfter(1)
                 .build());
 
@@ -412,15 +407,15 @@ public class DetailTransaksiActivity extends AppCompatActivity implements OnCart
         al.add( (new TextPrintable.Builder())
                 .setText("www.postku.site")
                 .setAlignment(DefaultPrinter.Companion.getALIGNMENT_CENTER())
-                .setLineSpacing(DefaultPrinter.Companion.getLINE_SPACING_30())
+                .setLineSpacing(DefaultPrinter.Companion.getLINE_SPACING_60())
                 .setFontSize(FONT_SMALL)
-                .setNewLinesAfter(1)
+                .setNewLinesAfter(2)
                 .build());
 
-        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_footer_print);
-        al.add(new ImagePrintable.Builder(image)
-                .setNewLinesAfter(1)
-                .build());
+//        Bitmap image = BitmapFactory.decodeResource(resources, R.drawable.img_footer_print);
+//        al.add(new ImagePrintable.Builder(image)
+//                .setNewLinesAfter(1)
+//                .build());
 
         return al;
     }
