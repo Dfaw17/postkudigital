@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Meja"
         android:textColor="@color/colorBlack"
         android:textSize="20sp" />
@@ -25,14 +25,14 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/custom_edittext"
         android:ems="10"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_regular"
         android:hint="Nama Meja"
         android:inputType="text"
         android:paddingStart="20dp"
         android:paddingTop="13dp"
         android:paddingEnd="20dp"
         android:paddingBottom="13dp"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 
     <EditText
         android:id="@+id/edittext2"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/custom_edittext"
         android:ems="10"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_regular"
         android:hint="Note"
         android:inputType="textMultiLine"
         android:maxLines="3"
@@ -51,7 +51,7 @@
         android:paddingTop="13dp"
         android:paddingEnd="20dp"
         android:paddingBottom="13dp"
-        android:textSize="16sp" />
+        android:textSize="12sp" />
 
     <EditText
         android:id="@+id/edittext3"

@@ -68,11 +68,11 @@
 
                 <ImageView
                     android:id="@+id/imageView39"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="20dp"
-                    app:srcCompat="@drawable/img_printer" />
+                    app:srcCompat="@drawable/img_printer_2" />
 
                 <TextView
                     android:id="@+id/textView53"
@@ -83,10 +83,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Printer tidak ditemukan"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/textView54"
@@ -96,7 +95,7 @@
                     android:layout_marginStart="50dp"
                     android:layout_marginEnd="50dp"
                     android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_horizontal"
                     android:text="Pastikan tipe printermu sesuai dan kamu sudah menyalakan koneksi printer."
                     android:textSize="14sp" />

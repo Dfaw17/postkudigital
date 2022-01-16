@@ -46,9 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Voucher Jumat Berkah"
-            android:textStyle="bold" />
+            android:textColor="@color/colorBlack"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Voucher Jumat Berkah" />
 
     </LinearLayout>
 

@@ -12,4 +12,13 @@
         android:layout_height="250dp"
         android:layout_centerInParent="true"
         android:src="@drawable/logo_app_3" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Apilikasi Kasir Digital Gratis Untuk UMKM Indonesia"
+        />
 </RelativeLayout>

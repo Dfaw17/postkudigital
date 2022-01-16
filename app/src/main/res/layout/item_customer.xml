@@ -43,9 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Nama_Produk"
-            android:textStyle="bold" />
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/colorBlack"
+            android:text="Nama_Produk"/>
 
     </LinearLayout>
 
