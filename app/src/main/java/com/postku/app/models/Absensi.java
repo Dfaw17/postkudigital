@@ -16,6 +16,10 @@ public class Absensi implements Serializable {
     private String nama;
 
     @Expose
+    @SerializedName("email")
+    private String email;
+
+    @Expose
     @SerializedName("no_telp")
     private String phone;
 
@@ -42,6 +46,14 @@ public class Absensi implements Serializable {
     @Expose
     @SerializedName("user")
     private int userId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getUserId() {
         return userId;

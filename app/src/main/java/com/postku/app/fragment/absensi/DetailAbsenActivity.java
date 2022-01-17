@@ -87,6 +87,9 @@ public class DetailAbsenActivity extends AppCompatActivity {
                    if(response.body().getStatusCode() == 200){
                        main.setVisibility(View.VISIBLE);
                        final Absensi absensi = response.body().getAbsensi();
+                       nama.setText(absensi.getNama());
+                       email.setText(absensi.getEmail());
+                       phone.setText(absensi.getPhone());
                        Glide.with(context)
                                .load(absensi.getPic1())
                                .placeholder(R.drawable.image_placeholder)

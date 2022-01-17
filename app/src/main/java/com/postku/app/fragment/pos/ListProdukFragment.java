@@ -147,8 +147,10 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
         getData(idCat);
         if(sessionManager.isCartActive()){
             checkCartExist(Integer.parseInt(sessionManager.getActiveCart()));
+        }else{
+            checkCart();
         }
-//        checkCart();
+        Log.e(TAG, "IDCART:" + idCart);
 //
 //        loadOrder();
     }
@@ -295,7 +297,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
     public void addItem(int id){
         Log.e(TAG, id + "-------------");
         if(idCart > 0){
-            detailCart(idCart, id);
+            addMenuItem(id);
         }else {
             createCart(id);
         }
@@ -422,6 +424,7 @@ public class ListProdukFragment extends Fragment implements OnItemClickListener,
                         if(response.body().getItemCartList().size() > 0){
                             itemCartList = response.body().getItemCartList();
                             for(int i=0;i < itemCartList.size();i++){
+                                Log.e(TAG, i + "------");
                                 if(itemCartList.get(i).getMenu() == idItem){
                                     Log.e(TAG, "upd idmenu: " + itemCartList.get(i).getMenu() + " iditem:" + idItem);
                                     updMenuItem(itemCartList.get(i).getId(), itemCartList.get(i).getQty() + 1);

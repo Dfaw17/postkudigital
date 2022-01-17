@@ -620,6 +620,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         sessionManager.delAllAddOn();
+
                         finish();
                     }
                 }).create().show();
@@ -691,7 +692,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OnCartItem
                 if(type == 1){
                     noms =  value;
                 }else {
-                    noms = totalTagihan * value/100;
+                    noms = totalPrice * value/100;
                 }
                 sessionManager.setIdPajak(id);
                 sessionManager.setPajak(String.valueOf(value));

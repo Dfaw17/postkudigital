@@ -168,7 +168,7 @@ public class ReportFragment extends Fragment {
                         textPajak.setText(DHelper.formatRupiah(response.body().getDataPajak()));
                         textServiceFee.setText(DHelper.formatRupiah(response.body().getDataServiceFee()));
                         textDiskon.setText(DHelper.formatRupiah(response.body().getDataDiscount()));
-                        textCanceled.setText(DHelper.toformatRupiah(String.valueOf(response.body().getDataTotalItem())));
+                        textCanceled.setText(DHelper.toformatRupiah(String.valueOf(response.body().getDataCancelTrx())));
                         textHpp.setText(DHelper.formatRupiah(response.body().getDataHpp()));
                         textTotalItems.setText(DHelper.toformatRupiah(String.valueOf(response.body().getDataTotalItem())));
                         textLabaRugi.setText(DHelper.formatRupiah(response.body().getDataLabaRugi()));
