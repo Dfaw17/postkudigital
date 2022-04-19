@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
         context = this;
         backButton = findViewById(R.id.back_button);
         caption = findViewById(R.id.text_caption);
-        edtUsername = findViewById(R.id.edt_username);
+        edtUsername = findViewById(R.id.edt_phone);
         edtPassword = findViewById(R.id.edt_password);
         edtEmail = findViewById(R.id.edt_email);
         edtNama = findViewById(R.id.edt_nama_akun);
@@ -214,11 +214,12 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edtUsername.getText().toString().isEmpty()){
-                    edtUsername.setError(context.getString(R.string.error_empty));
-                    edtUsername.requestFocus();
-                    return;
-                }else if(edtPassword.getText().toString().isEmpty()){
+//                if(edtUsername.getText().toString().isEmpty()){
+//                    edtUsername.setError(context.getString(R.string.error_empty));
+//                    edtUsername.requestFocus();
+//                    return;
+//                }else
+                if(edtPassword.getText().toString().isEmpty()){
                     edtPassword.setError(context.getString(R.string.error_empty));
                     edtPassword.requestFocus();
                     return;
@@ -266,7 +267,7 @@ public class RegisterActivity extends AppCompatActivity implements ReferenceFrag
 
                 if(NetworkUtils.isConnected(context)){
                     Log.e(TAG, "completed data");
-                    createAccount("@" + edtUsername.getText().toString(),
+                    createAccount(edtUsername.getText().toString(),
                             edtPassword.getText().toString(),
                             edtEmail.getText().toString());
                 }else{

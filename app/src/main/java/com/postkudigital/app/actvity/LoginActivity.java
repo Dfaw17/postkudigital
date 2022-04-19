@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 //                check internet connection
                 if(NetworkUtils.isConnected(context)){
-                    login("@" + edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim());
+                    login(edtUsername.getText().toString().trim(), edtPassword.getText().toString().trim());
                 }else {
                     DHelper.pesan(context, context.getString(R.string.error_connection));
                 }
