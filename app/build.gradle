@@ -12,7 +12,7 @@ android {
         configurations.all {
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
         }
-        applicationId "com.postku.app"
+        applicationId 'com.postkudigital.app'
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
