@@ -109,7 +109,6 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_edittext"
                 android:ems="10"
-                android:maxLength="6"
                 android:fontFamily="@font/poppins_regular"
                 android:hint="Kata Sandi"
                 android:inputType="textPassword"
